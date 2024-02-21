@@ -43,3 +43,39 @@ This command formats all files in the project directory according to the Prettie
 Remember to run this command before submitting your pull request to ensure consistent code formatting across the project.
 
 For more information about Prettier and its benefits, visit the official [website](https://prettier.io/).
+
+## Color pallete
+
+#### Modern Color Palette:
+
+![Crimson](https://via.placeholder.com/150x50/DC143C/000000?text=+) `#DC143C` (RGB: 220, 20, 60)
+
+` Use for critical alerts or errors, such as when there's a problem with saving data or when there's an error in the user's input. Highlight important notifications, etc.`
+
+![Dark Gray](https://via.placeholder.com/150x50/2F4F4F/000000?text=+) `#2F4F4F` (RGB: 47, 79, 79)
+
+` Borders, Seperators to organize page / Use aganst darker background`
+
+![Goldenrod](https://via.placeholder.com/150x50/DAA520/000000?text=+) `#DAA520` (RGB: 218, 165, 32)
+
+`Highlight achievements or milestones, such as reaching a personal best or completing a goal`
+
+![Green](https://via.placeholder.com/150x50/008000/000000?text=+) `#008000` (RGB: 0, 128, 0)
+
+` Success messages (achieved a goal) / highlight positive achievement`
+
+![Imperial Blue](https://via.placeholder.com/150x50/003366/000000?text=+) `#003366` (RGB: 0, 51, 102)
+
+`Headings / titles`
+
+![Navy Blue](https://via.placeholder.com/150x50/000080/000000?text=+) `#000080` (RGB: 0, 0, 128)
+
+` Navigational Elements`
+
+![Royal Purple](https://via.placeholder.com/150x50/6A0DAD/000000?text=+) `#6A0DAD` (RGB: 106, 13, 173)
+
+` Decrotive elements and accents to add visual intrest`
+
+![Slate Gray](https://via.placeholder.com/150x50/708090/000000?text=+) `#708090` (RGB: 112, 128, 144)
+
+`General background color`
