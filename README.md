@@ -39,4 +39,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 Prettier allows all software enginner working on this project to work together, regardless of ones perception of code smell.
 
-Run ```npx prettier --write .``` before your pull request to automatically format your code to a "prettier" structure.
+Run `npx prettier --write .` before your pull request to automatically format your code to a "prettier" structure.
+See [website](https://prettier.io/) for more information.
