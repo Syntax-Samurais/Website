@@ -23,6 +23,12 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
+## Deployment Check
+
+The application includes a GitHub Actions workflow for Next.js deployment checks. This workflow ensures that the production build of the application is optimized and ready for deployment.
+
+When you push changes to the main branch, GitHub Actions will automatically run the deployment check workflow, which includes building the Next.js app and performing any specified checks.
+
 ## Pre-commit Hook and Linting
 
 This project is configured to use a pre-commit hook powered by Husky and lint-staged. Before each commit, lint-staged runs Prettier to ensure consistent code formatting.
@@ -37,9 +43,3 @@ This command formats all files in the project directory according to the Prettie
 Remember to run this command before submitting your pull request to ensure consistent code formatting across the project.
 
 For more information about Prettier and its benefits, visit the official [website](https://prettier.io/).
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
