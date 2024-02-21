@@ -34,3 +34,9 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Using prettier
+
+Prettier allows all software enginner working on this project to work together, regardless of ones perception of code smell.
+
+Run ```npx prettier --write .``` before your pull request to automatically format your code to a "prettier" structure.
