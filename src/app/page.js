@@ -3,7 +3,9 @@
 import Head from "next/head";
 import { useState } from "react";
 import LoginModal from "./_modals/LoginModal";
-import SignUpModal from "./_modals/SignUpModal";
+// import SignUpModal from "./_modals/SignUpModal";
+// import SignUpPage from "./_SignUp/SignUpPage"
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -13,6 +15,7 @@ export default function Home() {
   const closeLoginModal = () => setShowLoginModal(false);
   const openSignUpModal = () => setShowSignUpModal(true);
   const closeSignUpModal = () => setShowSignUpModal(false);
+  const router = useRouter();
 
   const handleLogin = (username, password) => {
     console.log(
@@ -23,16 +26,20 @@ export default function Home() {
     );
   };
 
-  const handleSignUp = (username, email, password) => {
-    console.log(
-      "Signing up with username:",
-      username,
-      "email:",
-      email,
-      "and password:",
-      password,
-    );
+  const handleSignUp = () => {
+    router.push("/SignUp");
   };
+
+  // const handleSignUp = (username, email, password) => {
+  //   console.log(
+  //     "Signing up with username:",
+  //     username,
+  //     "email:",
+  //     email,
+  //     "and password:",
+  //     password,
+  //   );
+  // };
 
   // Fake testimonials
   const testimonials = [
@@ -67,11 +74,9 @@ export default function Home() {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
       <header className="bg-purple-700 bg-opacity-75 py-2 text-center">
         <h1 className="text-lg font-semibold">FitFusion</h1>
       </header>
-
       <main>
         <div className="h-screen flex justify-center items-center">
           <div className="text-center text-white">
@@ -85,14 +90,13 @@ export default function Home() {
             </button>
             <button
               className="mt-4 bg-white text-blue-500 px-4 py-2 rounded-md ml-2"
-              onClick={openSignUpModal}
+              onClick={() => router.push("/SignUp")}
             >
               Sign Up
             </button>
           </div>
         </div>
       </main>
-
       {/* testemonials */}
       <section className="py-10 justify-center items-center">
         <div className="container mx-auto">
@@ -131,17 +135,17 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       <LoginModal
         isOpen={showLoginModal}
         onClose={closeLoginModal}
         onLogin={handleLogin}
       />
-      <SignUpModal
+      {/* <SignUpModal
         isOpen={showSignUpModal}
         onClose={closeSignUpModal}
         onSignUp={handleSignUp}
-      />
+      /> */}
+      */
     </div>
   );
 }
