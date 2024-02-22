@@ -61,7 +61,6 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {/* Scrolling Header */}
       <header className="fixed top-0 left-0 w-full bg-gray-800 shadow-md z-10">
         <div className="container mx-auto py-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold">FitFusion</h1>
@@ -113,7 +112,7 @@ export default function Home() {
         </div>
       </main>
 
-      {/* Testimonials */}
+      {/* { testemonials } */}
       <section className="bg-gray-800 py-10">
         <div className="container mx-auto">
           <h2 className="text-3xl font-bold mb-6 text-center">
