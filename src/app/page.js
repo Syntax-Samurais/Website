@@ -51,7 +51,14 @@ export default function Home() {
   ];
 
   return (
-    <div className="bg-gray-900 text-white">
+    <div
+      className="text-white"
+      style={{
+        backgroundImage: "url('/images/mountains.jpeg')",
+        backgroundSize: "cover",
+        backgroundAttachment: "scroll", // Scroll along with the content
+      }}
+    >
       <Head>
         <title>FitFusion</title>
         <meta
@@ -61,38 +68,12 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <header className="fixed top-0 left-0 w-full bg-gray-800 shadow-md z-10">
-        <div className="container mx-auto py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold">FitFusion</h1>
-          <nav>
-            <ul className="flex">
-              <li className="mr-4">
-                <a href="#" className="text-white">
-                  Home
-                </a>
-              </li>
-              <li className="mr-4">
-                <a href="#" className="text-white">
-                  About
-                </a>
-              </li>
-              <li className="mr-4">
-                <a href="#" className="text-white">
-                  Services
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-white">
-                  Contact
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </div>
+      <header className="bg-purple-700 bg-opacity-75 py-2 text-center">
+        <h1 className="text-lg font-semibold">FitFusion</h1>
       </header>
 
-      <main className="mt-20">
-        <div className="h-screen flex justify-center items-center bg-gradient-to-r from-blue-500 to-green-500">
+      <main>
+        <div className="h-screen flex justify-center items-center">
           <div className="text-center text-white">
             <h1 className="text-4xl font-bold mb-4">Welcome to FitFusion</h1>
             <p className="text-lg">Elevate your fitness</p>
@@ -112,19 +93,39 @@ export default function Home() {
         </div>
       </main>
 
-      {/* { testemonials } */}
-      <section className="bg-gray-800 py-10">
+      {/* testemonials */}
+      <section className="py-10 justify-center items-center">
         <div className="container mx-auto">
           <h2 className="text-3xl font-bold mb-6 text-center">
             What Our Users Say
           </h2>
-          <div className="flex flex-col items-center">
-            {testimonials.map((testimonial) => (
+          <div className="space-y-6">
+            {testimonials.map((testimonial, index) => (
               <div
                 key={testimonial.id}
-                className="bg-gray-900 px-6 py-4 mb-4 rounded-lg max-w-lg"
+                className={`p-6 rounded-lg flex items-center ${
+                  index % 2 === 0 ? "flex-row" : "flex-row-reverse"
+                } justify-center`}
               >
-                <p className="text-lg">{testimonial.text}</p>
+                <img
+                  src={`images/Testimonial_pfp.jpg`}
+                  className="w-16 h-16 rounded-full mr-4"
+                  style={{ marginBottom: "5px", marginTop: "5px" }}
+                />
+                <div>
+                  <p className="text-lg font-semibold mb-2">
+                    {testimonial.name}
+                  </p>
+                  <p
+                    className="text-lg"
+                    style={{
+                      marginLeft: index % 2 === 0 ? "1rem" : "0",
+                      marginRight: index % 2 === 0 ? "0" : "1rem",
+                    }}
+                  >
+                    {testimonial.text}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
