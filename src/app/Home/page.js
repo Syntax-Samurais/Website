@@ -3,9 +3,10 @@
 import { La_Belle_Aurore } from "next/font/google";
 import React, { useState } from "react";
 import NavBar from "../_components/NavBar.jsx";
-import BarChart from "@/_components/BarChart";
-import LineChart from "@/_components/LineChart";
-import PieChart from "@/_components/PieChart";
+import Header from "../_components/_header.jsx";
+import BarChart from "../_components/BarChart.js";
+import LineChart from "../_components/LineChart";
+import PieChart from "../_components/PieChart";
 import { UserData } from "../Data";
 
 const Home = () => {
@@ -24,9 +25,7 @@ const Home = () => {
   });
   return (
     <>
-      <header className="bg-purple-700 bg-opacity-75 px-6 text-white py-2">
-        <h1 className="text-lg font-semibold justify-start">FitFusion</h1>
-      </header>
+      <Header />
       <NavBar />
       {/* /* -------------------------Chart JS-----------------------*/}
       <section className="flex justify-center h-screen">
