@@ -8,7 +8,7 @@ module.exports = {
   theme: {
     extend: {
       height: {
-        custom: "50%",
+        custom: "340px",
       },
       fontSize: {
         "2xxl": "2.25rem",
@@ -18,6 +18,7 @@ module.exports = {
         customDarkGray: "#191a19",
         customBlue: "#1e2f44",
         customLightBlue: "#22d3ee",
+        customLightDarkBlue: "#019fc2",
       },
 
       backgroundImage: {

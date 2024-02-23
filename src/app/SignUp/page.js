@@ -8,23 +8,35 @@ const goals = [
   { text: "I want to increase my running mileage.", value: "mileage", id: 4 },
   { text: "I want to run faster.", value: "runFast", id: 5 },
 ];
-
 const ScreenOne = (props) => {
+  //----------------------------------------------------Changes Text Color to White Upon Clicking
+  const [selectedGoalId, setSelectedGoalId] = useState(null);
+
+  const setGoal_ChangeStyle = (goal) => {
+    props.setGoal(goal.value);
+    setSelectedGoalId(goal.id);
+  };
   return (
     <>
-      <h1 className="text-customLightBlue my-4 text-2xl">
-        What is your primary goal?
-      </h1>
-      {goals.map((goal) => (
-        <div
-          key={goal.id}
-          value={goal.value}
-          className="border border-cyan-400 rounded-md text-customLightBlue px-1 py-1 my-4 text-md cursor-pointer w-3/4 ml-12"
-          onClick={() => props.setGoal(goal.value)}
-        >
-          {goal.text}
-        </div>
-      ))}
+      <div className="h-custom ">
+        <h1 className="text-customLightBlue my-4 text-2xl">
+          What is your primary goal?
+        </h1>
+        {goals.map((goal) => (
+          <div
+            key={goal.id}
+            value={goal.value}
+            className={`border border-cyan-400 rounded-md text-customLightBlue px-1 py-1 my-4 text-md cursor-pointer w-3/4 
+            ml-12 hover:opacity-75 ${selectedGoalId === goal.id ? "text-white font-bold" : ""}`}
+            onClick={() => {
+              props.setGoal(goal.value);
+              setGoal_ChangeStyle(goal);
+            }}
+          >
+            {goal.text}
+          </div>
+        ))}
+      </div>
     </>
   );
 };
@@ -50,8 +62,10 @@ const ScreenTwo = (props) => {
 
   return (
     <>
-      <h1>{question}</h1>
-      <input type="text" required></input>
+      <div className="h-custom text-customLightBlue">
+        <h1 className="mb-4 mt-6 text-lg">{question}</h1>
+        <input className="text-black" type="text" required></input>
+      </div>
     </>
   );
 };
@@ -77,8 +91,10 @@ const ScreenThree = (props) => {
 
   return (
     <>
-      <h1>{question}</h1>
-      <input type="text" required></input>
+      <div className="h-custom text-customLightBlue">
+        <h1 className="mb-4 mt-6">{question}</h1>
+        <input className="text-black" type="text" required></input>
+      </div>
     </>
   );
 };
@@ -86,16 +102,23 @@ const ScreenThree = (props) => {
 const ScreenFour = (props) => {
   return (
     <>
-      <h1>Awesome! Let us help you reach your goal!</h1>
-      <h2>Get started today.</h2>
-      <form>
-        <label>Username:</label>
-        <input type="text" required></input>
-        <label>Password:</label>
-        <input type="text" required></input>
-        <label>Confirm Password:</label>
-        <input type="text" required></input>
-      </form>
+      <div className="h-custom text-customLightBlue">
+        <h1 className="mt-5 mb-6 text-2xl">
+          Awesome! Let's get started.
+          <br />
+        </h1>
+        <h2 className="text-lg leading-relaxed">
+          Reach your goals by signing up today!
+        </h2>
+        <form>
+          <label>Username:</label>
+          <input className="text-black mt-8" type="text" required></input>
+          <label>Password:</label>
+          <input className="text-black mt-10" type="text" required></input>
+          <label className="relative top-7">Confirm Password:</label>
+          <input className="text-black mt-8" type="text" required></input>
+        </form>
+      </div>
     </>
   );
 };
@@ -114,37 +137,39 @@ const SignUpPage = () => {
   };
   return (
     <>
-      <div className="m-auto mt-20 w-96 h-96 border border-slate-800 rounded-xl bg-customBlue text-center">
-        <h2 className="text-white my-2 text-3xl tracking-wide underline">
-          Welcome to FitFusion
-        </h2>
-        {screens[currentScreen]}
-        {(currentScreen === 2) & (currentGoal === "sameWeight") ? (
-          <button
-            className="mt-4 bg-white text-blue-500 px-4 py-2 rounded-md ml-2"
-            onClick={() => setCurrentScreen(currentScreen + 2)}
-          >
-            Next
-          </button>
-        ) : (
-          <>
-            {currentScreen === 4 ? (
-              <button
-                className="mt-4 bg-white text-blue-500 px-4 py-2 rounded-md ml-2"
-                onClick={() => router.push("/")}
-              >
-                Sign Up!
-              </button>
-            ) : (
-              <button
-                className="mt-4 bg-white text-blue-500 px-4 py-2 rounded-md ml-2"
-                onClick={() => setCurrentScreen(currentScreen + 1)}
-              >
-                Next
-              </button>
-            )}
-          </>
-        )}
+      <div className="h-custom">
+        <div className="m-auto mt-20 w-96 border border-customLightBlue border-opacity-65 rounded-xl bg-customBlue text-center">
+          <h2 className="text-white my-2 text-3xl tracking-wide underline">
+            Welcome to FitFusion
+          </h2>
+          {screens[currentScreen]}
+          {(currentScreen === 2) & (currentGoal === "sameWeight") ? (
+            <button
+              className="mt-4 bg-white border-customDarkGray border-2 text-customLightDarkBlue font-bold px-4 py-2 rounded-md ml-2 hover:bg-customLightBlue hover:text-white"
+              onClick={() => setCurrentScreen(currentScreen + 2)}
+            >
+              Next
+            </button>
+          ) : (
+            <>
+              {currentScreen === 4 ? (
+                <button
+                  className="mt-4 bg-white border-customDarkGray border-2 text-customLightDarkBlue font-bold px-4 py-2 rounded-md ml-2 hover:bg-customLightBlue hover:text-white"
+                  onClick={() => router.push("/")}
+                >
+                  Sign Up!
+                </button>
+              ) : (
+                <button
+                  className="mt-4 bg-white border-customDarkGray border-2 text-customLightDarkBlue font-bold px-4 py-2 rounded-md ml-2 hover:bg-customLightBlue hover:text-white"
+                  onClick={() => setCurrentScreen(currentScreen + 1)}
+                >
+                  Next
+                </button>
+              )}
+            </>
+          )}
+        </div>
       </div>
     </>
   );
