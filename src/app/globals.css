@@ -3,5 +3,13 @@
 @tailwind utilities;
 
 body {
-  @apply bg-gray-700;
+  background-color: rgb(46, 47, 46);
+}
+
+.primary {
+  background-color: #294d77;
+}
+
+.secondary {
+  background-color: rgb(113, 129, 153);
 }
