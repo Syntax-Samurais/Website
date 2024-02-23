@@ -3,7 +3,7 @@
 export default function Header() {
   return (
     <>
-      <header className="bg-blue-900 shadow-2xl bg-opacity-75 py-2 shadow-md text-white font-semibold px-4 flex justify-between items-center">
+      <header className="bg-blue-800 shadow-2xl bg-opacity-75 py-2 shadow-md text-white font-semibold px-4 flex justify-between items-center">
         <h1 className="text-lg">Fit Fusion</h1>
         <nav className="flex items-center">
           <a href="/" className="ml-4">
