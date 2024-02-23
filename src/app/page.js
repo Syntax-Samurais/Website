@@ -13,8 +13,8 @@ export default function Home() {
 
   const openLoginModal = () => setShowLoginModal(true);
   const closeLoginModal = () => setShowLoginModal(false);
-  const openSignUpModal = () => setShowSignUpModal(true);
-  const closeSignUpModal = () => setShowSignUpModal(false);
+  // const openSignUpModal = () => setShowSignUpModal(true);
+  // const closeSignUpModal = () => setShowSignUpModal(false);
   const router = useRouter();
 
   const handleLogin = (username, password) => {
