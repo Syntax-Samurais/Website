@@ -1,5 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import axios from "axios";
+import NavBar from "../_components/NavBar";
+import Header from "../_components/_header";
 
 const Day = (props) => {
   const [weight, setWeight] = useState("");
@@ -13,9 +16,32 @@ const Day = (props) => {
     setCalories(e.target.value);
   }
 
-  function onSubmit(e) {
+  async function onSubmit(e) {
+    // create JS date variable (look on MDN)
+
+    // so it can be entered in as same format as Mark's in database
+    // if date is already in database, UPDATE weight and calories
+    // else if no date in database
+    // POST or insert weight and calories into database
+
     e.preventDefault();
-    console.log({ weight: weight, calories: calories });
+    await axios
+      .post(
+        "/api/Diet",
+        { weight: weight, calories: calories },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+      )
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    // console.log({ weight: weight, calories: calories });
   }
 
   return (
@@ -49,18 +75,19 @@ const Day = (props) => {
 };
 
 const page = () => {
+  const [calories_goal, setCaloriesGoal] = useState(0);
   useEffect(() => {
-    const setItems = async () => {
+    const setCalories = async () => {
       try {
         const res = await fetch(`/api/Diet`);
-        const tempItems = await res.json();
-        console.log(tempItems);
+        const result = await res.json();
+        setCaloriesGoal(result[0].goal_calorie_intake);
         // setTempItems(tempItems);
       } catch (e) {
         console.warn(`Couldnt fetch item`, e);
       }
     };
-    setItems();
+    setCalories();
   }, []);
   const days = [
     "Monday",
@@ -73,8 +100,10 @@ const page = () => {
   ];
   return (
     <>
+      <Header />
+      <NavBar />
       <div className="mt-10 m-auto w-fit primary px-64 text-xl">
-        I will eat __ calories every day
+        I will eat {calories_goal} calories every day
       </div>
       <div className="flex flex-wrap w-3/4 m-auto mt-4 justify-center ">
         {days.map((day, index) => (
