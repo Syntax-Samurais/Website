@@ -1,7 +1,7 @@
 "use client";
 
 import Header from "../_components/_header";
-import NavBar from "../_components/_navbar";
+import NavBar from "../_components/NavBar";
 
 export default function Cardio() {
   return (
