@@ -3,7 +3,7 @@
 import { La_Belle_Aurore } from "next/font/google";
 import React, { useState } from "react";
 import NavBar from "../_components/NavBar.jsx";
-import Header from "../_components/_header.jsx";
+import Header from "../_components/Header.jsx/index.js";
 import BarChart from "../_components/BarChart.js";
 import LineChart from "../_components/LineChart";
 import PieChart from "../_components/PieChart";

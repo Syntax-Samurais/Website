@@ -4,7 +4,7 @@ import Head from "next/head";
 import { useState } from "react";
 import LoginModal from "./_components/_modals/LoginModal";
 import SignUpModal from "./_components/_modals/SignUpModal";
-import Header from "./_components/_header";
+import Header from "./_components/Header";
 
 export default function Home() {
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -14,15 +14,6 @@ export default function Home() {
   const closeLoginModal = () => setShowLoginModal(false);
   const openSignUpModal = () => setShowSignUpModal(true);
   const closeSignUpModal = () => setShowSignUpModal(false);
-
-  const handleLogin = (username, password) => {
-    console.log(
-      "Logging in with username:",
-      username,
-      "and password:",
-      password,
-    );
-  };
 
   const handleSignUp = (username, email, password) => {
     console.log(
@@ -131,11 +122,7 @@ export default function Home() {
         </div>
       </section>
 
-      <LoginModal
-        isOpen={showLoginModal}
-        onClose={closeLoginModal}
-        onLogin={handleLogin}
-      />
+      <LoginModal isOpen={showLoginModal} onClose={closeLoginModal} />
       <SignUpModal
         isOpen={showSignUpModal}
         onClose={closeSignUpModal}
