@@ -1,14 +1,14 @@
 INSERT INTO users (id, username, password) VALUES 
-(1, 'lfishleigh0', 'eI6}{\8f5th'),
-(2, 'bvanbruggen1', 'hA1*aV_X'),
-(3, 'mhaswall2', 'pB2|{j{2}xL'),
-(4, 'ecarlyon3', 'wN6~(#P{'),
-(5, 'bbenner4', 'pX4=.ca''B&Q\}q'),
-(6, 'gcoggins5', 'qS7=1o$Mo_'),
-(7, 'mgairdner6', 'iW6?8?\dHo>A{V(9'),
-(8, 'jnation7', 'jL4*%)FY'),
-(9, 'fstilling8', 'gN5`BA7avoqN>7'),
-(10, 'dcopes9', 'iU9`"rl2');
+(1, 'lfishleigh0', crypt('1234', gen_salt('bf'))),
+(2, 'bvanbruggen1', crypt('1234', gen_salt('bf'))),
+(3, 'mhaswall2', crypt('1234', gen_salt('bf'))),
+(4, 'ecarlyon3', crypt('1234', gen_salt('bf'))),
+(5, 'bbenner4', crypt('1234', gen_salt('bf'))),
+(6, 'gcoggins5', crypt('1234', gen_salt('bf'))),
+(7, 'mgairdner6', crypt('1234', gen_salt('bf'))),
+(8, 'jnation7', crypt('1234', gen_salt('bf'))),
+(9, 'fstilling8', crypt('1234', gen_salt('bf'))),
+(10, 'dcopes9', crypt('1234', gen_salt('bf')));
 
 INSERT INTO user_interests (user_id, improve_pace, increase_running, increase_weight, lose_weight, maintain_weight, gain_weight) VALUES
   (1, true, false, false, true, false, false),

@@ -1,3 +1,5 @@
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
 DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS user_interests CASCADE;
 DROP TABLE IF EXISTS goals CASCADE;
@@ -46,7 +48,7 @@ CREATE TABLE run_history (
   user_id INTEGER REFERENCES users(id),
   date DATE DEFAULT CURRENT_DATE,
   miles_ran DECIMAL(6, 2),
-  run_time INTERVAL
+  run_time VARCHAR(255)
 );
 
 CREATE TABLE calorie_history (
