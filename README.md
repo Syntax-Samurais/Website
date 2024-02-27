@@ -72,7 +72,8 @@ Several pre-commit hooks were incorporated into the project workflow:
 
 ## Additional Resources
 
-- Placeholder for ERD (Entity-Relationship Diagram)
+- Entity Relationship Diagram
+  ![Entity Relationship Diagram](images/FitFusion-ERD.png)
 - Placeholder for User Stories
 - Placeholder for Screenshots/GIFs demonstrating the app's functionality
 
