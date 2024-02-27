@@ -6,6 +6,9 @@ import LoginModal from "./_modals/LoginModal";
 // import SignUpModal from "./_modals/SignUpModal";
 // import SignUpPage from "./_SignUp/SignUpPage"
 import { useRouter } from "next/navigation";
+import LoginModal from "./_components/_modals/LoginModal";
+import SignUpModal from "./_components/_modals/SignUpModal";
+import Header from "./_components/_header";
 
 export default function Home() {
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -77,6 +80,7 @@ export default function Home() {
       <header className="bg-purple-700 bg-opacity-75 py-2 text-center">
         <h1 className="text-lg font-semibold">FitFusion</h1>
       </header>
+      <Header />
       <main>
         <div className="h-screen flex justify-center items-center">
           <div className="text-center text-white">
