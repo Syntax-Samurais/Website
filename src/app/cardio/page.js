@@ -1,15 +1,33 @@
 "use client";
 
+import React, { useState, useEffect } from "react";
 import Header from "../_components/_header";
 
 export default function Cardio() {
+  const [pastRuns, setPastRuns] = useState([]);
+
+  useEffect(() => {
+    const fetchingData = async () => {
+      try {
+        const res = await fetch("/api/Cardio");
+        const data = await res.json();
+        console.log("Fetched data: ", data);
+        setPastRuns(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchingData();
+  }, []);
+
   return (
     <>
       <Header />
       <UserGoalMiles />
       <div className="flex justify-center mt-12">
         <div className="mx-24">
-          <ScrollableBox />
+          <ScrollableBox pastRuns={pastRuns} />
         </div>
         <div className="mx-24">
           <Box />
@@ -29,7 +47,9 @@ const UserGoalMiles = () => {
   );
 };
 
-const ScrollableBox = () => {
+const ScrollableBox = ({ pastRuns }) => {
+  if (!pastRuns) return null;
+
   //Sorts past runs by date, most recent first
   const sortedPastRuns = pastRuns
     .slice()
@@ -79,7 +99,27 @@ const Box = () => {
     const miles_ran = e.target.elements.miles_ran.value;
 
     const entry = { date, run_time, miles_ran };
-    console.log(entry);
+
+    fetch("/api/Cardio", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(entry),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          console.log(entry);
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        alert("Post completed");
+      })
+      .catch((error) => {
+        console.error("Posting error: ", error);
+      });
   };
 
   return (
@@ -148,23 +188,3 @@ const Box = () => {
     </>
   );
 };
-
-//Until database is up, refrence this
-const pastRuns = [
-  { date: "2024-02-20", run_time: "3:02:36", miles_ran: "5" },
-  { date: "2024-02-20", run_time: "3:02:36", miles_ran: "5" },
-  { date: "2024-02-20", run_time: "3:02:36", miles_ran: "5" },
-  { date: "2024-02-20", run_time: "3:02:36", miles_ran: "5" },
-  { date: "2024-02-20", run_time: "3:02:36", miles_ran: "5" },
-  { date: "2024-02-20", run_time: "3:02:36", miles_ran: "5" },
-  { date: "2024-02-20", run_time: "3:02:36", miles_ran: "5" },
-  { date: "2024-02-20", run_time: "3:02:36", miles_ran: "5" },
-  { date: "2024-02-20", run_time: "3:02:36", miles_ran: "5" },
-  { date: "2024-02-20", run_time: "3:02:36", miles_ran: "5" },
-  { date: "2024-02-20", run_time: "3:02:36", miles_ran: "5" },
-  { date: "2024-02-20", run_time: "3:02:36", miles_ran: "5" },
-  { date: "2024-02-20", run_time: "3:02:36", miles_ran: "5" },
-  { date: "2024-02-20", run_time: "3:02:36", miles_ran: "5" },
-  { date: "2024-02-20", run_time: "3:02:36", miles_ran: "5" },
-  { date: "2024-02-20", run_time: "3:02:36", miles_ran: "5" },
-];
