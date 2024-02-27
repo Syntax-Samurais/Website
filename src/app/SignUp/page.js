@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import axios from "axios";
+// import axios from "axios";
 import Header from "../_components/_header";
 
 const goals = [
@@ -194,21 +194,23 @@ const SignUpPage = () => {
     ),
   };
 
-  function signUp() {
+  async function signUp() {
     if (password !== confirmPassword || password == "" || username == "") {
       alert("Passwords do not match or make sure to fill out all fields");
     } else {
       if (currentGoal === "sameWeight") {
         setAfter(before);
       }
-      axios
-        .post("/api/SignUp", {
+      await fetch("/api/SignUp", {
+        method: "POST",
+        body: JSON.stringify({
           username: username,
           password: password,
           goal: currentGoal,
           before: before,
           after: after,
-        })
+        }),
+      })
         .then((response) => {
           console.log(response);
           router.push("/");

@@ -5,12 +5,12 @@ export async function POST(request, response) {
 
   //based on what the goal is, we will insert the data into the database
   const { goal, before, after, username, password } = await request.json();
-  console.log(username, password);
+  //   console.log(username, password);
   let results = await psql.query(
     "Insert into users (username, password) values ($1, crypt($2, gen_salt('bf'))) returning id;",
     [username, password],
   );
-  console.log(results.rows[0].id);
+  //   console.log(results.rows[0].id);
   let id = results.rows[0].id;
   if (goal === "mileage") {
     await psql.query(
