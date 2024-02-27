@@ -27,7 +27,7 @@ CREATE TABLE user_interests (
 CREATE TABLE goals (
   id SERIAL PRIMARY KEY,
   user_id INTEGER REFERENCES users(id),
-  date DATE DEFAULT CURRENT_DATE,
+  date DATE,
   goal_weight INTEGER,
   weight_goal_date DATE,
   initial_weekly_miles INTEGER,
@@ -39,14 +39,14 @@ CREATE TABLE goals (
 CREATE TABLE weight_history (
   id SERIAL PRIMARY KEY,
   user_id INTEGER REFERENCES users(id),
-  date DATE DEFAULT CURRENT_DATE,
+  date DATE,
   weight DECIMAL(6, 2)
 );
 
 CREATE TABLE run_history (
   id SERIAL PRIMARY KEY,
   user_id INTEGER REFERENCES users(id),
-  date DATE DEFAULT CURRENT_DATE,
+  date DATE,
   miles_ran DECIMAL(6, 2),
   run_time VARCHAR(255)
 );
@@ -54,7 +54,7 @@ CREATE TABLE run_history (
 CREATE TABLE calorie_history (
   id SERIAL PRIMARY KEY,
   user_id INTEGER REFERENCES users(id),
-  date DATE DEFAULT CURRENT_DATE,
+  date DATE,
   calories INTEGER
 );
 
