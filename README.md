@@ -1,81 +1,79 @@
-## Getting Started
+# Fit Fusion
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Table of Contents
 
-First, run the development server:
+- [Fit Fusion](#fit-fusion)
+  - [Table of Contents](#table-of-contents)
+  - [Overview](#overview)
+  - [Key Sections](#key-sections)
+    - [1. Login and Sign Up](#1-login-and-sign-up)
+    - [2. Dashboard](#2-dashboard)
+    - [3. My Goals](#3-my-goals)
+    - [4. My Diet](#4-my-diet)
+    - [5. My Cardio](#5-my-cardio)
+  - [Contributors](#contributors)
+  - [Workflow](#workflow)
+    - [Pre-commit Hooks](#pre-commit-hooks)
+  - [Additional Resources](#additional-resources)
 
-```bash
-npm run dev
-```
+Fit Fusion is a collaborative fitness app designed to help users achieve their fitness goals, including run goals, weight loss goals, and calorie intake goals. The app provides a platform for users to track their progress, set goals, and stay motivated on their fitness journey.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Overview
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Fit Fusion is built using the Next.js framework with React.js for the frontend and PostgreSQL for the database. It offers a comprehensive set of features to cater to different aspects of fitness tracking and goal management.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Key Sections
 
-## Learn More
+### 1. Login and Sign Up
 
-To learn more about Next.js, take a look at the following resources:
+The app begins with a user-friendly login page and a seamless sign-up process where users can set their fitness goals.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 2. Dashboard
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+The dashboard serves as the central hub where users can visualize their progress through interactive charts for their fitness goals. It also includes tabs for easy navigation to other sections of the app.
 
-## Deployment Check
+### 3. My Goals
 
-The application includes a GitHub Actions workflow for Next.js deployment checks. This workflow ensures that the production build of the application is optimized and ready for deployment.
+In this section, users can manage and update their fitness goals, track their achievements, and modify goals as needed.
 
-When you push changes to the main branch, GitHub Actions will automatically run the deployment check workflow, which includes building the Next.js app and performing any specified checks.
+### 4. My Diet
 
-## Pre-commit Hook and Linting
+Users can monitor their calorie intake, log meals, and access nutritional information to support their dietary goals.
 
-This project is configured to use a pre-commit hook powered by Husky and lint-staged. Before each commit, lint-staged runs Prettier to ensure consistent code formatting.
+### 5. My Cardio
 
-To ensure your code adheres to the project's formatting standards, Prettier automatically formats your code according to the project's configuration. This happens automatically before each commit due to the pre-commit hook setup.
+This section allows users to record their cardio exercises, track distance covered, duration, and calories burned.
 
-However, if you need to format your code manually, you can do so by running the following command in your terminal:
-` npx prettier --write .`
+## Contributors
 
-This command formats all files in the project directory according to the Prettier configuration.
+Fit Fusion is a collaborative effort by the following individuals:
 
-Remember to run this command before submitting your pull request to ensure consistent code formatting across the project.
+- Mark Wiseman
+- Dave Robinson
+- Matt Slonoff
+- Joshua Thompson
+- Morgan
+- Steven DeClercq
+- Anthony Meadows
 
-For more information about Prettier and its benefits, visit the official [website](https://prettier.io/).
+Each contributor played a crucial role as software engineers, with some also taking on responsibilities as project managers.
 
-## Color pallete
+## Workflow
 
-#### Modern Color Palette:
+The development process followed Agile methodology, utilizing Jira's Agile ticketing software for task management and progress tracking.
 
-![Crimson](https://via.placeholder.com/150x50/DC143C/000000?text=+) `#DC143C` (RGB: 220, 20, 60)
+### Pre-commit Hooks
 
-` Use for critical alerts or errors, such as when there's a problem with saving data or when there's an error in the user's input. Highlight important notifications, etc.`
+Several pre-commit hooks were incorporated into the project workflow:
 
-![Dark Gray](https://via.placeholder.com/150x50/2F4F4F/000000?text=+) `#2F4F4F` (RGB: 47, 79, 79)
+- **Prettier Check**: Ensures consistent code formatting across the project.
+- **Vercel Deployment Check**: Verifies the production build's readiness for deployment.
+- **Vercel Previewed Comments**: Enables efficient CI/CD pipeline by previewing comments before deployment.
 
-` Borders, Seperators to organize page / Use aganst darker background`
+## Additional Resources
 
-![Goldenrod](https://via.placeholder.com/150x50/DAA520/000000?text=+) `#DAA520` (RGB: 218, 165, 32)
+- Placeholder for ERD (Entity-Relationship Diagram)
+- Placeholder for User Stories
+- Placeholder for Screenshots/GIFs demonstrating the app's functionality
 
-`Highlight achievements or milestones, such as reaching a personal best or completing a goal`
-
-![Green](https://via.placeholder.com/150x50/008000/000000?text=+) `#008000` (RGB: 0, 128, 0)
-
-` Success messages (achieved a goal) / highlight positive achievement`
-
-![Imperial Blue](https://via.placeholder.com/150x50/003366/000000?text=+) `#003366` (RGB: 0, 51, 102)
-
-`Headings / titles`
-
-![Navy Blue](https://via.placeholder.com/150x50/000080/000000?text=+) `#000080` (RGB: 0, 0, 128)
-
-` Navigational Elements`
-
-![Royal Purple](https://via.placeholder.com/150x50/6A0DAD/000000?text=+) `#6A0DAD` (RGB: 106, 13, 173)
-
-` Decrotive elements and accents to add visual intrest`
-
-![Slate Gray](https://via.placeholder.com/150x50/708090/000000?text=+) `#708090` (RGB: 112, 128, 144)
-
-`General background color`
+Feel free to contribute, suggest improvements, or report issues. Your feedback is valuable in enhancing Fit Fusion and empowering users in their fitness journey.
