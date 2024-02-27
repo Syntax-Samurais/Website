@@ -123,8 +123,9 @@ const ScreenFour = (props) => {
   );
 };
 
+//Function that returns the current screen
 const SignUpPage = () => {
-  const router = useRouter();
+  const routing = useRouter();
   const [currentScreen, setCurrentScreen] = useState(1);
   const [currentGoal, setCurrentGoal] = useState("");
   // console.log(currentGoal)
@@ -155,7 +156,7 @@ const SignUpPage = () => {
               {currentScreen === 4 ? (
                 <button
                   className="mt-4 bg-white border-customDarkGray border-2 text-customLightDarkBlue font-bold px-4 py-2 rounded-md ml-2 hover:bg-customLightBlue hover:text-white"
-                  onClick={() => router.push("/")}
+                  onClick={() => routing.push("/")}
                 >
                   Sign Up!
                 </button>

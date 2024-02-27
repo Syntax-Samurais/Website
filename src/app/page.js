@@ -2,7 +2,7 @@
 
 import Head from "next/head";
 import { useState } from "react";
-import LoginModal from "./_modals/LoginModal";
+// import LoginModal from "./_modals/LoginModal";
 // import SignUpModal from "./_modals/SignUpModal";
 // import SignUpPage from "./_SignUp/SignUpPage"
 import { useRouter } from "next/navigation";
