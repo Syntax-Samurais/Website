@@ -1,11 +1,13 @@
 "use client";
 
 import Header from "../_components/_header";
+import NavBar from "../_components/NavBar";
 
 export default function Cardio() {
   return (
     <>
       <Header />
+      <NavBar />
       <UserGoalMiles />
       <div className="flex justify-center mt-12">
         <div className="mx-24">
