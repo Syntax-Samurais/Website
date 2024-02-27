@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const Day = (props) => {
   const [weight, setWeight] = useState("");
@@ -49,6 +49,19 @@ const Day = (props) => {
 };
 
 const page = () => {
+  useEffect(() => {
+    const setItems = async () => {
+      try {
+        const res = await fetch(`/api/Diet`);
+        const tempItems = await res.json();
+        console.log(tempItems);
+        // setTempItems(tempItems);
+      } catch (e) {
+        console.warn(`Couldnt fetch item`, e);
+      }
+    };
+    setItems();
+  }, []);
   const days = [
     "Monday",
     "Tuesday",
