@@ -48,7 +48,7 @@ CREATE TABLE run_history (
   user_id INTEGER REFERENCES users(id),
   date DATE DEFAULT CURRENT_DATE,
   miles_ran DECIMAL(6, 2),
-  run_time INTERVAL
+  run_time VARCHAR(255)
 );
 
 CREATE TABLE calorie_history (
