@@ -1,6 +1,6 @@
 import React from "react";
 
-function AlertBox({ onClose }) {
+export default function AlertBox({ onClose }) {
   return (
     <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center">
       <div className="p-12 relative animate-bounce">
@@ -18,5 +18,3 @@ function AlertBox({ onClose }) {
     </div>
   );
 }
-
-export default AlertBox;

@@ -5,13 +5,13 @@ import Header from "../_components/Header";
 import NavBar from "../_components/NavBar";
 import AlertBox from "../_components/AlertBox.jsx";
 import { globalId } from "../_components/_modals/LoginModal.jsx";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 
 import "./cardio.css";
 
 export default function Cardio() {
   const [pastRuns, setPastRuns] = useState([]);
-  const router = useRouter();
+  // const router = useRouter();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,9 +27,9 @@ export default function Cardio() {
     fetchData();
   }, []);
 
-  if (globalId === 0) {
-    router.push("/");
-  }
+  // if (globalId === 0) {
+  //   router.push("/");
+  // }
 
   return (
     <>
