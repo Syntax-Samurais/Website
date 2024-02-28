@@ -19,12 +19,15 @@ export async function GET(request) {
 
 export async function POST(request) {
   try {
-    let psql = await getPsql();
-    let { date, run_time, miles_ran } = request.body;
+    const url = new URL(request.url);
+    const userId = url.searchParams.get("id");
+    const res = await request.json();
+    const { date, run_time, miles_ran } = await res;
 
+    let psql = await getPsql();
     let results = await psql.query(
-      "INSERT INTO run_history (date, run_time, miles_ran, user_id) VALUES ($1, $2, $3, $4)",
-      [date, run_time, miles_ran, userId],
+      "INSERT INTO run_history (user_id, date, miles_ran, run_time) VALUES ($1, $2, $3, $4)",
+      [userId, date, miles_ran, run_time],
     );
 
     return new Response(JSON.stringify(results.rows[0]), {
