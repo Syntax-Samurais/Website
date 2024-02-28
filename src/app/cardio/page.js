@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Header from "../_components/Header";
 import NavBar from "../_components/NavBar";
+import { globalId } from "../_components/_modals/LoginModal.jsx";
 
 export default function Cardio() {
   const [pastRuns, setPastRuns] = useState([]);
@@ -10,9 +11,13 @@ export default function Cardio() {
   useEffect(() => {
     const fetchingData = async () => {
       try {
-        const res = await fetch("/api/Cardio");
+        // if (globalId === "0") {
+        //   window.location.href = "/";
+        //   return;
+        // }
+
+        const res = await fetch(`/api/Cardio?id=${globalId}`);
         const data = await res.json();
-        console.log("Fetched data: ", data);
         setPastRuns(data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -20,7 +25,7 @@ export default function Cardio() {
     };
 
     fetchingData();
-  }, []);
+  }, [pastRuns]);
 
   return (
     <>
@@ -66,8 +71,8 @@ const ScrollableBox = ({ pastRuns }) => {
             {/* Maps through past runs and displays them */}
             {sortedPastRuns.map((run, index) => (
               <li key={index} className="mb-2">
-                <strong>{run.date}</strong> | Time Taken: {run.run_time} | Miles
-                Ran: {run.miles_ran}
+                <strong>{run.date.split("T")[0]}</strong> | Time Taken:{" "}
+                {run.run_time} | Miles Ran: {run.miles_ran}
               </li>
             ))}
           </ul>
@@ -79,49 +84,37 @@ const ScrollableBox = ({ pastRuns }) => {
 
 //function `Box` is a placeholder for the new entry form
 const Box = () => {
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const date = e.target.elements.date.value;
-    const runHours = e.target.elements.run_hours.value || 0;
-    const runMinutes = e.target.elements.run_minutes.value || 0;
-    const runSeconds = e.target.elements.run_seconds.value || 0;
-
-    // Calculate the total run time in seconds
-    const totalSeconds =
-      parseInt(runHours) * 3600 +
-      parseInt(runMinutes) * 60 +
-      parseInt(runSeconds);
-
-    // Convert the total seconds to hours, minutes, and seconds format
-    const hours = Math.floor(totalSeconds / 3600);
-    const minutes = Math.floor((totalSeconds % 3600) / 60);
-    const seconds = totalSeconds % 60;
+    const hours = e.target.elements.run_hours.value.padStart(2, "0") || "00";
+    const minutes =
+      e.target.elements.run_minutes.value.padStart(2, "0") || "00";
+    const seconds =
+      e.target.elements.run_seconds.value.padStart(2, "0") || "00";
 
     const run_time = `${hours}:${minutes}:${seconds}`;
     const miles_ran = e.target.elements.miles_ran.value;
 
-    const entry = { date, run_time, miles_ran };
-
-    fetch("/api/Cardio", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(entry),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          console.log(entry);
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        alert("Post completed");
-      })
-      .catch((error) => {
-        console.error("Posting error: ", error);
+    try {
+      const response = await fetch(`/api/Cardio?id=${globalId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          date: date,
+          run_time: run_time,
+          miles_ran: miles_ran,
+        }),
       });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+    } catch (error) {
+      console.error("Posting error: ", error);
+    }
   };
 
   return (
