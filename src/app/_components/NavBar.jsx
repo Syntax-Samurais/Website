@@ -39,7 +39,7 @@ const NavBar = () => {
               My Diet
             </Link>
             <Link
-              href="cardio"
+              href="/cardio"
               className={path == "/cardio" ? selectedStyle : defaultStyle}
             >
               My Cardio
