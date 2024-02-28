@@ -25,7 +25,7 @@ const NavBar = () => {
             </Link>
             {/* update goals link href when route is created */}
             <Link
-              href="/goals"
+              href="goals"
               className={path == "/goals" ? selectedStyle : defaultStyle}
             >
               My Goals
