@@ -1,4 +1,4 @@
-import { getPsql } from "../../db.js";
+import { getPsql } from "../../../db.js";
 // import { globalId } from "@/app/_variable/GlobalVar.js";
 
 export async function GET(request) {
