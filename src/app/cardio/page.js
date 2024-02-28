@@ -112,6 +112,16 @@ const Box = () => {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+
+      // Clear input fields on successful post
+      e.target.elements.date.value = "";
+      e.target.elements.run_hours.value = "";
+      e.target.elements.run_minutes.value = "";
+      e.target.elements.run_seconds.value = "";
+      e.target.elements.miles_ran.value = "";
+
+      // Display alert on successful post
+      alert("You did it");
     } catch (error) {
       console.error("Posting error: ", error);
     }
