@@ -86,25 +86,43 @@ const Home = () => {
           ],
         });
 
-        // setGoalWeight(tempItems.goals[0].goal_weight)
+        setGoalWeight(tempItems.goals[0].goal_weight);
         // let weeklyCalorieGoal = tempItems.goals[0].goal_calorie_intake * 7;
         // let totalCaloriesConsumed = 0;
         // tempItems.calorieData.map((meal) => totalCaloriesConsumed += Number(meal.calories))
+        let entryDates = [];
+        let weightEntries = [];
+        tempItems.weightData.map((entry) => {
+          entryDates.push(entry.date);
+          weightEntries.push(Number(entry.weight));
+        });
+
+        // let weightEntries = [];
+        // tempItems.weightData.map(
+        //   (entry) => weightEntries.push(Number(entry.weight))
+        // );
 
         setWeightChartData({
-          labels: ["Intial Weight", "Weight Goal"],
+          labels: entryDates,
           datasets: [
             {
-              // label: "Users Gained",
-              data: [
-                totalCaloriesConsumed,
-                weeklyCalorieGoal - totalCaloriesConsumed,
-              ],
-              //tempItems.map((data) => data.username),
-              backgroundColor: ["#1861a5", "#b8c0cd"],
-              borderColor: "#2e2f2e",
-              borderWidth: 1,
+              label: "Weight Data",
+              data: weightEntries,
             },
+            // {
+            //   label: "test",
+            //   data: [
+            //     150,
+            //     100,
+            //     120,
+            //     90,
+            //     60
+            //   ],
+            //   //tempItems.map((data) => data.username),
+            //   backgroundColor: ["#1861a5", "#b8c0cd"],
+            //   borderColor: "#2e2f2e",
+            //   borderWidth: 1,
+            // },
           ],
         });
         setLoading(false);
@@ -122,8 +140,8 @@ const Home = () => {
       <Header />
       <NavBar />
       {/* /* -------------------------Chart JS-----------------------*/}
-      <section className="flex justify-center h-screen">
-        <div className="flex relative h-2/4 w-3/4 m-auto">
+      <section className="flex flex-col justify-center h-full w-screen my-16">
+        <div className="flex relative h-3/4 w-3/4 m-auto">
           <div className="flex flex-col h-auto w-1/2">
             <div className="flex h-3/4 justify-center">
               <div className="w-32 h-32 self-center absolute rounded-full bg-slate-500 shadow-xl"></div>
@@ -143,10 +161,9 @@ const Home = () => {
             </span>
           </div>
         </div>
-      </section>
-      <section className="justify-center w-3/4 h-1/3 m-auto">
-        {console.log(goalWeight)}
-        <LineChart chartData={mileChartData} goalWeight={goalWeight} />
+        <div className="justify-center w-3/4 h-1/4 m-auto">
+          <LineChart chartData={WeightChartData} goalWeight={160} />
+        </div>
       </section>
     </>
   );
