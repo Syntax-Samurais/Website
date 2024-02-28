@@ -16,6 +16,21 @@ const Day = (props) => {
     setCalories(e.target.value);
   }
 
+  useEffect(() => {
+    const getInfo = async () => {
+      try {
+        const res = await fetch(`/api/Diet/Day`, (body = { date: props.day }));
+        const result = await res.json();
+        // setCalories(result[0].calories);
+        // setWeight(result[0].weight)
+        console.log(res.json);
+      } catch (e) {
+        console.warn(`Couldnt fetch item`, e);
+      }
+    };
+    getInfo();
+  }, []);
+
   async function onSubmit(e) {
     // console.log(weight, calories)
     // create JS date variable (look on MDN)
@@ -96,14 +111,31 @@ const page = () => {
     setCalories();
   }, []);
   const days = [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday",
+    // ==> change this to a week's worth of dates always from Monday to Sunday
+    // "Sunday", // Mar 03, 2024
+    // "Monday", // Feb 26, 2024
+    // "Tuesday", // Feb 27, 2024
+    // "Wednesday", // Feb 28, 2024
+    // "Thursday", // Feb 29, 2024
+    // "Friday", // Mar 01, 2024
+    // "Saturday", // Mar 02, 2024
   ];
+
+  // for
+
+  const date = new Date();
+  let today = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+  let year = date.getFullYear();
+  let month = date.getMonth() + 1;
+  let day = date.getDate();
+  function createDays() {
+    for (let i = 0; i < 7; i++)
+      days.push(
+        `${year}-${String(month).padStart(2, 0)}-${String(day - i).padStart(2, 0)}`,
+      );
+  }
+  createDays();
+  // console.log(days)
   return (
     <>
       <Header />
