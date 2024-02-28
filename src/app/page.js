@@ -33,17 +33,6 @@ export default function Home() {
     router.push("/SignUp");
   };
 
-  // const handleSignUp = (username, email, password) => {
-  //   console.log(
-  //     "Signing up with username:",
-  //     username,
-  //     "email:",
-  //     email,
-  //     "and password:",
-  //     password,
-  //   );
-  // };
-
   // Fake testimonials
   const testimonials = [
     {
@@ -58,6 +47,18 @@ export default function Home() {
       id: 3,
       text: "FitFusion makes staying fit fun and accessible. Highly recommend it to everyone!",
     },
+    {
+      id: 4,
+      text: "FitFusion has completely transformed my fitness journey. I've never felt better!",
+    },
+    {
+      id: 5,
+      text: "The workouts are challenging yet rewarding. I'm addicted to the results!",
+    },
+    {
+      id: 6,
+      text: "FitFusion makes staying fit fun and accessible. Highly recommend it to everyone!",
+    },
   ];
 
   return (
@@ -66,7 +67,7 @@ export default function Home() {
       style={{
         backgroundImage: "url('/images/mountains.jpeg')",
         backgroundSize: "cover",
-        backgroundAttachment: "scroll", // Scroll along with the content
+        backgroundAttachment: "scroll",
       }}
     >
       <Head>
@@ -77,9 +78,6 @@ export default function Home() {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <header className="bg-purple-700 bg-opacity-75 py-2 text-center">
-        <h1 className="text-lg font-semibold">FitFusion</h1>
-      </header>
       <Header />
       <main>
         <div className="h-screen flex justify-center items-center">
