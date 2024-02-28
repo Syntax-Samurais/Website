@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Header from "../_components/Header";
 import NavBar from "../_components/NavBar";
+import { globalId } from "../_components/_modals/LoginModal.jsx";
 
 export default function Cardio() {
   const [pastRuns, setPastRuns] = useState([]);
@@ -10,7 +11,7 @@ export default function Cardio() {
   useEffect(() => {
     const fetchingData = async () => {
       try {
-        const res = await fetch("/api/Cardio");
+        const res = await fetch(`/api/Cardio?id=${globalId}`);
         const data = await res.json();
         console.log("Fetched data: ", data);
         setPastRuns(data);

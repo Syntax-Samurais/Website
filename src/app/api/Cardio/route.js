@@ -1,13 +1,16 @@
 import { getPsql } from "../../../db.js";
 
 export async function GET(request) {
+  const url = new URL(request.url);
+  const userId = url.searchParams.get("id");
+
+  console.log("UserId: ", userId);
+
   let psql = await getPsql();
   let results = await psql.query(
     "SELECT date, miles_ran, run_time FROM run_history WHERE user_id = $1",
-    [1],
+    [userId],
   );
-  // Using 1 for now, needs to be dynamic -> Missing run_time (waiting refactor)
-  console.log(results);
 
   return new Response(JSON.stringify(results.rows), {
     contentType: "application/json",
@@ -20,8 +23,8 @@ export async function POST(request) {
     let { date, run_time, miles_ran } = request.body;
 
     let results = await psql.query(
-      "INSERT INTO run_history (date, run_time, miles_ran, user_id) VALUES ($1, $2, $3, $4) RETURNING *",
-      [date, run_time, miles_ran, 1],
+      "INSERT INTO run_history (date, run_time, miles_ran, user_id) VALUES ($1, $2, $3, $4)",
+      [date, run_time, miles_ran, userId],
     );
 
     return new Response(JSON.stringify(results.rows[0]), {
