@@ -210,8 +210,9 @@ const ScreenFour = (props) => {
   );
 };
 
+//Function that returns the current screen
 const SignUpPage = () => {
-  const router = useRouter();
+  const routing = useRouter();
   const [currentScreen, setCurrentScreen] = useState(1);
   const [currentGoal, setCurrentGoal] = useState("");
   const [input, setInput] = useState("");

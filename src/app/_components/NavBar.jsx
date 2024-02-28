@@ -25,7 +25,7 @@ const NavBar = () => {
             </Link>
             {/* update goals link href when route is created */}
             <Link
-              href=""
+              href="/goals"
               className={path == "/goals" ? selectedStyle : defaultStyle}
             >
               My Goals
@@ -39,7 +39,7 @@ const NavBar = () => {
               My Diet
             </Link>
             <Link
-              href="cardio"
+              href="/cardio"
               className={path == "/cardio" ? selectedStyle : defaultStyle}
             >
               My Cardio
