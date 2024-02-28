@@ -1,15 +1,37 @@
+"use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
-export default function LoginModal({ isOpen, onClose, onLogin }) {
+let globalId = 0;
+
+export default function LoginModal({ isOpen, onClose }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
-  const handleLogin = (e) => {
+  const router = useRouter();
+  const handleLogin = async (e) => {
     e.preventDefault();
-    onLogin(username, password);
     setUsername("");
     setPassword("");
-    onClose();
+    try {
+      const res = await fetch(
+        `/api/Login?username=${username}&password=${password}`,
+      );
+      console.log(res); // 400 = missing field | 401 = invalid username or password | 200 = success
+
+      if (res.status === 200) {
+        const data = await res.json();
+        const { id } = data;
+        // alert("Login successful!" + id);
+        globalId = id;
+        router.push(`/Home`);
+      } else if (res.status === 401) {
+        alert("Invalid username or password.");
+      } else if (res.status === 400) {
+        alert("Username and password are required.");
+      }
+    } catch (error) {
+      console.warn("Could not fetch item", error);
+    }
   };
 
   return (
@@ -45,10 +67,12 @@ export default function LoginModal({ isOpen, onClose, onLogin }) {
             type="submit"
             className="bg-blue-500 text-white px-4 py-2 rounded-full w-full mb-8"
           >
-            Login
+            Sumbit
           </button>
         </form>
       </div>
     </div>
   );
 }
+
+export { globalId };

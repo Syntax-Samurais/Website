@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 // import axios from "axios";
-import Header from "../_components/_header";
+import Header from "../_components/Header";
 
 const goals = [
   { text: "I want to lose weight.", value: "loseWeight", id: 1 },
