@@ -29,9 +29,9 @@ export default function Home() {
     );
   };
 
-  const handleSignUp = () => {
-    router.push("/SignUp");
-  };
+  // const handleSignUp = () => {
+  //   router.push("/SignUp");
+  // };
 
   // Fake testimonials
   const testimonials = [
