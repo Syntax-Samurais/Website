@@ -3,24 +3,33 @@
 import React, { useState, useEffect } from "react";
 import Header from "../_components/Header";
 import NavBar from "../_components/NavBar";
+import AlertBox from "../_components/AlertBox.jsx";
+import { globalId } from "../_components/_modals/LoginModal.jsx";
+// import { useRouter } from "next/navigation";
+
+import "./cardio.css";
 
 export default function Cardio() {
   const [pastRuns, setPastRuns] = useState([]);
+  // const router = useRouter();
 
   useEffect(() => {
-    const fetchingData = async () => {
+    const fetchData = async () => {
       try {
-        const res = await fetch("/api/Cardio");
+        const res = await fetch(`/api/Cardio?id=${globalId}`);
         const data = await res.json();
-        console.log("Fetched data: ", data);
         setPastRuns(data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
-    fetchingData();
+    fetchData();
   }, []);
+
+  // if (globalId === 0) {
+  //   router.push("/");
+  // }
 
   return (
     <>
@@ -40,153 +49,191 @@ export default function Cardio() {
 }
 
 const UserGoalMiles = () => {
+  const [runGoal, setRunGoal] = useState("");
+
+  useEffect(() => {
+    const fetchRunGoal = async () => {
+      try {
+        const res = await fetch(`/api/Cardio?id=${globalId}&goal=weekly`);
+        const data = await res.json();
+
+        if (data && data.length > 0) {
+          setRunGoal(data[0].goal_weekly_miles);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchRunGoal();
+  }, []);
+
   return (
-    <div className="flex justify-center items-center pt-12">
-      <div className="bg-blue-950 p-8 rounded-lg text-center text-white">
-        <p className="text-lg font-bold">I want to run 10 Miles every day!</p>
+    <div id="run_goal_container">
+      <div>
+        <p>I want to run {runGoal} miles every week!</p>
       </div>
     </div>
   );
 };
 
 const ScrollableBox = ({ pastRuns }) => {
-  if (!pastRuns) return null;
+  return (
+    <div className="flex flex-col items-center mt-12">
+      <h1 className="text-center text-white text-2xl font-bold mb-4">
+        Run History
+      </h1>
+      <div className="bg-PrimaryBlue w-96 max-h-80 rounded-lg text-white border border-black overflow-auto">
+        <div className="p-4">
+          {pastRuns && pastRuns.length > 0 ? (
+            <RunHistory pastRuns={pastRuns} />
+          ) : (
+            <p className="text-center">No past runs recorded.</p>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
 
-  //Sorts past runs by date, most recent first
+const RunHistory = ({ pastRuns }) => {
   const sortedPastRuns = pastRuns
     .slice()
     .sort((a, b) => new Date(b.date) - new Date(a.date));
 
-  return (
-    <>
-      <h1 className="text-center text-white text-xl">History</h1>
-      <div className="bg-blue-950 w-96 h-96 rounded-lg text-center text-white border border-black overflow-auto">
-        <div className="p-4">
-          <ul className="list-disc list-inside">
-            {/* Maps through past runs and displays them */}
-            {sortedPastRuns.map((run, index) => (
-              <li key={index} className="mb-2">
-                <strong>{run.date}</strong> | Time Taken: {run.run_time} | Miles
-                Ran: {run.miles_ran}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </>
-  );
-};
-
-//function `Box` is a placeholder for the new entry form
-const Box = () => {
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const date = e.target.elements.date.value;
-    const runHours = e.target.elements.run_hours.value || 0;
-    const runMinutes = e.target.elements.run_minutes.value || 0;
-    const runSeconds = e.target.elements.run_seconds.value || 0;
-
-    // Calculate the total run time in seconds
-    const totalSeconds =
-      parseInt(runHours) * 3600 +
-      parseInt(runMinutes) * 60 +
-      parseInt(runSeconds);
-
-    // Convert the total seconds to hours, minutes, and seconds format
-    const hours = Math.floor(totalSeconds / 3600);
-    const minutes = Math.floor((totalSeconds % 3600) / 60);
-    const seconds = totalSeconds % 60;
-
-    const run_time = `${hours}:${minutes}:${seconds}`;
-    const miles_ran = e.target.elements.miles_ran.value;
-
-    const entry = { date, run_time, miles_ran };
-
-    fetch("/api/Cardio", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(entry),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          console.log(entry);
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        alert("Post completed");
-      })
-      .catch((error) => {
-        console.error("Posting error: ", error);
-      });
+  const handleDelete = () => {
+    alert("Deleting run"); //API Post request to delete run
   };
 
   return (
-    <>
-      <h1 className="text-center text-white text-xl">New Entry</h1>
-      <div className="bg-blue-950 w-96 h-96 rounded-lg text-center text-white border border-black">
-        <form onSubmit={handleSubmit}>
-          <div className="p-4">
-            <div className="mb-4">
-              <label htmlFor="date" className="block text-left text-white">
-                Date
-              </label>
-              <input
-                type="date"
-                id="date"
-                name="date"
-                className="w-full rounded-md p-2 text-black"
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block text-left text-white">Run Time</label>
-              <div className="flex space-x-2">
-                <input
-                  type="number"
-                  id="run_hours"
-                  name="run_hours"
-                  placeholder="Hours"
-                  className="w-full rounded-md p-2 text-black"
-                />
-                <input
-                  type="number"
-                  id="run_minutes"
-                  name="run_minutes"
-                  placeholder="Minutes"
-                  className="w-full rounded-md p-2 text-black"
-                />
-                <input
-                  type="number"
-                  id="run_seconds"
-                  name="run_seconds"
-                  placeholder="Seconds"
-                  className="w-full rounded-md p-2 text-black"
-                />
-              </div>
-            </div>
-            <div className="mb-4">
-              <label htmlFor="miles_ran" className="block text-left text-white">
-                Miles Ran
-              </label>
-              <input
-                type="text"
-                id="miles_ran"
-                name="miles_ran"
-                className="w-full rounded-md p-2 text-black"
-              />
+    <ul className="divide-y divide-SecondaryGrey">
+      {sortedPastRuns.map((run, index) => (
+        <li key={index} className="py-2">
+          <div className="flex justify-between items-center">
+            <div>
+              <p className="text-lg font-semibold">{run.date.split("T")[0]}</p>
+              <p className="text-sm">Time Taken: {run.run_time}</p>
+              <p className="text-sm">Miles Ran: {run.miles_ran}</p>
             </div>
             <button
-              type="submit"
-              className="bg-blue-800 text-white p-2 rounded-md"
+              onClick={() => handleDelete()}
+              className="text-red-600 hover:text-red-800 focus:outline-none"
             >
-              Submit
+              🗑️
             </button>
           </div>
+        </li>
+      ))}
+    </ul>
+  );
+};
+
+const Box = () => {
+  const [showAlert, setShowAlert] = useState(false); // Initially set showAlert to false
+
+  const handleCloseAlert = () => {
+    setShowAlert(false);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const date = e.target.elements.date.value;
+    const hours = e.target.elements.run_hours.value.padStart(2, "0") || "00";
+    const minutes =
+      e.target.elements.run_minutes.value.padStart(2, "0") || "00";
+    const seconds =
+      e.target.elements.run_seconds.value.padStart(2, "0") || "00";
+    const run_time = `${hours}:${minutes}:${seconds}`;
+    const miles_ran = e.target.elements.miles_ran.value;
+
+    try {
+      const response = await fetch(`/api/Cardio?id=${globalId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          date: date,
+          run_time: run_time,
+          miles_ran: miles_ran,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      e.target.reset();
+      setShowAlert(true); // Set showAlert to true after successful submission
+    } catch (error) {
+      console.error("Posting error: ", error);
+    }
+  };
+
+  return (
+    <div className="flex flex-col items-center mt-12">
+      <h1 className="text-center text-white text-2xl font-bold mb-4">
+        New Entry
+      </h1>
+      <div className="bg-PrimaryBlue w-96 max-h-80 rounded-lg text-white border border-black">
+        <form onSubmit={handleSubmit} className="p-4">
+          <div className="mb-4">
+            <label htmlFor="date" className="block text-white">
+              Date
+            </label>
+            <input
+              type="date"
+              id="date"
+              name="date"
+              className="w-full rounded-md p-2 text-black"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-white">Run Time</label>
+            <div className="flex space-x-2">
+              <input
+                type="number"
+                id="run_hours"
+                name="run_hours"
+                placeholder="Hours"
+                className="w-1/3 rounded-md p-2 text-black"
+              />
+              <input
+                type="number"
+                id="run_minutes"
+                name="run_minutes"
+                placeholder="Minutes"
+                className="w-1/3 rounded-md p-2 text-black"
+              />
+              <input
+                type="number"
+                id="run_seconds"
+                name="run_seconds"
+                placeholder="Seconds"
+                className="w-1/3 rounded-md p-2 text-black"
+              />
+            </div>
+          </div>
+          <div className="mb-4">
+            <label htmlFor="miles_ran" className="block text-white">
+              Miles Ran
+            </label>
+            <input
+              type="text"
+              id="miles_ran"
+              name="miles_ran"
+              className="w-full rounded-md p-2 text-black"
+            />
+          </div>
+          <button
+            type="submit"
+            className="bg-SecondaryBlue text-white p-2 rounded-md w-full"
+          >
+            Submit
+          </button>
         </form>
       </div>
-    </>
+      {showAlert && <AlertBox onClose={handleCloseAlert} />}
+    </div>
   );
 };

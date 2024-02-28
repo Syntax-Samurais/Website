@@ -14,12 +14,21 @@ const LineChart = ({ chartData, goalWeight }) => {
             type: "line",
             yMin: goalWeight,
             yMax: goalWeight,
-            borderColor: "rgb(144, 238, 144)",
+            borderColor: "rgb(24, 97, 165)",
             borderWidth: 1,
           },
         },
       },
     },
+    scales: {
+      x: {
+        ticks: {
+          display: false,
+        },
+      },
+    },
+    responsive: true,
+    maintainAspectRatio: false,
   };
   return <Line data={chartData} options={options} />;
 };

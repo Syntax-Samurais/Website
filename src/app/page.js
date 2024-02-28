@@ -2,11 +2,13 @@
 
 import Head from "next/head";
 import { useState } from "react";
-import LoginModal from "./_components/_modals/LoginModal";
+// import LoginModal from "./_components/_modals/LoginModal"; // we commented out lots of stuff here and went back and forth
 import Header from "./_components/Header";
 // import SignUpModal from "./_modals/SignUpModal";
 // import SignUpPage from "./_SignUp/SignUpPage"
 import { useRouter } from "next/navigation";
+import LoginModal from "./_components/_modals/LoginModal";
+// import SignUpModal from "./_components/_modals/SignUpModal";
 
 export default function Home() {
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -27,19 +29,8 @@ export default function Home() {
     );
   };
 
-  const handleSignUp = () => {
-    router.push("/SignUp");
-  };
-
-  // const handleSignUp = (username, email, password) => {
-  //   console.log(
-  //     "Signing up with username:",
-  //     username,
-  //     "email:",
-  //     email,
-  //     "and password:",
-  //     password,
-  //   );
+  // const handleSignUp = () => {
+  //   router.push("/SignUp");
   // };
 
   // Fake testimonials
@@ -56,6 +47,18 @@ export default function Home() {
       id: 3,
       text: "FitFusion makes staying fit fun and accessible. Highly recommend it to everyone!",
     },
+    {
+      id: 4,
+      text: "FitFusion has completely transformed my fitness journey. I've never felt better!",
+    },
+    {
+      id: 5,
+      text: "The workouts are challenging yet rewarding. I'm addicted to the results!",
+    },
+    {
+      id: 6,
+      text: "FitFusion makes staying fit fun and accessible. Highly recommend it to everyone!",
+    },
   ];
 
   return (
@@ -64,7 +67,7 @@ export default function Home() {
       style={{
         backgroundImage: "url('/images/mountains.jpeg')",
         backgroundSize: "cover",
-        backgroundAttachment: "scroll", // Scroll along with the content
+        backgroundAttachment: "scroll",
       }}
     >
       <Head>

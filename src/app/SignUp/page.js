@@ -47,12 +47,14 @@ const ScreenOne = (props) => {
 
 const ScreenTwo = (props) => {
   let question = "";
+  let calorieQuestion = "";
   // console.log(props.goal + 'pro')
   switch (props.goal) {
     case "loseWeight":
     case "gainWeight":
     case "sameWeight":
       question = "What is your current weight?";
+      calorieQuestion = "How many calories do you eat a day?";
       break;
     case "mileage":
       question = "How many miles do you run a week?";
@@ -73,6 +75,17 @@ const ScreenTwo = (props) => {
       <div className="h-custom text-customLightBlue">
         <h1 className="mb-4 mt-6 text-lg">{question}</h1>
         <input className="text-black" type="text" onChange={input}></input>
+        {calorieQuestion !== "" ? (
+          <div>
+            {" "}
+            <h1 className="mb-4 mt-6 text-lg">{calorieQuestion}</h1>{" "}
+            <input
+              className="text-black"
+              type="text"
+              onChange={(e) => props.setCalories(e.target.value)}
+            ></input>
+          </div>
+        ) : null}
       </div>
     </>
   );
@@ -80,11 +93,13 @@ const ScreenTwo = (props) => {
 
 const ScreenThree = (props) => {
   let question = "";
+  let calorieQuestion = "";
   // console.log(props.goal + 'pro')
   switch (props.goal) {
     case "loseWeight":
     case "gainWeight":
       question = "What is your goal weight?";
+      calorieQuestion = "How many calories do you want to target a day?";
       break;
     case "mileage":
       question = "What is your target mileage a week?";
@@ -101,11 +116,43 @@ const ScreenThree = (props) => {
     props.setInput(e.target.value);
     props.setAfter(e.target.value);
   };
+
+  // document.getElementById("date").addEventListener("change", function () {
+  //   props.setDate(this.value);
+  //   // console.log(date);
+  // });
   return (
     <>
       <div className="h-custom text-customLightBlue">
         <h1 className="mb-4 mt-6">{question}</h1>
-        <input className="text-black" type="text" onChange={input}></input>
+        {props.goal !== "sameWeight" ? (
+          <input className="text-black" type="text" onChange={input}></input>
+        ) : null}
+        {calorieQuestion !== "" ? (
+          <div>
+            {" "}
+            <h1 className="text-customLightBlue block mt-10">
+              {calorieQuestion}
+            </h1>{" "}
+            <input
+              className="text-black my-2"
+              type="text"
+              onChange={(e) => props.setCalories(e.target.value)}
+            ></input>
+          </div>
+        ) : null}
+        <label className="text-customLightBlue block mt-10">
+          By what date do you want to meet your goal?
+        </label>
+        <input
+          type="date"
+          id="date"
+          name="date"
+          className=" rounded-md p-2 my-2 text-black"
+          onChange={(e) => {
+            props.setDate(e.target.value);
+          }}
+        />
       </div>
     </>
   );
@@ -133,31 +180,37 @@ const ScreenFour = (props) => {
         <h2 className="text-lg leading-relaxed">
           Reach your goals by signing up today!
         </h2>
-        <form>
-          <label>Username:</label>
+        <form className="flex flex-wrap mx-2 mt-5">
+          <div></div>
+          <label className="justify-self-end">Username:</label>
           <input
-            className="text-black mt-8"
+            className="text-black mx-5"
             type="text"
             onChange={createUsername}
           ></input>
-          <label>Password:</label>
-          <input
-            className="text-black mt-10"
-            type="password"
-            onChange={createPassword}
-          ></input>
-          <label className="relative top-7">Confirm Password:</label>
-          <input
-            className="text-black mt-8"
-            type="password"
-            onChange={confirmPassword}
-          ></input>
+          <div className="mt-7">
+            <label>Password:</label>
+            <input
+              className="text-black mx-5"
+              type="password"
+              onChange={createPassword}
+            ></input>
+          </div>
+          <div>
+            <label className="relative mt-7">Confirm Password:</label>
+            <input
+              className="text-black mt-8"
+              type="password"
+              onChange={confirmPassword}
+            ></input>
+          </div>
         </form>
       </div>
     </>
   );
 };
 
+//Function that returns the current screen
 const SignUpPage = () => {
   const router = useRouter();
   const [currentScreen, setCurrentScreen] = useState(1);
@@ -168,13 +221,30 @@ const SignUpPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  console.log(currentGoal, before, after, username, password, confirmPassword);
-  console.log();
+  const [goalDate, setGoalDate] = useState("");
+  const [currentCalories, setCurrentCalories] = useState("");
+  const [goalCalories, setGoalCalories] = useState("");
+
+  let date = new Date();
+  let currentDate =
+    date.getFullYear() +
+    "-" +
+    String(date.getUTCMonth() + 1).padStart(2, 0) +
+    "-" +
+    String(date.getDate()).padStart(2, 0);
+  // console.log(currentDate);
+  // console.log(currentGoal, before, currentCalories, after, goalCalories, goalDate, username, password, confirmPassword);
+
   // 3: <ScreenThree goal={currentGoal} next={setCurrentScreen(currentScreen+1)}/>
   let screens = {
     1: <ScreenOne setGoal={setCurrentGoal} setInput={setInput} />,
     2: (
-      <ScreenTwo goal={currentGoal} setInput={setInput} setBefore={setBefore} />
+      <ScreenTwo
+        goal={currentGoal}
+        setInput={setInput}
+        setBefore={setBefore}
+        setCalories={setCurrentCalories}
+      />
     ),
     3: (
       <ScreenThree
@@ -182,6 +252,8 @@ const SignUpPage = () => {
         next={setCurrentScreen}
         setInput={setInput}
         setAfter={setAfter}
+        setDate={setGoalDate}
+        setCalories={setGoalCalories}
       />
     ),
     4: (
@@ -198,9 +270,6 @@ const SignUpPage = () => {
     if (password !== confirmPassword || password == "" || username == "") {
       alert("Passwords do not match or make sure to fill out all fields");
     } else {
-      if (currentGoal === "sameWeight") {
-        setAfter(before);
-      }
       await fetch("/api/SignUp", {
         method: "POST",
         body: JSON.stringify({
@@ -209,14 +278,18 @@ const SignUpPage = () => {
           goal: currentGoal,
           before: before,
           after: after,
+          goalDate: goalDate,
+          currentCalories: currentCalories,
+          goalCalories: goalCalories,
+          currentDate: currentDate,
         }),
       })
         .then((response) => {
-          console.log(response);
+          // console.log(response);
           router.push("/");
         })
         .catch((error) => {
-          console.log(error);
+          // console.log(error);
         });
       // router.push("/")}
     }
@@ -231,42 +304,36 @@ const SignUpPage = () => {
             Welcome to FitFusion
           </h2>
           {screens[currentScreen]}
-          {(currentScreen === 2) & (currentGoal === "sameWeight") ? (
+          {currentScreen === 4 ? (
+            <button
+              className="mt-4 bg-white border-customDarkGray border-2 text-customLightDarkBlue font-bold px-4 py-2 rounded-md ml-2 hover:bg-customLightBlue hover:text-white"
+              onClick={signUp}
+            >
+              Sign Up!
+            </button>
+          ) : (
             <button
               className="mt-4 bg-white border-customDarkGray border-2 text-customLightDarkBlue font-bold px-4 py-2 rounded-md ml-2 hover:bg-customLightBlue hover:text-white"
               onClick={() => {
                 if (input !== "") {
-                  setCurrentScreen(currentScreen + 2);
+                  setCurrentScreen(currentScreen + 1);
                   setInput("");
+                } else if (
+                  currentScreen === 3 &&
+                  currentGoal === "sameWeight" &&
+                  goalDate !== ""
+                ) {
+                  setCurrentScreen(currentScreen + 1);
+                  setAfter(before);
+                  setGoalCalories(currentCalories);
                 }
               }}
             >
               Next
             </button>
-          ) : (
-            <>
-              {currentScreen === 4 ? (
-                <button
-                  className="mt-4 bg-white border-customDarkGray border-2 text-customLightDarkBlue font-bold px-4 py-2 rounded-md ml-2 hover:bg-customLightBlue hover:text-white"
-                  onClick={signUp}
-                >
-                  Sign Up!
-                </button>
-              ) : (
-                <button
-                  className="mt-4 bg-white border-customDarkGray border-2 text-customLightDarkBlue font-bold px-4 py-2 rounded-md ml-2 hover:bg-customLightBlue hover:text-white"
-                  onClick={() => {
-                    if (input !== "") {
-                      setCurrentScreen(currentScreen + 1);
-                      setInput("");
-                    }
-                  }}
-                >
-                  Next
-                </button>
-              )}
-            </>
           )}
+          {/* </>
+          )} */}
         </div>
       </div>
     </>

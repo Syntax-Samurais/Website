@@ -32,7 +32,10 @@ const Home = () => {
   const [calorieChartData, setCalorieChartData] = useState(defaultChar);
   const [WeightChartData, setWeightChartData] = useState(defaultChar);
   const [goalWeight, setGoalWeight] = useState(150);
-
+  const [weeklyRunGoalState, setRunGoal] = useState(25);
+  const [totalMilesRan, setMilesRan] = useState(0);
+  const [weeklyCalorieGoal, setCalorieGoal] = useState(25);
+  const [totalCaloriesConsumed, setCaloriesConsumed] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -48,15 +51,22 @@ const Home = () => {
         tempItems.runData.map(
           (run) => (totalMilesRan += Number(run.miles_ran)),
         );
+        setRunGoal(weeklyRunGoal);
+        setMilesRan(totalMilesRan);
 
         setMileChartData({
-          labels: ["Miles Ran", "Goal Miles"],
+          labels: ["Miles Ran", "Miles To Goal"],
           datasets: [
             {
               // label: "Users Gained",
-              data: [totalMilesRan, weeklyRunGoal - totalMilesRan],
+              data: [
+                totalMilesRan,
+                weeklyRunGoal - totalMilesRan <= 0
+                  ? 0
+                  : weeklyRunGoal - totalMilesRan,
+              ],
               //tempItems.map((data) => data.username),
-              backgroundColor: ["#1861a5", "#b8c0cd"],
+              backgroundColor: ["#1861A5", "#b8c0cd"],
               borderColor: "#2e2f2e",
               borderWidth: 1,
             },
@@ -68,9 +78,10 @@ const Home = () => {
         tempItems.calorieData.map(
           (meal) => (totalCaloriesConsumed += Number(meal.calories)),
         );
-
+        setCalorieGoal(weeklyCalorieGoal);
+        setCaloriesConsumed(totalCaloriesConsumed);
         setCalorieChartData({
-          labels: ["Calorie Consumed", "Calorie Goal"],
+          labels: ["Calorie Consumed", "Calories Remaining"],
           datasets: [
             {
               // label: "Users Gained",
@@ -79,31 +90,36 @@ const Home = () => {
                 weeklyCalorieGoal - totalCaloriesConsumed,
               ],
               //tempItems.map((data) => data.username),
-              backgroundColor: ["#1861a5", "#b8c0cd"],
+              backgroundColor: ["#1861A5", "#b8c0cd"],
               borderColor: "#2e2f2e",
               borderWidth: 1,
             },
           ],
         });
 
-        // setGoalWeight(tempItems.goals[0].goal_weight)
+        setGoalWeight(tempItems.goals[0].goal_weight);
         // let weeklyCalorieGoal = tempItems.goals[0].goal_calorie_intake * 7;
         // let totalCaloriesConsumed = 0;
         // tempItems.calorieData.map((meal) => totalCaloriesConsumed += Number(meal.calories))
+        let entryDates = [];
+        let weightEntries = [];
+        tempItems.weightData.map((entry) => {
+          entryDates.push(entry.date);
+          weightEntries.push(Number(entry.weight));
+        });
+
+        // let weightEntries = [];
+        // tempItems.weightData.map(
+        //   (entry) => weightEntries.push(Number(entry.weight))
+        // );
 
         setWeightChartData({
-          labels: ["Intial Weight", "Weight Goal"],
+          labels: entryDates,
           datasets: [
             {
-              // label: "Users Gained",
-              data: [
-                totalCaloriesConsumed,
-                weeklyCalorieGoal - totalCaloriesConsumed,
-              ],
-              //tempItems.map((data) => data.username),
-              backgroundColor: ["#1861a5", "#b8c0cd"],
-              borderColor: "#2e2f2e",
-              borderWidth: 1,
+              label: "Weight Entries",
+              data: weightEntries,
+              borderColor: "#1861A5",
             },
           ],
         });
@@ -122,20 +138,30 @@ const Home = () => {
       <Header />
       <NavBar />
       {/* /* -------------------------Chart JS-----------------------*/}
-      <section className="flex justify-center h-screen">
-        <div className="flex relative h-2/4 w-3/4 m-auto">
-          <div className="flex flex-col h-auto w-1/2">
+      <section className="flex justify-center flex-col h-full w-screen mt-16">
+        <div className="flex relative h-96 w-full m-auto justify-center">
+          <div className="flex flex-col h-auto w-1/4 justify-center">
             <div className="flex h-3/4 justify-center">
-              <div className="w-32 h-32 self-center absolute rounded-full bg-slate-500 shadow-xl"></div>
+              <div className="w-32 h-32 flex justify-center content-center self-center absolute rounded-full bg-PrimaryGrey shadow-lg">
+                <span className="text-center self-center font-bold text-white">
+                  {totalCaloriesConsumed}/<br></br>
+                  {weeklyCalorieGoal}
+                </span>
+              </div>
               <PieChart chartData={calorieChartData} />
             </div>
             <span className="text-center py-4 text-3xl text-white font-medium">
               Calorie Goal
             </span>
           </div>
-          <div className="flex flex-col h-auto w-1/2">
+          <div className="flex flex-col h-auto w-1/4 justify-center">
             <div className="flex h-3/4 justify-center">
-              <div className="w-32 h-32 self-center absolute rounded-full bg-slate-500 shadow-lg"></div>
+              <div className="w-32 h-32 flex justify-center content-center self-center absolute rounded-full bg-PrimaryGrey shadow-lg">
+                <span className="text-center self-center font-bold text-white">
+                  {totalMilesRan}/<br></br>
+                  {weeklyRunGoalState}
+                </span>
+              </div>
               <PieChart chartData={mileChartData} />
             </div>
             <span className="text-center py-4 text-white font-medium text-3xl">
@@ -143,10 +169,9 @@ const Home = () => {
             </span>
           </div>
         </div>
-      </section>
-      <section className="justify-center w-3/4 h-1/3 m-auto">
-        {console.log(goalWeight)}
-        <LineChart chartData={mileChartData} goalWeight={goalWeight} />
+        <div className="flex justify-center w-3/4 h-80 m-auto">
+          <LineChart chartData={WeightChartData} goalWeight={160} />
+        </div>
       </section>
     </>
   );

@@ -19,6 +19,11 @@ module.exports = {
         customBlue: "#1e2f44",
         customLightBlue: "#22d3ee",
         customLightDarkBlue: "#019fc2",
+        PrimaryGrey: "#718199",
+        SecondaryGrey: "#191a19",
+        PrimaryBlue: "#294D77",
+        SecondaryBlue: "#1861A5",
+        Utility: "#BFAD1D",
       },
 
       color: {
