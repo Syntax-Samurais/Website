@@ -3,13 +3,5 @@
 @tailwind utilities;
 
 body {
-  @apply bg-neutral-800;
-}
-
-.primary {
-  background-color: #294d77;
-}
-
-.secondary {
-  background-color: rgb(113, 129, 153);
+  background-color: #2e2f2e;
 }

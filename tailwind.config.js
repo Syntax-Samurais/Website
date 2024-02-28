@@ -14,11 +14,11 @@ module.exports = {
         "2xxl": "2.25rem",
       },
       colors: {
-        customGray: "#2e2f2e",
-        customDarkGray: "#191a19",
-        customBlue: "#1e2f44",
-        customLightBlue: "#22d3ee",
-        customLightDarkBlue: "#019fc2",
+        PrimaryGrey: "#2e2f2e",
+        SecondaryGrey: "#191a19",
+        PrimaryBlue: "#294D77",
+        SecondaryBlue: "#1861A5",
+        Utlility: "#BFAD1D",
       },
 
       color: {

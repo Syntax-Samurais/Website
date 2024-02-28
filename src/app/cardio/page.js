@@ -4,18 +4,17 @@ import React, { useState, useEffect } from "react";
 import Header from "../_components/Header";
 import NavBar from "../_components/NavBar";
 import { globalId } from "../_components/_modals/LoginModal.jsx";
+import { useRouter } from "next/navigation";
+
+import "./cardio.css";
 
 export default function Cardio() {
   const [pastRuns, setPastRuns] = useState([]);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchingData = async () => {
       try {
-        // if (globalId === "0") {
-        //   window.location.href = "/";
-        //   return;
-        // }
-
         const res = await fetch(`/api/Cardio?id=${globalId}`);
         const data = await res.json();
         setPastRuns(data);
@@ -25,14 +24,18 @@ export default function Cardio() {
     };
 
     fetchingData();
-  }, [pastRuns]);
+  }, []);
+
+  if (globalId === 0) {
+    router.push("/");
+  }
 
   return (
     <>
       <Header />
       <NavBar />
       <UserGoalMiles />
-      <div className="flex justify-center mt-12">
+      <div className="flex justify-center mt-12 shadows-lg">
         <div className="mx-24">
           <ScrollableBox pastRuns={pastRuns} />
         </div>
@@ -44,41 +47,85 @@ export default function Cardio() {
   );
 }
 
+// Fetches the user's weekly run goal from the database
 const UserGoalMiles = () => {
+  const [runGoal, setRunGoal] = useState("");
+
+  useEffect(() => {
+    const fetchRunGoal = async () => {
+      try {
+        const res = await fetch(`/api/Cardio?id=${globalId}&goal=weekly`);
+        const data = await res.json();
+
+        if (data && data.length > 0) {
+          setRunGoal(data[0].goal_weekly_miles);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchRunGoal();
+  }, []);
+
   return (
-    <div className="flex justify-center items-center pt-12">
-      <div className="bg-blue-950 p-8 rounded-lg text-center text-white">
-        <p className="text-lg font-bold">I want to run 10 Miles every day!</p>
+    <div id="run_goal_container">
+      <div>
+        <p>I want to run {runGoal} miles every week!</p>
       </div>
     </div>
   );
 };
 
 const ScrollableBox = ({ pastRuns }) => {
-  if (!pastRuns) return null;
+  // If pastRuns is empty or undefined, render an empty box
+  if (!pastRuns || pastRuns.length === 0) {
+    return (
+      <div className="flex flex-col items-center">
+        <h1 className="text-center text-white text-2xl font-bold mb-4">
+          Run History
+        </h1>
+        <div className="bg-PrimaryBlue w-96 max-h-80 rounded-lg text-white border border-black overflow-auto">
+          <div className="p-4">
+            <p className="text-center">No past runs recorded.</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
-  //Sorts past runs by date, most recent first
+  // Sort past runs by date, most recent first
   const sortedPastRuns = pastRuns
     .slice()
     .sort((a, b) => new Date(b.date) - new Date(a.date));
 
   return (
-    <>
-      <h1 className="text-center text-white text-xl">History</h1>
-      <div className="bg-blue-950 w-96 h-96 rounded-lg text-center text-white border border-black overflow-auto">
+    <div className="flex flex-col items-center">
+      <h1 className="text-center text-white text-2xl font-bold mb-4">
+        Run History
+      </h1>
+      <div className="bg-PrimaryBlue w-96 max-h-80 rounded-lg text-white border border-black overflow-auto">
         <div className="p-4">
-          <ul className="list-disc list-inside">
-            {/* Maps through past runs and displays them */}
+          <ul className="divide-y divide-SecondaryGrey">
+            {/* Map through past runs and display them */}
             {sortedPastRuns.map((run, index) => (
-              <li key={index} className="mb-2">
-                <strong>{run.date.split("T")[0]}</strong> | Time Taken:{" "}
-                {run.run_time} | Miles Ran: {run.miles_ran}
+              <li key={index} className="py-2">
+                <div className="flex justify-between">
+                  <div>
+                    <p className="text-lg font-semibold">
+                      {run.date.split("T")[0]}
+                    </p>
+                    <p className="text-sm">Time Taken: {run.run_time}</p>
+                    <p className="text-sm">Miles Ran: {run.miles_ran}</p>
+                  </div>
+                  {/* Delete Button */}
+                </div>
               </li>
             ))}
           </ul>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
@@ -129,9 +176,9 @@ const Box = () => {
 
   return (
     <>
-      <h1 className="text-center text-white text-xl">New Entry</h1>
-      <div className="bg-blue-950 w-96 h-96 rounded-lg text-center text-white border border-black">
-        <form onSubmit={handleSubmit}>
+      <h1 className="text-center text-white text-xxl">New Entry</h1>
+      <div className="bg-PrimaryBlue w-96 max-h-80 rounded-lg flex flex-col justify-center items-center text-white border border-black">
+        <form onSubmit={handleSubmit} className="w-full">
           <div className="p-4">
             <div className="mb-4">
               <label htmlFor="date" className="block text-left text-white">
@@ -152,21 +199,21 @@ const Box = () => {
                   id="run_hours"
                   name="run_hours"
                   placeholder="Hours"
-                  className="w-full rounded-md p-2 text-black"
+                  className="w-1/3 rounded-md p-2 text-black"
                 />
                 <input
                   type="number"
                   id="run_minutes"
                   name="run_minutes"
                   placeholder="Minutes"
-                  className="w-full rounded-md p-2 text-black"
+                  className="w-1/3 rounded-md p-2 text-black"
                 />
                 <input
                   type="number"
                   id="run_seconds"
                   name="run_seconds"
                   placeholder="Seconds"
-                  className="w-full rounded-md p-2 text-black"
+                  className="w-1/3 rounded-md p-2 text-black"
                 />
               </div>
             </div>
@@ -183,7 +230,7 @@ const Box = () => {
             </div>
             <button
               type="submit"
-              className="bg-blue-800 text-white p-2 rounded-md"
+              className="bg-blue-800 text-white p-2 rounded-md w-full"
             >
               Submit
             </button>
