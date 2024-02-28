@@ -1,4 +1,4 @@
-import { getPsql } from "../../db.js";
+import { getPsql } from "../../../db.js";
 
 export async function POST(request, response) {
   let psql = await getPsql();
