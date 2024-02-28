@@ -2,14 +2,13 @@
 
 import Head from "next/head";
 import { useState } from "react";
-import LoginModal from "./_components/_modals/LoginModal";
+// import LoginModal from "./_components/_modals/LoginModal"; // we commented out lots of stuff here and went back and forth
 import Header from "./_components/Header";
 // import SignUpModal from "./_modals/SignUpModal";
 // import SignUpPage from "./_SignUp/SignUpPage"
 import { useRouter } from "next/navigation";
 import LoginModal from "./_components/_modals/LoginModal";
-import SignUpModal from "./_components/_modals/SignUpModal";
-import Header from "./_components/_header";
+// import SignUpModal from "./_components/_modals/SignUpModal";
 
 export default function Home() {
   const [showLoginModal, setShowLoginModal] = useState(false);

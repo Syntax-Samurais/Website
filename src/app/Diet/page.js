@@ -1,8 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+// import axios from "axios";
 import NavBar from "../_components/NavBar";
-import Header from "../_components/_header";
+import Header from "../_components/Header";
 
 const Day = (props) => {
   const [weight, setWeight] = useState("");
@@ -17,6 +17,7 @@ const Day = (props) => {
   }
 
   async function onSubmit(e) {
+    // console.log(weight, calories)
     // create JS date variable (look on MDN)
 
     // so it can be entered in as same format as Mark's in database
@@ -25,23 +26,28 @@ const Day = (props) => {
     // POST or insert weight and calories into database
 
     e.preventDefault();
-    await axios
-      .post(
-        "/api/Diet",
-        { weight: weight, calories: calories },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
+    try {
+      const response = await fetch("/api/Diet", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      )
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
+        body: JSON.stringify({
+          user_id: 1,
+          weight: weight,
+          calories: calories,
+        }),
       });
-    // console.log({ weight: weight, calories: calories });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const data = await response.json();
+      console.log("data", data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
   }
 
   return (
