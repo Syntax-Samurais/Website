@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Header from "../_components/Header";
 import NavBar from "../_components/NavBar";
+import AlertBox from "../_components/AlertBox.jsx";
 import { globalId } from "../_components/_modals/LoginModal.jsx";
 import { useRouter } from "next/navigation";
 
@@ -100,16 +101,26 @@ const RunHistory = ({ pastRuns }) => {
     .slice()
     .sort((a, b) => new Date(b.date) - new Date(a.date));
 
+  const handleDelete = () => {
+    alert("Deleting run"); //API Post request to delete run
+  };
+
   return (
     <ul className="divide-y divide-SecondaryGrey">
       {sortedPastRuns.map((run, index) => (
         <li key={index} className="py-2">
-          <div className="flex justify-between">
+          <div className="flex justify-between items-center">
             <div>
               <p className="text-lg font-semibold">{run.date.split("T")[0]}</p>
               <p className="text-sm">Time Taken: {run.run_time}</p>
               <p className="text-sm">Miles Ran: {run.miles_ran}</p>
             </div>
+            <button
+              onClick={() => handleDelete()}
+              className="text-red-600 hover:text-red-800 focus:outline-none"
+            >
+              🗑️
+            </button>
           </div>
         </li>
       ))}
@@ -118,6 +129,12 @@ const RunHistory = ({ pastRuns }) => {
 };
 
 const Box = () => {
+  const [showAlert, setShowAlert] = useState(false); // Initially set showAlert to false
+
+  const handleCloseAlert = () => {
+    setShowAlert(false);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const date = e.target.elements.date.value;
@@ -147,7 +164,7 @@ const Box = () => {
       }
 
       e.target.reset();
-      alert("You did it");
+      setShowAlert(true); // Set showAlert to true after successful submission
     } catch (error) {
       console.error("Posting error: ", error);
     }
@@ -210,12 +227,13 @@ const Box = () => {
           </div>
           <button
             type="submit"
-            className="bg-blue-800 text-white p-2 rounded-md w-full"
+            className="bg-SecondaryBlue text-white p-2 rounded-md w-full"
           >
             Submit
           </button>
         </form>
       </div>
+      {showAlert && <AlertBox onClose={handleCloseAlert} />}
     </div>
   );
 };

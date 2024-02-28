@@ -18,7 +18,7 @@ module.exports = {
         SecondaryGrey: "#191a19",
         PrimaryBlue: "#294D77",
         SecondaryBlue: "#1861A5",
-        Utlility: "#BFAD1D",
+        Utility: "#BFAD1D",
       },
 
       color: {
