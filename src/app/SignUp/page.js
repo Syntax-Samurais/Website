@@ -212,7 +212,7 @@ const ScreenFour = (props) => {
 
 //Function that returns the current screen
 const SignUpPage = () => {
-  const routing = useRouter();
+  const router = useRouter();
   const [currentScreen, setCurrentScreen] = useState(1);
   const [currentGoal, setCurrentGoal] = useState("");
   const [input, setInput] = useState("");
@@ -285,11 +285,11 @@ const SignUpPage = () => {
         }),
       })
         .then((response) => {
-          console.log(response);
+          // console.log(response);
           router.push("/");
         })
         .catch((error) => {
-          console.log(error);
+          // console.log(error);
         });
       // router.push("/")}
     }
