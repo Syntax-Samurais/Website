@@ -1,10 +1,13 @@
+"use client";
 import { useState } from "react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
+
+let globalId = 0;
 
 export default function LoginModal({ isOpen, onClose }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
+  const router = useRouter();
   const handleLogin = async (e) => {
     e.preventDefault();
     setUsername("");
@@ -13,10 +16,14 @@ export default function LoginModal({ isOpen, onClose }) {
       const res = await fetch(
         `/api/Login?username=${username}&password=${password}`,
       );
-      await console.log(res.status); // 400 = missing field | 401 = invalid username or password | 200 = success
+      console.log(res); // 400 = missing field | 401 = invalid username or password | 200 = success
+
       if (res.status === 200) {
-        alert("Login successful!");
-        redirect(`/Home?username=${username}`);
+        const data = await res.json();
+        const { id } = data;
+        // alert("Login successful!" + id);
+        globalId = id;
+        router.push(`/Home`);
       } else if (res.status === 401) {
         alert("Invalid username or password.");
       } else if (res.status === 400) {
@@ -67,3 +74,5 @@ export default function LoginModal({ isOpen, onClose }) {
     </div>
   );
 }
+
+export { globalId };
