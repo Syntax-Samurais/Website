@@ -7,6 +7,9 @@ import Header from "../_components/Header.jsx";
 import { globalId } from "../_components/_modals/LoginModal.jsx";
 
 const Goals = () => {
+  const [currentWeight, setCurrentWeight] = useState(0);
+  const [goalWeight, setGoalWeight] = useState(0);
+
   return (
     <div>
       <Header />
@@ -23,6 +26,9 @@ const UserWeightGoal = () => {
         <p className="text-lg font-bold">
           I want to lose 10 pounds this month!
         </p>
+        <button>
+          <p className="text-lg font-bold">Modify</p>
+        </button>
       </div>
     </div>
   );
