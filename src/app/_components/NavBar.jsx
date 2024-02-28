@@ -7,9 +7,9 @@ const NavBar = () => {
   const path = usePathname();
 
   let selectedStyle =
-    "flex justify-center h-full w-40 rounded-3xl bg-slate-500 items-center font-bold text-white drop-shadow-lg hover:brightness-110";
+    "flex justify-center h-full w-40 rounded-3xl bg-PrimaryGrey items-center font-bold text-white drop-shadow-lg hover:brightness-110";
   let defaultStyle =
-    "flex justify-center h-full w-40 rounded-3xl items-center hover:text-slate-500 hover:font-bold";
+    "flex justify-center h-full w-40 rounded-3xl items-center hover:text-PrimaryGrey hover:font-bold";
 
   return (
     <>

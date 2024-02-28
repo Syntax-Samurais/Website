@@ -27,6 +27,8 @@ const LineChart = ({ chartData, goalWeight }) => {
         },
       },
     },
+    responsive: true,
+    maintainAspectRatio: false,
   };
   return <Line data={chartData} options={options} />;
 };
