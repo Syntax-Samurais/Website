@@ -8,6 +8,11 @@ const PieChart = ({ chartData }) => {
       legend: {
         display: false,
       },
+      tooltip: {
+        yAlign: "top",
+        xAlign: "left",
+        caretPadding: 55,
+      },
     },
   };
 

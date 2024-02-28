@@ -67,7 +67,7 @@ export default function LoginModal({ isOpen, onClose }) {
             type="submit"
             className="bg-blue-500 text-white px-4 py-2 rounded-full w-full mb-8"
           >
-            Sumbit
+            Submit
           </button>
         </form>
       </div>
