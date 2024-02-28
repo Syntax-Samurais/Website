@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from "react";
 import Header from "../_components/Header.jsx";
 import NavBar from "../_components/NavBar.jsx";
-import { useRouter } from "next/navigation";
 import { globalId } from "../_components/_modals/LoginModal.jsx";
 
 const Goals = () => {
@@ -13,10 +12,6 @@ const Goals = () => {
   const [goal_calorie_intake, setGoalCalorieIntake] = useState(0);
   const [initialMiles, setInitialMiles] = useState(0);
   const [goalMiles, setGoalMiles] = useState(0);
-  const router = useRouter();
-  if (globalId === 0) {
-    router.push("/");
-  }
 
   useEffect(() => {
     const fetchingData = async () => {
