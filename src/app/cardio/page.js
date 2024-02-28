@@ -176,7 +176,9 @@ const Box = () => {
 
   return (
     <>
-      <h1 className="text-center text-white text-xxl">New Entry</h1>
+      <h1 className="text-center text-white text-2xl font-bold mb-4">
+        New Entry
+      </h1>
       <div className="bg-PrimaryBlue w-96 max-h-80 rounded-lg flex flex-col justify-center items-center text-white border border-black">
         <form onSubmit={handleSubmit} className="w-full">
           <div className="p-4">
