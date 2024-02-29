@@ -20,6 +20,7 @@ export default function Cardio() {
         const data = await res.json();
         setPastRuns(data);
       } catch (error) {
+        g;
         console.error("Error fetching data:", error);
       }
     };

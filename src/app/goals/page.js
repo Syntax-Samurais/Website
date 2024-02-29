@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Header from "../_components/Header.jsx";
 import NavBar from "../_components/NavBar.jsx";
 import { globalId } from "../_components/_modals/LoginModal.jsx";
+import "./goals.css";
 
 const Goals = () => {
   const [currentWeight, setCurrentWeight] = useState(0);
@@ -47,11 +48,11 @@ const Goals = () => {
 
 const UserWeightGoal = ({ goalWeight }) => {
   return (
-    <div className="flex justify-center items-center pt-12">
-      <div className="bg-blue-950 p-8 rounded-lg text-center text-white">
-        <p className="text-lg font-bold">`I want to weigh {goalWeight} lbs!`</p>
+    <div className="goal-wrapper">
+      <div>
+        <p>I want to weigh {goalWeight} lbs!</p>
         <button>
-          <p className="text-lg font-bold">Modify</p>
+          <p>Modify</p>
         </button>
       </div>
     </div>
@@ -60,14 +61,14 @@ const UserWeightGoal = ({ goalWeight }) => {
 
 const UserCalorieGoal = ({ initialCalories, goal_calorie_intake }) => {
   return (
-    <div className="flex justify-center items-center pt-12">
-      <div className="bg-blue-950 p-8 rounded-lg text-center text-white">
-        <p className="text-lg font-bold">
-          `I currently eat {initialCalories} calories, I want to eat{" "}
-          {goal_calorie_intake} calories!`
+    <div className="goal-wrapper">
+      <div>
+        <p>
+          I currently eat {initialCalories} calories, I want to eat{" "}
+          {goal_calorie_intake} calories!
         </p>
         <button>
-          <p className="text-lg font-bold">Modify</p>
+          <p>Modify</p>
         </button>
       </div>
     </div>
@@ -76,14 +77,13 @@ const UserCalorieGoal = ({ initialCalories, goal_calorie_intake }) => {
 
 const UserCardioGoal = ({ initialMiles, goalMiles }) => {
   return (
-    <div className="flex justify-center items-center pt-12">
-      <div className="bg-blue-950 p-8 rounded-lg text-center text-white">
-        <p className="text-lg font-bold">
-          `I currently run {initialMiles} miles, I want to run {goalMiles}{" "}
-          miles!`
+    <div className="goal-wrapper">
+      <div>
+        <p>
+          I currently run {initialMiles} miles, I want to run {goalMiles} miles!
         </p>
         <button>
-          <p className="text-lg font-bold">Modify</p>
+          <p>Modify</p>
         </button>
       </div>
     </div>
