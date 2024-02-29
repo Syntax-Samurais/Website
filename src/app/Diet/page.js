@@ -51,7 +51,7 @@ const Day = (props) => {
   }
 
   return (
-    <div className="border border-gray-400 w-72 m-2 h-64 primary rounded-xl">
+    <div className="border border-gray-400 w-72 m-2 h-64 bg-PrimaryBlue rounded-xl">
       <h1 className="text-center mb-10">{props.day}</h1>
       <form className="w-1/2 m-auto text-center">
         <label className="mt-20">Weight (lbs):</label>
