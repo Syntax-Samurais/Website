@@ -1,37 +1,37 @@
 import { getPsql } from "../../../db.js";
 import { NextApiRequest, NextApiResponse } from "next";
 
-// export async function GET(request) {
-//   let psql = await getPsql();
-//   let results = await psql.query(
-//     "SELECT goal_calorie_intake from goals where user_id = 1;",
-//   );
-//   // console.log(results);
-//   return new Response(JSON.stringify(results.rows), {
-//     contentType: "application/json",
-//   });
-// }
-
 export async function GET(request) {
   let psql = await getPsql();
   let results = await psql.query(
-    "SELECT * from weight_history where user_id = 1;",
+    "SELECT goal_calorie_intake from goals where user_id = 1;",
   );
   // console.log(results);
-
-  let weightHistory = await psql.query(
-    "SELECT * from weight_history where user_id = 1 AND (date = '2024-02-28' OR date='2024-02-27' OR date='2024-02-27')",
-  );
-  let calorieHistory = await psql.query(
-    "SELECT * from calorie_history where user_id = 1 AND (date = '2024-02-28' OR date='2024-02-27' OR date='2024-02-27')",
-  );
-
-  // console.log(weightHistory)
-  // console.log(calorieHistory)
   return new Response(JSON.stringify(results.rows), {
     contentType: "application/json",
   });
 }
+
+// export async function GET(request) {
+//   let psql = await getPsql();
+//   let results = await psql.query(
+//     "SELECT * from weight_history where user_id = 1;",
+//   );
+//   // console.log(results);
+
+//   let weightHistory = await psql.query(
+//     "SELECT * from weight_history where user_id = 1 AND (date = '2024-02-28' OR date='2024-02-27' OR date='2024-02-27')",
+//   );
+//   let calorieHistory = await psql.query(
+//     "SELECT * from calorie_history where user_id = 1 AND (date = '2024-02-28' OR date='2024-02-27' OR date='2024-02-27')",
+//   );
+
+//   // console.log(weightHistory)
+//   // console.log(calorieHistory)
+//   return new Response(JSON.stringify(results.rows), {
+//     contentType: "application/json",
+//   });
+// }
 
 export async function POST(request, response) {
   try {
