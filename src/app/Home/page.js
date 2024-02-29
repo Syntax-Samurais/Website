@@ -37,6 +37,7 @@ const Home = () => {
   const [weeklyCalorieGoal, setCalorieGoal] = useState(25);
   const [totalCaloriesConsumed, setCaloriesConsumed] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [mileBackgroundColor, setMileBgColor] = useState("#b8c0cd");
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -54,6 +55,13 @@ const Home = () => {
         setRunGoal(weeklyRunGoal);
         setMilesRan(totalMilesRan);
 
+        let mileCompletionColor = "#1861A5";
+        if (totalMilesRan > weeklyRunGoal) {
+          mileCompletionColor = "#00ff00"; // Change to green if exceeded goal
+        } else {
+          mileCompletionColor = "#1861A5";
+        }
+
         setMileChartData({
           labels: ["Miles Ran", "Miles To Goal"],
           datasets: [
@@ -66,7 +74,7 @@ const Home = () => {
                   : weeklyRunGoal - totalMilesRan,
               ],
               //tempItems.map((data) => data.username),
-              backgroundColor: ["#1861A5", "#b8c0cd"],
+              backgroundColor: [mileCompletionColor, "#b8c0cd"],
               borderColor: "#2e2f2e",
               borderWidth: 1,
             },
@@ -80,6 +88,14 @@ const Home = () => {
         );
         setCalorieGoal(weeklyCalorieGoal);
         setCaloriesConsumed(totalCaloriesConsumed);
+
+        let calorieCompletionColor = "#1861A5";
+        if (totalCaloriesConsumed > weeklyCalorieGoal) {
+          calorieCompletionColor = "#ff0000"; // Change to red if exceeded goal
+          alert("YOU ARE A FAT ASS, Lose Some Weight!!!");
+        } else {
+          calorieCompletionColor = "#1861A5";
+        }
         setCalorieChartData({
           labels: ["Calorie Consumed", "Calories Remaining"],
           datasets: [
@@ -90,7 +106,7 @@ const Home = () => {
                 weeklyCalorieGoal - totalCaloriesConsumed,
               ],
               //tempItems.map((data) => data.username),
-              backgroundColor: ["#1861A5", "#b8c0cd"],
+              backgroundColor: [calorieCompletionColor, "#b8c0cd"],
               borderColor: "#2e2f2e",
               borderWidth: 1,
             },

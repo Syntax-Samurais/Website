@@ -22,8 +22,27 @@ const LineChart = ({ chartData, goalWeight }) => {
     },
     scales: {
       x: {
-        ticks: {
-          display: false,
+        display: true,
+        title: {
+          display: true,
+          text: "Time in Weeks",
+          color: "#1861a5", // Adjust the color if needed
+          font: {
+            size: 16, // Adjust the font size if needed
+            weight: "800", // Adjust the font weight if needed
+          },
+        },
+      },
+      y: {
+        display: true,
+        title: {
+          display: true,
+          text: "Weight in lbs",
+          color: "#1861a5", // Adjust the color if needed
+          font: {
+            size: 16, // Adjust the font size if needed
+            weight: "800", // Adjust the font weight if needed
+          },
         },
       },
     },
