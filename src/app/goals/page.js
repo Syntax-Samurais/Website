@@ -13,6 +13,17 @@ const Goals = () => {
   const [goal_calorie_intake, setGoalCalorieIntake] = useState(0);
   const [initialMiles, setInitialMiles] = useState(0);
   const [goalMiles, setGoalMiles] = useState(0);
+  const [userInterests, setUserInterests] = useState({
+    gain_weight: false,
+    improve_pace: false,
+    increase_running: false,
+    increase_weight: false,
+    lose_weight: false,
+    maintain_weight: false,
+  });
+
+  const [currentMiles, setCurrentMiles] = useState(0);
+  const [currentCalories, setCurrentCalories] = useState(0);
 
   useEffect(() => {
     const fetchingData = async () => {
@@ -20,11 +31,21 @@ const Goals = () => {
         const res = await fetch(`/api/Goals?id=${globalId}`);
         const data = await res.json();
         console.log("Goals data: ", data);
-        setGoalWeight(data[0].goal_weight);
-        setInitialCalories(data[0].initial_calorie_intake);
-        setGoalCalorieIntake(data[0].goal_calorie_intake);
-        setInitialMiles(data[0].initial_weekly_miles);
-        setGoalMiles(data[0].goal_weekly_miles);
+        setGoalWeight(data.goals[0].goal_weight);
+        setInitialCalories(data.goals[0].initial_calorie_intake);
+        setGoalCalorieIntake(data.goals[0].goal_calorie_intake);
+        setInitialMiles(data.goals[0].initial_weekly_miles);
+        setGoalMiles(data.goals[0].goal_weekly_miles);
+        setCurrentWeight(data.weightHistory[0].weight);
+        setUserInterests({ ...data.userInterests[0] });
+        setCurrentMiles(data.runHistory[0].miles);
+        let calorieSum = 0;
+        if (data.calorieHistory.length != 0)
+          data.calorieHistory.map((entry) => {
+            calorieSum += entry.calories;
+          });
+        let avgCalories = calorieSum / data.calorieHistory.length;
+        setCurrentCalories(Math.floor(avgCalories));
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -33,55 +54,62 @@ const Goals = () => {
   }, []);
 
   return (
-    <div>
-      <Header />
-      <NavBar />
-      <UserWeightGoal goalWeight={goalWeight} />
-      <UserCalorieGoal
-        initialCalories={initialCalories}
-        goal_calorie_intake={goal_calorie_intake}
-      />
-      <UserCardioGoal initialMiles={initialMiles} goalMiles={goalMiles} />
-    </div>
-  );
-};
-
-const UserWeightGoal = ({ goalWeight }) => {
-  return (
-    <div className="goal-wrapper">
+    <>
       <div>
-        <p>I want to weigh {goalWeight} lbs!</p>
-        <button>
-          <p>Modify</p>
-        </button>
+        <Header />
+        <NavBar />
+        <GoalRibbon goalWeight={goalWeight} currentWeight={currentWeight} />
+        <GoalRibbon
+          currentCalories={currentCalories}
+          initialCalories={initialCalories}
+          goal_calorie_intake={goal_calorie_intake}
+        />
+        {userInterests.increase_running || userInterests.improve_pace ? (
+          <GoalRibbon initialMiles={initialMiles} goalMiles={goalMiles} />
+        ) : null}
       </div>
-    </div>
+    </>
   );
 };
 
-const UserCalorieGoal = ({ initialCalories, goal_calorie_intake }) => {
-  return (
-    <div className="goal-wrapper">
-      <div>
-        <p>
-          I currently eat {initialCalories} calories, I want to eat{" "}
-          {goal_calorie_intake} calories!
-        </p>
-        <button>
-          <p>Modify</p>
-        </button>
-      </div>
-    </div>
+const GoalRibbon = (props) => {
+  const [goalText, setGoalText] = useState(<p></p>);
+  let weightText = (
+    <p>
+      I currently weigh {props.currentWeight} lbs, and I want to weigh{" "}
+      {props.goalWeight} lbs!
+    </p>
   );
-};
+  let cardioText = (
+    <p>
+      I currently run {props.initialMiles} miles, I want to run{" "}
+      {props.goalMiles} miles!
+    </p>
+  );
+  let calorieText = (
+    <p>
+      I currently eat{" "}
+      {props.currentCalories == 0
+        ? props.initialCalories
+        : props.currentCalories}{" "}
+      calories, I want to eat {props.goal_calorie_intake} calories!
+    </p>
+  );
 
-const UserCardioGoal = ({ initialMiles, goalMiles }) => {
+  useEffect(() => {
+    if (props.goalWeight != undefined) {
+      setGoalText(weightText);
+    } else if (props.initialCalories != undefined) {
+      setGoalText(calorieText);
+    } else {
+      setGoalText(cardioText);
+    }
+  }, [props]);
+
   return (
     <div className="goal-wrapper">
       <div>
-        <p>
-          I currently run {initialMiles} miles, I want to run {goalMiles} miles!
-        </p>
+        <p>{goalText}</p>
         <button>
           <p>Modify</p>
         </button>
