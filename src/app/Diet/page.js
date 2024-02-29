@@ -16,21 +16,6 @@
 //     setCalories(e.target.value);
 //   }
 
-//   useEffect(() => {
-//     const getInfo = async () => {
-//       try {
-//         const res = await fetch(`/api/Diet/Day`, (body = { date: props.day }));
-//         const result = await res.json();
-//         // setCalories(result[0].calories);
-//         // setWeight(result[0].weight)
-//         console.log(res.json);
-//       } catch (e) {
-//         console.warn(`Couldnt fetch item`, e);
-//       }
-//     };
-//     getInfo();
-//   }, []);
-
 //   async function onSubmit(e) {
 //     // console.log(weight, calories)
 //     // create JS date variable (look on MDN)
@@ -66,7 +51,7 @@
 //   }
 
 //   return (
-//     <div className="border border-gray-400 w-72 m-2 h-64 primary rounded-xl">
+//     <div className="border border-gray-400 w-72 m-2 h-64 bg-PrimaryBlue rounded-xl">
 //       <h1 className="text-center mb-10">{props.day}</h1>
 //       <form className="w-1/2 m-auto text-center">
 //         <label className="mt-20">Weight (lbs):</label>
@@ -111,31 +96,14 @@
 //     setCalories();
 //   }, []);
 //   const days = [
-//     // ==> change this to a week's worth of dates always from Monday to Sunday
-//     // "Sunday", // Mar 03, 2024
-//     // "Monday", // Feb 26, 2024
-//     // "Tuesday", // Feb 27, 2024
-//     // "Wednesday", // Feb 28, 2024
-//     // "Thursday", // Feb 29, 2024
-//     // "Friday", // Mar 01, 2024
-//     // "Saturday", // Mar 02, 2024
+//     "Monday",
+//     "Tuesday",
+//     "Wednesday",
+//     "Thursday",
+//     "Friday",
+//     "Saturday",
+//     "Sunday",
 //   ];
-
-//   // for
-
-//   const date = new Date();
-//   let today = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
-//   let year = date.getFullYear();
-//   let month = date.getMonth() + 1;
-//   let day = date.getDate();
-//   function createDays() {
-//     for (let i = 0; i < 7; i++)
-//       days.push(
-//         `${year}-${String(month).padStart(2, 0)}-${String(day - i).padStart(2, 0)}`,
-//       );
-//   }
-//   createDays();
-//   // console.log(days)
 //   return (
 //     <>
 //       <Header />
@@ -154,12 +122,12 @@
 
 // export default page;
 
-/*
-1.	User goal displayed at top of page
-2.	Each day of week will have option for user to input daily calorie intake which updates 
-    dashboard/home page pie chart
-3.	User can update daily weight which will reflect on the dashboard/home page weight
-*/
+// /*
+// 1.	User goal displayed at top of page
+// 2.	Each day of week will have option for user to input daily calorie intake which updates
+//     dashboard/home page pie chart
+// 3.	User can update daily weight which will reflect on the dashboard/home page weight
+// */
 
 "use client";
 
@@ -169,35 +137,61 @@ import NavBar from "../_components/NavBar";
 import { globalId } from "../_components/_modals/LoginModal.jsx";
 
 export default function Cardio() {
-  const [pastRuns, setPastRuns] = useState([]);
-
+  const [pastWeight, setPastWeight] = useState([]);
   useEffect(() => {
-    const fetchingData = async () => {
+    const setCalories = async () => {
       try {
-        // if (globalId === "0") {
-        //   window.location.href = "/";
-        //   return;
-        // }
-
-        const res = await fetch(`/api/Cardio?id=${globalId}`);
-        const data = await res.json();
-        setPastRuns(data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
+        const res = await fetch(`/api/Diet/Day`);
+        const result = await res.json();
+        setPastWeight(result);
+      } catch (e) {
+        console.warn(`Couldnt fetch item`, e);
       }
     };
+    setCalories();
+  }, []);
+  // console.log(pastWeight)
 
-    fetchingData();
-  }, [pastRuns]);
+  const [calories_goal, setCaloriesGoal] = useState(0);
+  useEffect(() => {
+    const setCalories = async () => {
+      try {
+        const res = await fetch(`/api/Diet`);
+        const result = await res.json();
+        setCaloriesGoal(result[0].goal_calorie_intake);
+        // setTempItems(tempItems);
+      } catch (e) {
+        console.warn(`Couldnt fetch item`, e);
+      }
+    };
+    setCalories();
+  }, []);
+  //   const fetchingData = async () => {
+  //     try {
+  //       // if (globalId === "0") {
+  //       //   window.location.href = "/";
+  //       //   return;
+  //       // }
+
+  //       const res = await fetch(`/api/Cardio?id=${globalId}`);
+  //       const data = await res.json();
+  //       setPastRuns(data);
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     }
+  //   };
+
+  //   fetchingData();
+  // }, [pastRuns]);
 
   return (
     <>
       <Header />
       <NavBar />
-      <UserGoalMiles />
+      <UserGoalCalories />
       <div className="flex justify-center mt-12">
         <div className="mx-24">
-          <ScrollableBox pastRuns={pastRuns} />
+          <ScrollableBox pastRuns={pastWeight} />
         </div>
         <div className="mx-24">
           <Box />
@@ -207,11 +201,28 @@ export default function Cardio() {
   );
 }
 
-const UserGoalMiles = () => {
+const UserGoalCalories = () => {
+  const [calories_goal, setCaloriesGoal] = useState(0);
+  useEffect(() => {
+    const setCalories = async () => {
+      try {
+        const res = await fetch(`/api/Diet`);
+        const result = await res.json();
+        setCaloriesGoal(result[0].goal_calorie_intake);
+        // setTempItems(tempItems);
+      } catch (e) {
+        console.warn(`Couldnt fetch item`, e);
+      }
+    };
+    setCalories();
+  }, []);
+
   return (
     <div className="flex justify-center items-center pt-12">
       <div className="bg-blue-950 p-8 rounded-lg text-center text-white">
-        <p className="text-lg font-bold">I want to run 10 Miles every day!</p>
+        <p className="text-lg font-bold">
+          I want to eat {calories_goal} calories each day.
+        </p>
       </div>
     </div>
   );
@@ -231,11 +242,11 @@ const ScrollableBox = ({ pastRuns }) => {
       <div className="bg-blue-950 w-96 h-96 rounded-lg text-center text-white border border-black overflow-auto">
         <div className="p-4">
           <ul className="list-disc list-inside">
-            {/* Maps through past runs and displays them */}
+            Maps through past runs and displays them
             {sortedPastRuns.map((run, index) => (
               <li key={index} className="mb-2">
                 <strong>{run.date.split("T")[0]}</strong> | Time Taken:{" "}
-                {run.run_time} | Miles Ran: {run.miles_ran}
+                {run.run_time} | Weight: {run.miles_ran}
               </li>
             ))}
           </ul>
@@ -298,16 +309,18 @@ const Box = () => {
               />
             </div>
             <div className="mb-4">
-              <label className="block text-left text-white">Run Time</label>
+              <label className="block text-left text-white">
+                Current Weight
+              </label>
               <div className="flex space-x-2">
                 <input
                   type="number"
                   id="run_hours"
                   name="run_hours"
-                  placeholder="Hours"
+                  placeholder="in pounds"
                   className="w-full rounded-md p-2 text-black"
                 />
-                <input
+                {/* <input
                   type="number"
                   id="run_minutes"
                   name="run_minutes"
@@ -320,18 +333,19 @@ const Box = () => {
                   name="run_seconds"
                   placeholder="Seconds"
                   className="w-full rounded-md p-2 text-black"
-                />
+                /> */}
               </div>
             </div>
             <div className="mb-4">
               <label htmlFor="miles_ran" className="block text-left text-white">
-                Miles Ran
+                Calories Consumed
               </label>
               <input
                 type="text"
                 id="miles_ran"
                 name="miles_ran"
                 className="w-full rounded-md p-2 text-black"
+                placeholder="calories"
               />
             </div>
             <button
