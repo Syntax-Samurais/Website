@@ -68,16 +68,19 @@ const Home = () => {
           datasets: [
             {
               // label: "Users Gained",
-              data: [totalMilesRan, weeklyRunGoal - totalMilesRan],
+              data: [
+                totalMilesRan,
+                weeklyRunGoal - totalMilesRan <= 0
+                  ? 0
+                  : weeklyRunGoal - totalMilesRan,
+              ],
               //tempItems.map((data) => data.username),
-              backgroundColor: [chartBGColormile, mileCompletionColor],
+              backgroundColor: [mileCompletionColor, chartBGColor],
               borderColor: "#2e2f2e",
               borderWidth: 1,
             },
           ],
         });
-
-        console.log(` The weekly run goal is : ${weeklyRunGoal}`);
 
         let weeklyCalorieGoal = tempItems.goals[0].goal_calorie_intake * 7;
         let totalCaloriesConsumed = 0;
