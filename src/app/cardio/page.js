@@ -46,6 +46,8 @@ export default function Cardio() {
 }
 
 const UserGoalMiles = () => {
+  const { userId } = useUser();
+  const globalId = userId;
   const [runGoal, setRunGoal] = useState("");
 
   useEffect(() => {
