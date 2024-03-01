@@ -3,8 +3,11 @@ import React, { useState, useEffect } from "react";
 // import axios from "axios";
 import NavBar from "../_components/NavBar";
 import Header from "../_components/Header";
+import { useUser } from "../_components/_modals/LoginModal.jsx";
 
 const Day = (props) => {
+  const { userId } = useUser();
+  const globalId = userId;
   const [weight, setWeight] = useState("");
   const [calories, setCalories] = useState("");
 

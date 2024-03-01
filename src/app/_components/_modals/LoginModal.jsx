@@ -1,13 +1,33 @@
 "use client";
-import { useState } from "react";
+
+import { useState, createContext, useContext } from "react";
 import { useRouter } from "next/navigation";
 
-let globalId = 0;
+const UserContext = createContext();
+
+export const UserProvider = ({ children }) => {
+  const [userId, setUserId] = useState(null);
+  const loginUser = (id) => {
+    setUserId(id);
+  };
+  const logoutUser = () => {
+    setUserId(null);
+  };
+  return (
+    <UserContext.Provider value={{ userId, loginUser, logoutUser }}>
+      {children}
+    </UserContext.Provider>
+  );
+};
+
+export const useUser = () => useContext(UserContext);
 
 export default function LoginModal({ isOpen, onClose }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const { loginUser } = useUser();
   const router = useRouter();
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setUsername("");
@@ -21,8 +41,7 @@ export default function LoginModal({ isOpen, onClose }) {
       if (res.status === 200) {
         const data = await res.json();
         const { id } = data;
-        // alert("Login successful!" + id);
-        globalId = id;
+        loginUser(id);
         router.push(`/Home`);
       } else if (res.status === 401) {
         alert("Invalid username or password.");
@@ -36,7 +55,9 @@ export default function LoginModal({ isOpen, onClose }) {
 
   return (
     <div
-      className={`fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50 ${isOpen ? "" : "hidden"}`}
+      className={`fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50 ${
+        isOpen ? "" : "hidden"
+      }`}
     >
       <div className="bg-sky-900 p-8 rounded-md relative pl-12 pr-12">
         <button
@@ -74,5 +95,3 @@ export default function LoginModal({ isOpen, onClose }) {
     </div>
   );
 }
-
-export { globalId };

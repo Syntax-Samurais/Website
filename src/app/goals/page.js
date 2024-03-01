@@ -3,10 +3,13 @@
 import React, { useState, useEffect } from "react";
 import Header from "../_components/Header.jsx";
 import NavBar from "../_components/NavBar.jsx";
-import { globalId } from "../_components/_modals/LoginModal.jsx";
+import { useUser } from "../_components/_modals/LoginModal.jsx";
 import "./goals.css";
 
 const Goals = () => {
+  const { userId } = useUser();
+  const globalId = userId;
+
   const [currentWeight, setCurrentWeight] = useState(0);
   const [goalWeight, setGoalWeight] = useState(0);
   const [initialCalories, setInitialCalories] = useState(0);

@@ -4,12 +4,14 @@ import React, { useState, useEffect } from "react";
 import Header from "../_components/Header";
 import NavBar from "../_components/NavBar";
 import AlertBox from "../_components/AlertBox.jsx";
-import { globalId } from "../_components/_modals/LoginModal.jsx";
+import { useUser } from "../_components/_modals/LoginModal.jsx";
 import { ScrollableBox } from "../_components/ScrollableBox.jsx";
 
 import "./cardio.css";
 
 export default function Cardio() {
+  const { userId } = useUser();
+  const globalId = userId;
   const [pastRuns, setPastRuns] = useState([]);
 
   useEffect(() => {
