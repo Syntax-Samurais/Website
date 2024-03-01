@@ -35,7 +35,7 @@ export default function Cardio() {
     };
 
     fetchData();
-  }, []);
+  }, [pastRuns]);
 
   return (
     <>
@@ -87,6 +87,8 @@ const UserGoalMiles = () => {
 };
 
 const Box = () => {
+  let cookieUser = Cookies.get("user");
+  const globalId = cookieUser;
   const [showAlert, setShowAlert] = useState(false); // Initially set showAlert to false
 
   const handleCloseAlert = () => {

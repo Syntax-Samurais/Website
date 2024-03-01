@@ -1,10 +1,3 @@
-// /*
-// 1.	User goal displayed at top of page
-// 2.	Each day of week will have option for user to input daily calorie intake which updates
-//     dashboard/home page pie chart
-// 3.	User can update daily weight which will reflect on the dashboard/home page weight
-// */
-
 "use client";
 import "./diet.css";
 import React, { useState, useEffect } from "react";
@@ -33,11 +26,28 @@ export default function Diet() {
     // setPastWeight(result);
   }, [pastWeight]);
 
+  const [calories_goal, setCaloriesGoal] = useState(0);
+  useEffect(() => {
+    const setCalories = async () => {
+      try {
+        const res = await fetch(`/api/Diet?id=${globalId}`);
+        const result = await res.json();
+        // setCaloriesGoal(null);
+        setCaloriesGoal(result[0].goal_calorie_intake);
+        // setTempItems(tempItems);
+      } catch (e) {
+        console.warn(`Couldnt fetch item`, e);
+      }
+    };
+    setCalories();
+  }, []);
+
   return (
     <>
       <Header />
       <NavBar />
-      <UserGoalCalories globalId={globalId} />
+      {/* if calories goal is null then show big div that says set a weight and calorie goal to view this page */}
+      <UserGoalCalories calories_goal={calories_goal} />
       <div className="flex justify-center mt-12">
         <div className="mx-24">
           <ScrollableBox pastEntries={pastWeight} />
@@ -50,26 +60,15 @@ export default function Diet() {
   );
 }
 
-const UserGoalCalories = ({ globalId }) => {
-  const [calories_goal, setCaloriesGoal] = useState(0);
-  useEffect(() => {
-    const setCalories = async () => {
-      try {
-        const res = await fetch(`/api/Diet?id=${globalId}`);
-        const result = await res.json();
-        setCaloriesGoal(result[0].goal_calorie_intake);
-        // setTempItems(tempItems);
-      } catch (e) {
-        console.warn(`Couldnt fetch item`, e);
-      }
-    };
-    setCalories();
-  }, []);
-
+const UserGoalCalories = ({ calories_goal }) => {
   return (
     <div id="diet_goal_container">
       <div>
-        <p>I want to eat {calories_goal} calories each day.</p>
+        {calories_goal !== null ? (
+          <p>I want to eat {calories_goal} calories each day.</p>
+        ) : (
+          <p>No calorie goal set.</p>
+        )}
       </div>
     </div>
   );
