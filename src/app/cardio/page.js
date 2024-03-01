@@ -87,9 +87,9 @@ const UserGoalMiles = () => {
 };
 
 const Box = () => {
+  const [showAlert, setShowAlert] = useState(false);
   let cookieUser = Cookies.get("user");
   const globalId = cookieUser;
-  const [showAlert, setShowAlert] = useState(false); // Initially set showAlert to false
 
   const handleCloseAlert = () => {
     setShowAlert(false);
