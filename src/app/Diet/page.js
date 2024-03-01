@@ -6,7 +6,7 @@
 // */
 
 "use client";
-
+import "./cardio.css";
 import React, { useState, useEffect } from "react";
 import Header from "../_components/Header";
 import NavBar from "../_components/NavBar";
