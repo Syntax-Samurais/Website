@@ -11,7 +11,7 @@ const PieChart = ({ chartData }) => {
       tooltip: {
         yAlign: "top",
         xAlign: "left",
-        caretPadding: 75,
+        caretPadding: 120,
       },
     },
   };
