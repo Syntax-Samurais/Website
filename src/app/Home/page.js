@@ -52,7 +52,7 @@ const Home = () => {
         const tempItems = await res.json();
         console.log(tempItems);
 
-        let weekRunGoal = 0;
+        let weekRunGoal = 50;
         let totMilesRan = 0;
         tempItems.runData.map((run) => (totMilesRan += Number(run.miles_ran)));
         setRunGoal(weekRunGoal);
@@ -149,74 +149,20 @@ const Home = () => {
     fetchData();
   }, []);
 
-  const renderCaloriesHeader = () => {
+  const renderCalories = () => {
     if (weeklyCalorieGoal === 0 || weeklyCalorieGoal === null) {
       return (
-        <div className="text-PrimaryGrey">
-          No Data Found!<br></br>Click{" "}
+        <h1 className="text-PrimaryGrey space-y-2 mr-32 pr-32">
+          No Data Found!<br></br>Click
           <span className="text-PrimaryBlue font-bold underline">
             <a href="/goals"> here</a>
           </span>{" "}
           to set<br></br> a goal.
-        </div>
-      );
-    } else {
-      return (
-        <div className="w-32 h-32 flex justify-center content-center self-center absolute rounded-full bg-PrimaryGrey shadow-lg">
-          <span className="text-center self-center font-bold text-white">
-            {totalCaloriesConsumed}/<br></br>
-            {weeklyCalorieGoal}
-          </span>
-        </div>
-      );
-    }
-  };
-
-  const renderMilesRan = () => {
-    if (weeklyRunGoal === 0) {
-      return (
-        <h1 className="text-PrimaryGrey space-y-2 ml-64 pl-64">
-          No Run Data Found!<br></br>Click{" "}
-          <span className="text-PrimaryBlue font-bold underline">
-            <a href="/goals"> here</a>
-          </span>{" "}
-          to set<br></br>a new goal.
         </h1>
       );
     } else {
       return (
-        <div className="flex flex-col h-auto w-1/4 justify-center ml-32 pl-32">
-          <div className="flex h-3/4 justify-center">
-            <div className="w-32 h-32 flex justify-center content-center self-center absolute rounded-full bg-PrimaryGrey shadow-lg">
-              <span className="text-center self-center font-bold text-white">
-                {totalMilesRan}/<br></br>
-                {weeklyRunGoal}
-              </span>
-            </div>
-            <PieChart chartData={mileChartData} />
-          </div>
-          <span className="text-center py-4 text-white font-medium text-3xl">
-            Miles Ran
-          </span>
-        </div>
-      );
-    }
-  };
-
-  const renderCalories = () => {
-    if (weeklyCalorieGoal === 0) {
-      return (
-        <h1 className="text-PrimaryGrey space-y-2">
-          No Run Data Found!<br></br> Click{" "}
-          <span className="text-PrimaryBlue font-bold underline">
-            <a href="/goals"> here</a>
-          </span>{" "}
-          to set<br></br> a new goal.
-        </h1>
-      );
-    } else {
-      return (
-        <div className="flex flex-col h-auto w-1/4 mr-32 pr-32">
+        <div className="flex flex-col h-auto w-1/4 justify-center mr-16 pr-16">
           <div className="flex h-3/4 justify-center">
             <div className="w-32 h-32 flex justify-center content-center self-center absolute rounded-full bg-PrimaryGrey shadow-lg">
               <span className="text-center self-center font-bold text-white">
@@ -228,6 +174,36 @@ const Home = () => {
           </div>
           <span className="text-center py-4 text-white font-medium text-3xl">
             Calorie Goal
+          </span>
+        </div>
+      );
+    }
+  };
+  const renderMilesRan = () => {
+    if (weeklyRunGoal === 0 || weeklyRunGoal === null) {
+      return (
+        <h1 className="text-PrimaryGrey space-y-2 ml-32 pl-32">
+          No Run Data Found!<br></br>Click
+          <span className="text-PrimaryBlue font-bold underline">
+            <a href="/goals"> here</a>
+          </span>{" "}
+          to set<br></br>a new goal.
+        </h1>
+      );
+    } else {
+      return (
+        <div className="flex flex-col h-auto w-1/4 justify-center ml-16 pl-16">
+          <div className="flex h-3/4 justify-center">
+            <div className="w-32 h-32 flex justify-center content-center self-center absolute rounded-full bg-PrimaryGrey shadow-lg">
+              <span className="text-center self-center font-bold text-white">
+                {totalMilesRan}/<br></br>
+                {weeklyRunGoal}
+              </span>
+            </div>
+            <PieChart chartData={mileChartData} />
+          </div>
+          <span className="text-center py-4 text-white font-medium text-3xl">
+            Miles Ran
           </span>
         </div>
       );
