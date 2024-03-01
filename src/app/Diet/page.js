@@ -3,16 +3,16 @@ import React, { useState, useEffect } from "react";
 // import axios from "axios";
 import NavBar from "../_components/NavBar";
 import Header from "../_components/Header";
-import { useUser } from "../_components/_modals/LoginModal.jsx";
+import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 
 const Day = (props) => {
-  const { userId } = useUser();
-  const globalId = userId;
   const router = useRouter();
+  let cookieUser = Cookies.get("user");
+  const globalId = cookieUser;
 
   useEffect(() => {
-    if (globalId === 0 || globalId === null) {
+    if (cookieUser === 0 || cookieUser === null) {
       router.push(`/`);
     }
   }, [globalId, router]);

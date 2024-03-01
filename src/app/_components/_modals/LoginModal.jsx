@@ -1,5 +1,6 @@
 "use client";
-
+import Cookies from "js-cookie";
+// import { cookies } from 'next/headers'
 import { useState, createContext, useContext } from "react";
 import { useRouter } from "next/navigation";
 
@@ -42,6 +43,7 @@ export default function LoginModal({ isOpen, onClose }) {
         const data = await res.json();
         const { id } = data;
         loginUser(id);
+        Cookies.set("user", id);
         router.push(`/Home`);
       } else if (res.status === 401) {
         alert("Invalid username or password.");

@@ -3,17 +3,17 @@
 import React, { useState, useEffect } from "react";
 import Header from "../_components/Header.jsx";
 import NavBar from "../_components/NavBar.jsx";
-import { useUser } from "../_components/_modals/LoginModal.jsx";
+import Cookies from "js-cookie";
 import "./goals.css";
 import { useRouter } from "next/navigation";
 
 const Goals = () => {
   const router = useRouter();
-  const { userId } = useUser();
-  const globalId = userId;
+  let cookieUser = Cookies.get("user");
+  const globalId = cookieUser;
 
   useEffect(() => {
-    if (globalId === 0 || globalId === null) {
+    if (cookieUser === 0 || cookieUser === null) {
       router.push(`/`);
     }
   }, [globalId, router]);
