@@ -52,7 +52,7 @@ const Home = () => {
         const tempItems = await res.json();
         console.log(tempItems);
 
-        let weekRunGoal = 50;
+        let weekRunGoal = tempItems.goals[0].goal_weekly_miles;
         let totMilesRan = 0;
         tempItems.runData.map((run) => (totMilesRan += Number(run.miles_ran)));
         setRunGoal(weekRunGoal);
@@ -85,13 +85,11 @@ const Home = () => {
           ],
         });
 
-        // let weekCalGoal = tempItems.goals[0].goal_calorie_intake * 7;
-        let weekCalGoal = 25;
+        let weekCalGoal = tempItems.goals[0].goal_calorie_intake * 7;
         let totCalConsumed = 0;
         tempItems.calorieData.map(
           (meal) => (totCalConsumed += Number(meal.calories)),
         );
-        // setCalorieGoal(weekCalGoal);
         setCalorieGoal(weekCalGoal);
         setCaloriesConsumed(totCalConsumed);
 
@@ -111,7 +109,12 @@ const Home = () => {
           labels: ["Calorie Consumed", "Calories Remaining"],
           datasets: [
             {
-              data: [totCalConsumed, weekCalGoal - totCalConsumed],
+              data: [
+                totCalConsumed,
+                weekCalGoal - totCalConsumed <= 0
+                  ? 0
+                  : weekCalGoal - totCalConsumed,
+              ],
 
               backgroundColor: [calorieCompletionColor, calChartBGColor],
               borderColor: "#2e2f2e",
