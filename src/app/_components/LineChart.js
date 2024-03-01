@@ -25,7 +25,7 @@ const LineChart = ({ chartData, goalWeight }) => {
         display: true,
         title: {
           display: true,
-          text: "Time in Weeks",
+          text: "Date",
           color: "#1861a5", // Adjust the color if needed
           font: {
             size: 16, // Adjust the font size if needed
