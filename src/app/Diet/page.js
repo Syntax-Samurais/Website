@@ -115,8 +115,13 @@ const Box = () => {
           calories: calories,
         }),
       });
-      let data = await response.json();
-      console.log(data);
+
+      e.target.elements.current_weight.value = "";
+      e.target.elements.current_calories.value = "";
+      e.target.elements.date.value = "";
+
+      // let data = await response.json();
+      // console.log(data);
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }

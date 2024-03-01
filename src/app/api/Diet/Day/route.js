@@ -31,21 +31,39 @@ export async function POST(request, response) {
     let { user_id, currentDate, weight, calories } = body;
 
     // let currentDate = new Date().toISOString().split("T")[0];
-
+    let previousresults = await psql.query(
+      "SELECT weight_history.user_id, weight_history.weight, calorie_history.calories, weight_history.date FROM weight_history INNER JOIN calorie_history ON weight_history.user_id = calorie_history.user_id and weight_history.date = calorie_history.date WHERE weight_history.user_id = $1 GROUP BY weight_history.user_id, weight_history.weight, calorie_history.calories, weight_history.date ORDER BY weight_history.date DESC;",
+      [user_id],
+    );
+    console.log(previousresults.rows);
     let weightQuery = `
       INSERT INTO weight_history (user_id, date, weight) 
       VALUES ($1, $2, $3)
     `;
-
+    let weightValues = [user_id, currentDate, weight];
     let caloriesQuery = `
       INSERT INTO calorie_history (user_id, date, calories) 
       VALUES ($1, $2, $3)
     `;
+    let caloriesValues = [user_id, currentDate, calories];
+    for (let i = 0; i < previousresults.rows.length; i++) {
+      //  console.log("For loop entered", previousresults.rows[i].date.toISOString().split("T")[0])
+      if (
+        currentDate == previousresults.rows[i].date.toISOString().split("T")[0]
+      ) {
+        // console.log("Update condition met", previousresults.rows[i].date)
+        weightQuery =
+          "Update weight_history SET weight = $1 WHERE user_id = $2 AND date = $3";
+        weightValues = [weight, user_id, currentDate];
 
-    let weightValues = [user_id, currentDate, weight];
+        caloriesQuery =
+          "Update calorie_history SET calories = $1 WHERE user_id = $2 AND date = $3";
+        caloriesValues = [calories, user_id, currentDate];
+      }
+    }
+
     await psql.query(weightQuery, weightValues);
 
-    let caloriesValues = [user_id, currentDate, calories];
     await psql.query(caloriesQuery, caloriesValues);
 
     let responseBody = {
