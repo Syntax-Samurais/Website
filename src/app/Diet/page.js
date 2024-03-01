@@ -11,8 +11,20 @@ import React, { useState, useEffect } from "react";
 import Header from "../_components/Header";
 import NavBar from "../_components/NavBar";
 import { globalId } from "../_components/_modals/LoginModal.jsx";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 
 export default function Diet() {
+  const router = useRouter();
+  let cookieUser = Cookies.get("user");
+  const globalId = cookieUser;
+
+  useEffect(() => {
+    if (cookieUser === 0 || cookieUser === null) {
+      router.push(`/`);
+    }
+  }, [globalId, router]);
+
   const [pastWeight, setPastWeight] = useState([]);
   useEffect(() => {
     const res = fetch(`/api/Diet/Day?id=10`)

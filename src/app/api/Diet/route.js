@@ -1,5 +1,4 @@
 import { getPsql } from "../../../db.js";
-import { NextApiRequest, NextApiResponse } from "next";
 
 export async function GET(request) {
   const queryParams = new URL(request.url).searchParams;
