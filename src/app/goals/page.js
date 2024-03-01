@@ -39,7 +39,6 @@ const Goals = () => {
       try {
         const res = await fetch(`/api/Goals?id=${globalId}`);
         const data = await res.json();
-        console.log("Goals data: ", data);
         setGoalWeight(data.goals[0].goal_weight);
         setInitialCalories(data.goals[0].initial_calorie_intake);
         setGoalCalorieIntake(data.goals[0].goal_calorie_intake);
@@ -67,21 +66,32 @@ const Goals = () => {
       <div>
         <Header />
         <NavBar />
-        <GoalRibbon
-          goalWeight={goalWeight}
-          currentWeight={currentWeight}
-          handleOpenModal={handleOpenModal}
-          handleCloseModal={handleCloseModal}
-          showModal={showModal}
-        />
-        <GoalRibbon
-          currentCalories={currentCalories}
-          initialCalories={initialCalories}
-          goal_calorie_intake={goal_calorie_intake}
-          handleOpenModal={handleOpenModal}
-          handleCloseModal={handleCloseModal}
-          showModal={showModal}
-        />
+        {userInterests.increase_weight ||
+        userInterests.gain_weight ||
+        userInterests.lose_weight ||
+        userInterests.maintain_weight ? (
+          <GoalRibbon
+            goalWeight={goalWeight}
+            currentWeight={currentWeight}
+            handleOpenModal={handleOpenModal}
+            handleCloseModal={handleCloseModal}
+            showModal={showModal}
+          />
+        ) : null}
+        {userInterests.increase_weight ||
+        userInterests.gain_weight ||
+        userInterests.lose_weight ||
+        userInterests.maintain_weight ? (
+          <GoalRibbon
+            currentCalories={currentCalories}
+            initialCalories={initialCalories}
+            goal_calorie_intake={goal_calorie_intake}
+            handleOpenModal={handleOpenModal}
+            handleCloseModal={handleCloseModal}
+            showModal={showModal}
+          />
+        ) : null}
+
         {userInterests.increase_running || userInterests.improve_pace ? (
           <GoalRibbon
             initialMiles={initialMiles}
