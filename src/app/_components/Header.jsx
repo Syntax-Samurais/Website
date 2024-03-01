@@ -1,3 +1,5 @@
+"use client";
+
 import Cookies from "js-cookie";
 
 const handleLogout = () => {
@@ -28,7 +30,7 @@ export default function Header() {
             </a>
             <img
               src="/images/logo1.png"
-              alt="{image}"
+              alt="image"
               className="ml-4 w-10 h-10"
             />
           </nav>
