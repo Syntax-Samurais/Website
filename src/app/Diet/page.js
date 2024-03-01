@@ -80,12 +80,14 @@ const ScrollableBox = ({ pastEntries }) => {
 
   return (
     <>
-      <h1 className="text-center text-white text-xl mb-4">Run History</h1>
+      <h1 className="text-center text-white text-xl mb-4">
+        Weight & Calorie History
+      </h1>
       <div className="bg-PrimaryBlue w-96 max-h-80 rounded-lg text-white border border-black overflow-auto">
         <div className="p-4">
           <ul className="list list-inside">
             {/* Maps through past runs and displays them */}
-            {pastEntries ? (
+            {pastEntries.length !== 0 ? (
               <>
                 {pastEntries.map((entry, index) => (
                   <div className="border mb-1 rounded-lg">
@@ -100,7 +102,7 @@ const ScrollableBox = ({ pastEntries }) => {
                 ))}
               </>
             ) : (
-              <li>No entries found</li>
+              <li className="text-center">Make your first entry!</li>
             )}
           </ul>
         </div>
