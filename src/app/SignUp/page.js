@@ -9,7 +9,7 @@ const goals = [
   { text: "I want to gain weight", value: "gainWeight", id: 2 },
   { text: "I want to maintain my current weight.", value: "sameWeight", id: 3 },
   { text: "I want to increase my running mileage.", value: "mileage", id: 4 },
-  { text: "I want to run faster.", value: "runFast", id: 5 },
+  // { text: "I want to run faster.", value: "runFast", id: 5 },
 ];
 const ScreenOne = (props) => {
   //----------------------------------------------------Changes Text Color to White Upon Clicking
@@ -117,10 +117,6 @@ const ScreenThree = (props) => {
     props.setAfter(e.target.value);
   };
 
-  // document.getElementById("date").addEventListener("change", function () {
-  //   props.setDate(this.value);
-  //   // console.log(date);
-  // });
   return (
     <>
       <div className="h-custom text-customLightBlue">
