@@ -3,11 +3,23 @@
 import React, { useState, useEffect } from "react";
 import Header from "../_components/Header.jsx";
 import NavBar from "../_components/NavBar.jsx";
-import { globalId } from "../_components/_modals/LoginModal.jsx";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
+
 import "./goals.css";
 import GoalChange from "../_components/_modals/GoalChange.jsx";
 
 const Goals = () => {
+  const router = useRouter();
+  let cookieUser = Cookies.get("user");
+  const globalId = cookieUser;
+
+  useEffect(() => {
+    if (cookieUser === 0 || cookieUser === null) {
+      router.push(`/`);
+    }
+  }, [globalId, router]);
+
   const [showModal, setShowModal] = useState(false);
   const [currentWeight, setCurrentWeight] = useState(0);
   const [goalWeight, setGoalWeight] = useState(0);

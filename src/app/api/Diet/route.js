@@ -1,5 +1,4 @@
 import { getPsql } from "../../../db.js";
-import { NextApiRequest, NextApiResponse } from "next";
 
 export async function GET(request) {
   let psql = await getPsql();
