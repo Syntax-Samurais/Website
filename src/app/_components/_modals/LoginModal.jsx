@@ -1,13 +1,13 @@
 "use client";
+import Cookies from "js-cookie";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-
-let globalId = 0;
 
 export default function LoginModal({ isOpen, onClose }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setUsername("");
@@ -21,8 +21,7 @@ export default function LoginModal({ isOpen, onClose }) {
       if (res.status === 200) {
         const data = await res.json();
         const { id } = data;
-        // alert("Login successful!" + id);
-        globalId = id;
+        Cookies.set("user", id);
         router.push(`/Home`);
       } else if (res.status === 401) {
         alert("Invalid username or password.");
@@ -36,7 +35,9 @@ export default function LoginModal({ isOpen, onClose }) {
 
   return (
     <div
-      className={`fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50 ${isOpen ? "" : "hidden"}`}
+      className={`fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50 ${
+        isOpen ? "" : "hidden"
+      }`}
     >
       <div className="bg-sky-900 p-8 rounded-md relative pl-12 pr-12">
         <button
@@ -74,5 +75,3 @@ export default function LoginModal({ isOpen, onClose }) {
     </div>
   );
 }
-
-export { globalId };
