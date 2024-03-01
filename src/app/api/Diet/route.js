@@ -2,9 +2,13 @@ import { getPsql } from "../../../db.js";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export async function GET(request) {
+  const queryParams = new URL(request.url).searchParams;
+  const user_id = queryParams.get("id");
+  console.log(user_id);
   let psql = await getPsql();
   let results = await psql.query(
-    "SELECT goal_calorie_intake from goals where user_id = 1;",
+    "SELECT goal_calorie_intake from goals where user_id = $1;",
+    [user_id],
   );
   // console.log(results);
   return new Response(JSON.stringify(results.rows), {
@@ -32,51 +36,6 @@ export async function GET(request) {
 //     contentType: "application/json",
 //   });
 // }
-
-export async function POST(request, response) {
-  try {
-    let psql = await getPsql();
-    let body = await request.json();
-    // let results = await psql.query("UPDATE goals set goal_calorie_intake = $1 where user_id = 1;", [body.calories]);
-    let { user_id, weight, calories } = body;
-
-    let currentDate = new Date().toISOString().split("T")[0];
-
-    let weightQuery = `
-      INSERT INTO weight_history (user_id, date, weight) 
-      VALUES ($1, $2, $3)
-    `;
-
-    let caloriesQuery = `
-      INSERT INTO calorie_history (user_id, date, calories) 
-      VALUES ($1, $2, $3)
-    `;
-
-    let weightValues = [user_id, currentDate, weight];
-    await psql.query(weightQuery, weightValues);
-
-    let caloriesValues = [user_id, currentDate, calories];
-    await psql.query(caloriesQuery, caloriesValues);
-
-    let responseBody = {
-      user_id: user_id,
-      date: currentDate,
-      weight: weight,
-      calories: calories,
-    };
-
-    return new Response(JSON.stringify(responseBody), {
-      contentType: "application/json",
-    });
-  } catch (error) {
-    console.error("Error", error);
-
-    return new Response(JSON.stringify({ error: "Something went wrong" }), {
-      status: 500,
-      contentType: "application/json",
-    });
-  }
-}
 
 // export async function POST(request, response) {
 //   try {
