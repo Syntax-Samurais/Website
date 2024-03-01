@@ -12,7 +12,7 @@ import Header from "../_components/Header";
 import NavBar from "../_components/NavBar";
 import { globalId } from "../_components/_modals/LoginModal.jsx";
 
-export default function Cardio() {
+export default function Diet() {
   const [pastWeight, setPastWeight] = useState([]);
   useEffect(() => {
     const res = fetch(`/api/Diet/Day?id=10`)
