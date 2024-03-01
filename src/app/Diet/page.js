@@ -10,7 +10,7 @@ import "./diet.css";
 import React, { useState, useEffect } from "react";
 import Header from "../_components/Header";
 import NavBar from "../_components/NavBar";
-import { globalId } from "../_components/_modals/LoginModal.jsx";
+// import { globalId } from "../_components/_modals/LoginModal.jsx";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 
@@ -27,7 +27,7 @@ export default function Diet() {
 
   const [pastWeight, setPastWeight] = useState([]);
   useEffect(() => {
-    const res = fetch(`/api/Diet/Day?id=10`)
+    const res = fetch(`/api/Diet/Day?id=${globalId}`)
       .then((res) => res.json())
       .then((data) => setPastWeight(data));
     // setPastWeight(result);
@@ -37,25 +37,25 @@ export default function Diet() {
     <>
       <Header />
       <NavBar />
-      <UserGoalCalories />
+      <UserGoalCalories globalId={globalId} />
       <div className="flex justify-center mt-12">
         <div className="mx-24">
           <ScrollableBox pastEntries={pastWeight} />
         </div>
         <div className="mx-24">
-          <Box />
+          <Box globalId={globalId} />
         </div>
       </div>
     </>
   );
 }
 
-const UserGoalCalories = () => {
+const UserGoalCalories = ({ globalId }) => {
   const [calories_goal, setCaloriesGoal] = useState(0);
   useEffect(() => {
     const setCalories = async () => {
       try {
-        const res = await fetch(`/api/Diet?id=10`);
+        const res = await fetch(`/api/Diet?id=${globalId}`);
         const result = await res.json();
         setCaloriesGoal(result[0].goal_calorie_intake);
         // setTempItems(tempItems);
@@ -110,7 +110,7 @@ const ScrollableBox = ({ pastEntries }) => {
 };
 
 //function `Box` is a placeholder for the new entry form
-const Box = () => {
+const Box = ({ globalId }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const date = e.target.elements.date.value;
@@ -125,7 +125,7 @@ const Box = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          user_id: 10,
+          user_id: globalId,
           currentDate: date,
           weight: weight,
           calories: calories,
