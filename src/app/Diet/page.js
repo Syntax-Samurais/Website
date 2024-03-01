@@ -1,10 +1,21 @@
 "use client";
 import React, { useState, useEffect } from "react";
-// import axios from "axios";
 import NavBar from "../_components/NavBar";
 import Header from "../_components/Header";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 
 const Day = (props) => {
+  const router = useRouter();
+  let cookieUser = Cookies.get("user");
+  const globalId = cookieUser;
+
+  useEffect(() => {
+    if (cookieUser === 0 || cookieUser === null) {
+      router.push(`/`);
+    }
+  }, [globalId, router]);
+
   const [weight, setWeight] = useState("");
   const [calories, setCalories] = useState("");
 

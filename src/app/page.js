@@ -2,13 +2,9 @@
 
 import Head from "next/head";
 import { useState } from "react";
-// import LoginModal from "./_components/_modals/LoginModal"; // we commented out lots of stuff here and went back and forth
 import Header from "./_components/Header";
-// import SignUpModal from "./_modals/SignUpModal";
-// import SignUpPage from "./_SignUp/SignUpPage"
 import { useRouter } from "next/navigation";
 import LoginModal from "./_components/_modals/LoginModal";
-// import SignUpModal from "./_components/_modals/SignUpModal";
 
 export default function Home() {
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -16,8 +12,6 @@ export default function Home() {
 
   const openLoginModal = () => setShowLoginModal(true);
   const closeLoginModal = () => setShowLoginModal(false);
-  // const openSignUpModal = () => setShowSignUpModal(true);
-  // const closeSignUpModal = () => setShowSignUpModal(false);
   const router = useRouter();
 
   const handleLogin = (username, password) => {
@@ -28,10 +22,6 @@ export default function Home() {
       password,
     );
   };
-
-  // const handleSignUp = () => {
-  //   router.push("/SignUp");
-  // };
 
   // Fake testimonials
   const testimonials = [
@@ -142,12 +132,6 @@ export default function Home() {
         onClose={closeLoginModal}
         onLogin={handleLogin}
       />
-      {/* <SignUpModal
-        isOpen={showSignUpModal}
-        onClose={closeSignUpModal}
-        onSignUp={handleSignUp}
-      /> */}
-      */
     </div>
   );
 }

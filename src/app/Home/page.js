@@ -1,14 +1,25 @@
 "use client";
 
-import { La_Belle_Aurore } from "next/font/google";
 import React, { useState, useEffect } from "react";
 import NavBar from "../_components/NavBar.jsx";
 import Header from "../_components/Header.jsx";
 import PieChart from "../_components/PieChart";
 import LineChart from "../_components/LineChart";
-import { globalId } from "../_components/_modals/LoginModal.jsx";
+import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 const Home = () => {
+  const router = useRouter();
+
+  let cookieUser = Cookies.get("user");
+  const globalId = cookieUser;
+
+  useEffect(() => {
+    if (cookieUser === 0 || cookieUser === null) {
+      router.push(`/`);
+    }
+  }, [globalId, router]);
+
   const [sliderColor, setSliderColor] = useState("#000000");
   const defaultChar = {
     labels: [],
