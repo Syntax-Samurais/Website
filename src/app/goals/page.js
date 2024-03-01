@@ -4,8 +4,9 @@ import React, { useState, useEffect } from "react";
 import Header from "../_components/Header.jsx";
 import NavBar from "../_components/NavBar.jsx";
 import Cookies from "js-cookie";
-import "./goals.css";
 import { useRouter } from "next/navigation";
+
+import "./goals.css";
 
 const Goals = () => {
   const router = useRouter();

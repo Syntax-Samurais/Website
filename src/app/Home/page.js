@@ -5,15 +5,12 @@ import NavBar from "../_components/NavBar.jsx";
 import Header from "../_components/Header.jsx";
 import PieChart from "../_components/PieChart";
 import LineChart from "../_components/LineChart";
-import { useUser } from "../_components/_modals/LoginModal.jsx";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 
 const Home = () => {
   const router = useRouter();
 
-  // const { userId } = useUser();
-  // const globalId = userId;
   let cookieUser = Cookies.get("user");
   const globalId = cookieUser;
 

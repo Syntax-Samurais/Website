@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 import Header from "../_components/Header";
 import NavBar from "../_components/NavBar";
 import AlertBox from "../_components/AlertBox.jsx";
-import { useUser } from "../_components/_modals/LoginModal.jsx";
 import { ScrollableBox } from "../_components/ScrollableBox.jsx";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
@@ -56,8 +55,9 @@ export default function Cardio() {
 }
 
 const UserGoalMiles = () => {
-  const { userId } = useUser();
-  const globalId = userId;
+  let cookieUser = Cookies.get("user");
+  const globalId = cookieUser;
+
   const [runGoal, setRunGoal] = useState("");
 
   useEffect(() => {

@@ -1,32 +1,13 @@
 "use client";
 import Cookies from "js-cookie";
-// import { cookies } from 'next/headers'
-import { useState, createContext, useContext } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-
-const UserContext = createContext();
-
-export const UserProvider = ({ children }) => {
-  const [userId, setUserId] = useState(null);
-  const loginUser = (id) => {
-    setUserId(id);
-  };
-  const logoutUser = () => {
-    setUserId(null);
-  };
-  return (
-    <UserContext.Provider value={{ userId, loginUser, logoutUser }}>
-      {children}
-    </UserContext.Provider>
-  );
-};
 
 export const useUser = () => useContext(UserContext);
 
 export default function LoginModal({ isOpen, onClose }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { loginUser } = useUser();
   const router = useRouter();
 
   const handleLogin = async (e) => {
@@ -42,7 +23,6 @@ export default function LoginModal({ isOpen, onClose }) {
       if (res.status === 200) {
         const data = await res.json();
         const { id } = data;
-        loginUser(id);
         Cookies.set("user", id);
         router.push(`/Home`);
       } else if (res.status === 401) {
