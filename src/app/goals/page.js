@@ -5,9 +5,9 @@ import Header from "../_components/Header.jsx";
 import NavBar from "../_components/NavBar.jsx";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
+import GoalChange from "../_components/_modals/GoalChange.jsx";
 
 import "./goals.css";
-import GoalChange from "../_components/_modals/GoalChange.jsx";
 
 const Goals = () => {
   const router = useRouter();
@@ -23,6 +23,7 @@ const Goals = () => {
   const [showModal, setShowModal] = useState(false);
   const [currentWeight, setCurrentWeight] = useState(0);
   const [goalWeight, setGoalWeight] = useState(0);
+  const [weight_goal_date, setWeightGoalDate] = useState(0);
   const [initialCalories, setInitialCalories] = useState(0);
   const [goal_calorie_intake, setGoalCalorieIntake] = useState(0);
   const [initialMiles, setInitialMiles] = useState(0);
@@ -39,6 +40,7 @@ const Goals = () => {
   const [currentCalories, setCurrentCalories] = useState(0);
 
   const handleOpenModal = () => {
+    console.log("open modal clicked");
     setShowModal(true);
   };
 
@@ -52,6 +54,7 @@ const Goals = () => {
         const res = await fetch(`/api/Goals?id=${globalId}`);
         const data = await res.json();
         setGoalWeight(data.goals[0].goal_weight);
+        setWeightGoalDate(data.goals[0].weight_goal_date);
         setInitialCalories(data.goals[0].initial_calorie_intake);
         setGoalCalorieIntake(data.goals[0].goal_calorie_intake);
         setInitialMiles(data.goals[0].initial_weekly_miles);
@@ -60,7 +63,7 @@ const Goals = () => {
         setUserInterests({ ...data.userInterests[0] });
         setCurrentMiles(data.runHistory[0].miles);
         let calorieSum = 0;
-        if (data.calorieHistory.length != 0)
+        if (data.calorieHistory.length !== 0)
           data.calorieHistory.map((entry) => {
             calorieSum += entry.calories;
           });
@@ -78,6 +81,12 @@ const Goals = () => {
       <div>
         <Header />
         <NavBar />
+        {showModal && (
+          <GoalChange
+            handleCloseModal={handleCloseModal}
+            showModal={showModal}
+          />
+        )}
         {userInterests.increase_weight ||
         userInterests.gain_weight ||
         userInterests.lose_weight ||
@@ -85,9 +94,9 @@ const Goals = () => {
           <GoalRibbon
             goalWeight={goalWeight}
             currentWeight={currentWeight}
-            handleOpenModal={handleOpenModal}
             handleCloseModal={handleCloseModal}
             showModal={showModal}
+            handleOpenModal={handleOpenModal}
           />
         ) : null}
         {userInterests.increase_weight ||
@@ -98,8 +107,8 @@ const Goals = () => {
             currentCalories={currentCalories}
             initialCalories={initialCalories}
             goal_calorie_intake={goal_calorie_intake}
-            handleOpenModal={handleOpenModal}
             handleCloseModal={handleCloseModal}
+            handleOpenModal={handleOpenModal}
             showModal={showModal}
           />
         ) : null}
@@ -108,8 +117,8 @@ const Goals = () => {
           <GoalRibbon
             initialMiles={initialMiles}
             goalMiles={goalMiles}
-            handleOpenModal={handleOpenModal}
             handleCloseModal={handleCloseModal}
+            handleOpenModal={handleOpenModal}
             showModal={showModal}
           />
         ) : null}
@@ -144,8 +153,9 @@ const GoalRibbon = ({
   );
   let calorieText = (
     <p>
-      I currently eat {currentCalories == 0 ? initialCalories : currentCalories}{" "}
-      calories, I want to eat {goal_calorie_intake} calories!
+      I currently eat{" "}
+      {currentCalories === 0 ? initialCalories : currentCalories} calories, I
+      want to eat {goal_calorie_intake} calories!
     </p>
   );
 
@@ -165,7 +175,6 @@ const GoalRibbon = ({
         <p>{goalText}</p>
         <button onClick={handleOpenModal}>
           <p>Modify</p>
-          {showModal && <GoalChange onClose={handleCloseModal} />}
         </button>
       </div>
     </div>
