@@ -35,7 +35,7 @@ export async function POST(request, response) {
       "SELECT weight_history.user_id, weight_history.weight, calorie_history.calories, weight_history.date FROM weight_history INNER JOIN calorie_history ON weight_history.user_id = calorie_history.user_id and weight_history.date = calorie_history.date WHERE weight_history.user_id = $1 GROUP BY weight_history.user_id, weight_history.weight, calorie_history.calories, weight_history.date ORDER BY weight_history.date DESC;",
       [user_id],
     );
-    console.log(previousresults.rows);
+    // console.log(previousresults.rows);
     let weightQuery = `
       INSERT INTO weight_history (user_id, date, weight) 
       VALUES ($1, $2, $3)

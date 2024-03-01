@@ -6,7 +6,7 @@
 // */
 
 "use client";
-import "./cardio.css";
+import "./diet.css";
 import React, { useState, useEffect } from "react";
 import Header from "../_components/Header";
 import NavBar from "../_components/NavBar";
@@ -15,7 +15,7 @@ import { globalId } from "../_components/_modals/LoginModal.jsx";
 export default function Cardio() {
   const [pastWeight, setPastWeight] = useState([]);
   useEffect(() => {
-    const res = fetch(`/api/Diet/Day?id=3`)
+    const res = fetch(`/api/Diet/Day?id=10`)
       .then((res) => res.json())
       .then((data) => setPastWeight(data));
     // setPastWeight(result);
@@ -43,7 +43,7 @@ const UserGoalCalories = () => {
   useEffect(() => {
     const setCalories = async () => {
       try {
-        const res = await fetch(`/api/Diet?id=3`);
+        const res = await fetch(`/api/Diet?id=10`);
         const result = await res.json();
         setCaloriesGoal(result[0].goal_calorie_intake);
         // setTempItems(tempItems);
@@ -55,37 +55,41 @@ const UserGoalCalories = () => {
   }, []);
 
   return (
-    <div className="flex justify-center items-center pt-12">
-      <div className="bg-blue-950 p-8 rounded-lg text-center text-white">
-        <p className="text-lg font-bold">
-          I want to eat {calories_goal} calories each day.
-        </p>
+    <div id="diet_goal_container">
+      <div>
+        <p>I want to eat {calories_goal} calories each day.</p>
       </div>
     </div>
   );
 };
 
 const ScrollableBox = ({ pastEntries }) => {
-  if (!pastEntries) return null;
-
-  //Sorts past runs by date, most recent first
-  // const sortedPastRuns = pastRuns
-  //   .slice()
-  //   .sort((a, b) => new Date(b.date) - new Date(a.date));
+  // if (!pastEntries) return null;
 
   return (
     <>
-      <h1 className="text-center text-white text-xl">History</h1>
-      <div className="bg-blue-950 w-96 h-96 rounded-lg text-center text-white border border-black overflow-auto">
+      <h1 className="text-center text-white text-xl mb-4">Run History</h1>
+      <div className="bg-PrimaryBlue w-96 max-h-80 rounded-lg text-white border border-black overflow-auto">
         <div className="p-4">
-          <ul className="list-disc list-inside">
+          <ul className="list list-inside">
             {/* Maps through past runs and displays them */}
-            {pastEntries.map((entry, index) => (
-              <li key={index} className="mb-2">
-                <strong>{entry.date.split("T")[0]}</strong> | Calories:{" "}
-                {entry.calories} | Weight: {entry.weight}
-              </li>
-            ))}
+            {pastEntries ? (
+              <>
+                {pastEntries.map((entry, index) => (
+                  <div className="border mb-1 rounded-lg">
+                    <li key={index} className="mb-2 text-center">
+                      <strong>{entry.date.split("T")[0]}</strong>
+                    </li>
+                    <li className="text-center mb-1">
+                      {" "}
+                      Calories: {entry.calories} | Weight: {entry.weight}
+                    </li>
+                  </div>
+                ))}
+              </>
+            ) : (
+              <li>No entries found</li>
+            )}
           </ul>
         </div>
       </div>
@@ -101,7 +105,7 @@ const Box = () => {
 
     const weight = e.target.elements.current_weight.value;
     const calories = e.target.elements.current_calories.value;
-    console.log(date, weight, calories);
+    // console.log(date, weight, calories);
     try {
       const response = await fetch(`/api/Diet/Day`, {
         method: "POST",
@@ -109,7 +113,7 @@ const Box = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          user_id: 3,
+          user_id: 10,
           currentDate: date,
           weight: weight,
           calories: calories,
@@ -132,8 +136,8 @@ const Box = () => {
 
   return (
     <>
-      <h1 className="text-center text-white text-xl">New Entry</h1>
-      <div className="bg-blue-950 w-96 h-96 rounded-lg text-center text-white border border-black">
+      <h1 className="text-center text-white text-xl mb-4">New Entry</h1>
+      <div className="bg-PrimaryBlue w-96 h-fit rounded-lg text-center text-white border border-black">
         <form onSubmit={handleSubmit}>
           <div className="p-4">
             <div className="mb-4">
@@ -175,7 +179,7 @@ const Box = () => {
             </div>
             <button
               type="submit"
-              className="bg-blue-800 text-white p-2 rounded-md"
+              className="bg-SecondaryBlue text-white p-2 rounded-md w-full"
             >
               Submit
             </button>

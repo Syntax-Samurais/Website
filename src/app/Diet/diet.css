@@ -1,4 +1,4 @@
-#run_goal_container {
+#diet_goal_container {
   @apply flex justify-center items-center pt-12;
 
   div {
@@ -13,5 +13,9 @@
 
   p {
     @apply text-lg font-bold;
+  }
+
+  li {
+    @apply text-center;
   }
 }
