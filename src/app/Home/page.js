@@ -41,7 +41,6 @@ const Home = () => {
         const tempItems = await res.json();
         console.log(tempItems);
 
-        // let weeklyRunGoal = tempItems.goals[0].goal_weekly_miles;
         let weeklyRunGoal = 29;
         let totalMilesRan = 0;
         tempItems.runData.map(
@@ -62,19 +61,16 @@ const Home = () => {
           mileCompletionColor = "#1861A5";
           chartBGColor = "#718199";
         }
-        console.log(` The weekly run goal is : ${weeklyRunGoal}`);
         setMileChartData({
           labels: ["Miles Ran", "Miles To Goal"],
           datasets: [
             {
-              // label: "Users Gained",
               data: [
                 totalMilesRan,
                 weeklyRunGoal - totalMilesRan <= 0
                   ? 0
                   : weeklyRunGoal - totalMilesRan,
               ],
-              //tempItems.map((data) => data.username),
               backgroundColor: [mileCompletionColor, chartBGColor],
               borderColor: "#2e2f2e",
               borderWidth: 1,
@@ -95,7 +91,6 @@ const Home = () => {
         if (totalCaloriesConsumed > weeklyCalorieGoal) {
           calorieCompletionColor = "#ff0000"; // Change to red if exceeded goal
           calChartBGColor = "#1861A5";
-          alert("YOU ARE A FAT ASS, Lose Some Weight!!!");
         } else if (totalCaloriesConsumed === weeklyCalorieGoal) {
           calorieCompletionColor = "#1861A5";
           calChartBGColor = "#1861A5";
@@ -123,7 +118,8 @@ const Home = () => {
         let entryDates = [];
         let weightEntries = [];
         tempItems.weightData.map((entry) => {
-          entryDates.push(entry.date);
+          const date = entry.date.slice(0, 10);
+          entryDates.push(date);
           weightEntries.push(Number(entry.weight));
         });
         setWeightChartData({
