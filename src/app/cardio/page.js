@@ -6,6 +6,7 @@ import NavBar from "../_components/NavBar";
 import AlertBox from "../_components/AlertBox.jsx";
 import { useUser } from "../_components/_modals/LoginModal.jsx";
 import { ScrollableBox } from "../_components/ScrollableBox.jsx";
+import { useRouter } from "next/navigation";
 
 import "./cardio.css";
 
@@ -13,6 +14,13 @@ export default function Cardio() {
   const { userId } = useUser();
   const globalId = userId;
   const [pastRuns, setPastRuns] = useState([]);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (globalId === 0 || globalId === null) {
+      router.push(`/`);
+    }
+  }, [globalId, router]);
 
   useEffect(() => {
     const fetchData = async () => {

@@ -4,10 +4,19 @@ import React, { useState, useEffect } from "react";
 import NavBar from "../_components/NavBar";
 import Header from "../_components/Header";
 import { useUser } from "../_components/_modals/LoginModal.jsx";
+import { useRouter } from "next/navigation";
 
 const Day = (props) => {
   const { userId } = useUser();
   const globalId = userId;
+  const router = useRouter();
+
+  useEffect(() => {
+    if (globalId === 0 || globalId === null) {
+      router.push(`/`);
+    }
+  }, [globalId, router]);
+
   const [weight, setWeight] = useState("");
   const [calories, setCalories] = useState("");
 

@@ -6,10 +6,19 @@ import Header from "../_components/Header.jsx";
 import PieChart from "../_components/PieChart";
 import LineChart from "../_components/LineChart";
 import { useUser } from "../_components/_modals/LoginModal.jsx";
+import { useRouter } from "next/navigation";
 
 const Home = () => {
+  const router = useRouter();
   const { userId } = useUser();
   const globalId = userId;
+
+  useEffect(() => {
+    if (globalId === 0 || globalId === null) {
+      router.push(`/`);
+    }
+  }, [globalId, router]);
+
   const [sliderColor, setSliderColor] = useState("#000000");
   const defaultChar = {
     labels: [],

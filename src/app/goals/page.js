@@ -5,10 +5,18 @@ import Header from "../_components/Header.jsx";
 import NavBar from "../_components/NavBar.jsx";
 import { useUser } from "../_components/_modals/LoginModal.jsx";
 import "./goals.css";
+import { useRouter } from "next/navigation";
 
 const Goals = () => {
+  const router = useRouter();
   const { userId } = useUser();
   const globalId = userId;
+
+  useEffect(() => {
+    if (globalId === 0 || globalId === null) {
+      router.push(`/`);
+    }
+  }, [globalId, router]);
 
   const [currentWeight, setCurrentWeight] = useState(0);
   const [goalWeight, setGoalWeight] = useState(0);
