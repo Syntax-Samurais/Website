@@ -5,7 +5,7 @@ import Header from "../_components/Header";
 import NavBar from "../_components/NavBar";
 import AlertBox from "../_components/AlertBox.jsx";
 import { globalId } from "../_components/_modals/LoginModal.jsx";
-import { ScrollableBox } from "../_components/ScrollableBox";
+import { ScrollableBox } from "../_components/ScrollableBox.jsx";
 
 import "./cardio.css";
 
