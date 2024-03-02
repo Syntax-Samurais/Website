@@ -8,11 +8,10 @@ import LoginModal from "./_components/_modals/LoginModal";
 
 export default function Home() {
   const [showLoginModal, setShowLoginModal] = useState(false);
-  const [showSignUpModal, setShowSignUpModal] = useState(false);
+  const router = useRouter();
 
   const openLoginModal = () => setShowLoginModal(true);
   const closeLoginModal = () => setShowLoginModal(false);
-  const router = useRouter();
 
   const handleLogin = (username, password) => {
     console.log(
@@ -52,14 +51,7 @@ export default function Home() {
   ];
 
   return (
-    <div
-      className="text-white"
-      style={{
-        backgroundImage: "url('/images/mountains.jpeg')",
-        backgroundSize: "cover",
-        backgroundAttachment: "scroll",
-      }}
-    >
+    <div className="text-white bg-mountains2 bg-cover bg-scroll">
       <Head>
         <title>FitFusion</title>
         <meta
@@ -70,9 +62,9 @@ export default function Home() {
       </Head>
       <Header />
       <main>
-        <div className="h-screen flex justify-center items-center">
+        <div className="mt-48 flex justify-center">
           <div className="text-center text-white">
-            <h1 className="text-4xl font-bold mb-4">Welcome to FitFusion</h1>
+            <h1 className="text-4xl font-bold">Welcome to FitFusion</h1>
             <p className="text-lg">Elevate your fitness</p>
             <button
               className="mt-4 bg-white text-blue-500 px-4 py-2 rounded-md"
@@ -88,45 +80,45 @@ export default function Home() {
             </button>
           </div>
         </div>
-      </main>
-      {/* testemonials */}
-      <section className="py-10 justify-center items-center">
-        <div className="container mx-auto">
-          <h2 className="text-3xl font-bold mb-6 text-center">
-            What Our Users Say
-          </h2>
-          <div className="space-y-6">
-            {testimonials.map((testimonial, index) => (
-              <div
-                key={testimonial.id}
-                className={`p-6 rounded-lg flex items-center ${
-                  index % 2 === 0 ? "flex-row" : "flex-row-reverse"
-                } justify-center`}
-              >
-                <img
-                  src={`images/Testimonial_pfp.jpg`}
-                  className="w-16 h-16 rounded-full mr-4"
-                  style={{ marginBottom: "5px", marginTop: "5px" }}
-                />
-                <div>
-                  <p className="text-lg font-semibold mb-2">
-                    {testimonial.name}
-                  </p>
-                  <p
-                    className="text-lg"
-                    style={{
-                      marginLeft: index % 2 === 0 ? "1rem" : "0",
-                      marginRight: index % 2 === 0 ? "0" : "1rem",
-                    }}
-                  >
-                    {testimonial.text}
-                  </p>
+        {/* Testimonials */}
+        <section className="mt-96 py-10 justify-center items-center">
+          <div className="container mx-auto">
+            <h2 className="text-3xl font-bold mb-6 text-center">
+              What Our Users Say
+            </h2>
+            <div className="space-y-6">
+              {testimonials.map((testimonial, index) => (
+                <div
+                  key={testimonial.id}
+                  className={`p-6 rounded-lg flex items-center ${
+                    index % 2 === 0 ? "flex-row" : "flex-row-reverse"
+                  } justify-center`}
+                >
+                  <img
+                    src={`images/Testimonial_pfp.jpg`}
+                    className="w-16 h-16 rounded-full mr-4"
+                    style={{ marginBottom: "5px", marginTop: "5px" }}
+                  />
+                  <div>
+                    <p className="text-lg font-semibold mb-2">
+                      {testimonial.name}
+                    </p>
+                    <p
+                      className="text-lg"
+                      style={{
+                        marginLeft: index % 2 === 0 ? "1rem" : "0",
+                        marginRight: index % 2 === 0 ? "0" : "1rem",
+                      }}
+                    >
+                      {testimonial.text}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </main>
       <LoginModal
         isOpen={showLoginModal}
         onClose={closeLoginModal}

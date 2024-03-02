@@ -30,9 +30,13 @@ module.exports = {
         customHeaderBlue: "#294d77",
       },
       backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        mountains: "url('/images/mountains.jpeg')",
+        mountains2: "url('/images/mountains2.jpeg')",
+        gradient_native:
+          "linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.5) 100%)",
+        gradient: "url('/images/gradient.jpg')",
+        logo1: "url('/images/logo1.png')",
+        propoganda: "url('/images/propaganda.png",
       },
     },
   },
