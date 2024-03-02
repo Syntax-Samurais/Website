@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState, useEffect } from "react";
 import NavBar from "../_components/NavBar.jsx";
 import Header from "../_components/Header.jsx";
@@ -10,7 +9,6 @@ import Cookies from "js-cookie";
 
 const Home = () => {
   const router = useRouter();
-
   let cookieUser = Cookies.get("user");
   const globalId = cookieUser;
 
@@ -19,7 +17,6 @@ const Home = () => {
       router.push(`/`);
     }
   }, [globalId, router]);
-
   const [sliderColor, setSliderColor] = useState("#000000");
   const defaultChar = {
     labels: [],
@@ -33,7 +30,6 @@ const Home = () => {
       },
     ],
   };
-
   const [mileChartData, setMileChartData] = useState(defaultChar);
   const [calorieChartData, setCalorieChartData] = useState(defaultChar);
   const [WeightChartData, setWeightChartData] = useState(defaultChar);
@@ -115,7 +111,6 @@ const Home = () => {
                   ? 0
                   : weekCalGoal - totCalConsumed,
               ],
-
               backgroundColor: [calorieCompletionColor, calChartBGColor],
               borderColor: "#2e2f2e",
               borderWidth: 1,
@@ -148,7 +143,6 @@ const Home = () => {
         setLoading(false);
       }
     };
-
     fetchData();
   }, []);
 
