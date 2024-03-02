@@ -29,9 +29,67 @@ export default function GoalChange({ showModal, handleCloseModal }) {
           >
             &times;
           </button>
-          <h2 className="text-2xl font-bold text-center mb-12">
-            Welcome <br /> Back
-          </h2>
+          <form>
+            <div>
+              <label
+                htmlFor="goalWeight"
+                className="block text-left text-white"
+              >
+                Goal Weight
+              </label>
+              <input
+                type="number"
+                id="goalWeight"
+                name="goalWeight"
+                className="w-full rounded-md p-2 text-black"
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="weightGoalDate"
+                className="block text-left text-white"
+              >
+                Weight Goal Date
+              </label>
+              <input
+                type="date"
+                id="weightGoalDate"
+                name="weightGoalDate"
+                className="w-full rounded-md p-2 text-black"
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="goalCalories"
+                className="block text-left text-white"
+              >
+                Goal Calories
+              </label>
+              <input
+                type="number"
+                id="goalCalories"
+                name="goalCalories"
+                className="w-full rounded-md p-2 text-black"
+              />
+            </div>
+            <div>
+              <label htmlFor="goalMiles" className="block text-left text-white">
+                Goal Miles
+              </label>
+              <input
+                type="number"
+                id="goalMiles"
+                name="goalMiles"
+                className="w-full rounded-md p-2 text-black"
+              />
+            </div>
+            <button
+              type="submit"
+              className="bg-SecondaryBlue text-white p-2 rounded-md w-full"
+            >
+              Submit
+            </button>
+          </form>
         </div>
       </div>
     </>
