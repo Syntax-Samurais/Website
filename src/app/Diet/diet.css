@@ -1,0 +1,21 @@
+#diet_goal_container {
+  @apply flex justify-center items-center pt-12;
+
+  div {
+    @apply flex justify-center items-center text-white bg-PrimaryBlue;
+
+    border: 50px solid transparent;
+    border-right-color: #2e2f2e;
+    border-left-color: #2e2f2e;
+    width: 425px;
+    height: 60px;
+  }
+
+  p {
+    @apply text-lg font-bold;
+  }
+
+  li {
+    @apply text-center;
+  }
+}

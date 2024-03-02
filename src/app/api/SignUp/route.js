@@ -42,6 +42,35 @@ export async function POST(request, response) {
     );
   }
 
+  switch (goal) {
+    case "mileage":
+      await psql.query(
+        "Insert into user_interests (user_id, increase_running) values ($1, $2);",
+        [id, true],
+      );
+      break;
+    case "sameWeight":
+      await psql.query(
+        "Insert into user_interests (user_id, maintain_weight) values ($1, $2);",
+        [id, true],
+      );
+      break;
+    case "loseWeight":
+      await psql.query(
+        "Insert into user_interests (user_id, lose_weight) values ($1, $2);",
+        [id, true],
+      );
+      break;
+    case "gainWeight":
+      await psql.query(
+        "Insert into user_interests (user_id, gain_weight, increase_weight) values ($1, $2, $3);",
+        [id, true, true],
+      );
+      break;
+    default:
+      break;
+  }
+
   return new Response("user successfully added", {
     contentType: "application/json",
   });

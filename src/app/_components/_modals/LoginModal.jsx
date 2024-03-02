@@ -3,8 +3,6 @@ import Cookies from "js-cookie";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export const useUser = () => useContext(UserContext);
-
 export default function LoginModal({ isOpen, onClose }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
