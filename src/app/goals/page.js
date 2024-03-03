@@ -36,7 +36,7 @@ const Goals = () => {
     lose_weight: false,
     maintain_weight: false,
   });
-  const [currentMiles, setCurrentMiles] = useState(0);
+  const [currentMiles, setCurrentMiles] = useState(null);
   const [currentCalories, setCurrentCalories] = useState(0);
 
   const handleOpenModal = () => {
@@ -55,26 +55,37 @@ const Goals = () => {
         const data = await res.json();
         setGoalWeight(data.goals[0].goal_weight);
         setWeightGoalDate(data.goals[0].weight_goal_date);
-        setInitialCalories(data.goals[0].initial_calorie_intake);
-        setGoalCalorieIntake(data.goals[0].goal_calorie_intake);
-        setInitialMiles(data.goals[0].initial_weekly_miles);
-        setGoalMiles(data.goals[0].goal_weekly_miles);
-        setCurrentWeight(data.weightHistory[0].weight);
-        setUserInterests({ ...data.userInterests[0] });
-        setCurrentMiles(data.runHistory[0].miles);
-        let calorieSum = 0;
-        if (data.calorieHistory.length !== 0)
-          data.calorieHistory.map((entry) => {
-            calorieSum += entry.calories;
+        try {
+          setInitialCalories(data.goals[0].initial_calorie_intake);
+          setGoalCalorieIntake(data.goals[0].goal_calorie_intake);
+          setInitialMiles(data.goals[0].initial_weekly_miles);
+          setGoalMiles(data.goals[0].goal_weekly_miles);
+          setCurrentWeight(data.weightHistory[0].weight);
+          setUserInterests({ ...data.userInterests[0] });
+          let mileSum = 0;
+          data.runHistory[0].forEach((entry) => {
+            mileSum += entry.miles;
           });
-        let avgCalories = calorieSum / data.calorieHistory.length;
-        setCurrentCalories(Math.floor(avgCalories));
+          setCurrentMiles(mileSum);
+          let calorieSum = 0;
+          if (data.calorieHistory.length !== 0)
+            data.calorieHistory.map((entry) => {
+              calorieSum += entry.calories;
+            });
+          let avgCalories =
+            data.calorieHistory.length !== 0
+              ? calorieSum / data.calorieHistory.length
+              : 0;
+          setCurrentCalories(Math.floor(avgCalories));
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
     fetchingData();
-  }, []);
+  }, [showModal]);
 
   return (
     <>
@@ -134,30 +145,15 @@ const GoalRibbon = ({
   goalMiles,
   currentCalories,
   initialCalories,
-  handleOpenModal,
-  handleCloseModal,
-  showModal,
   goal_calorie_intake,
+  currentMiles,
+  handleOpenModal,
 }) => {
-  const [goalText, setGoalText] = useState(<p></p>);
-  let weightText = (
-    <p>
-      I currently weigh {currentWeight} lbs, and I want to weigh {goalWeight}{" "}
-      lbs!
-    </p>
-  );
-  let cardioText = (
-    <p>
-      I currently run {initialMiles} miles, I want to run {goalMiles} miles!
-    </p>
-  );
-  let calorieText = (
-    <p>
-      I currently eat{" "}
-      {currentCalories === 0 ? initialCalories : currentCalories} calories, I
-      want to eat {goal_calorie_intake} calories!
-    </p>
-  );
+  const [goalText, setGoalText] = useState("");
+  let weightText = `I currently weigh ${currentWeight} lbs, I want to weigh ${goalWeight} lbs!`;
+  let calorieText = `I currently eat ${currentCalories} calories, I want to eat ${goal_calorie_intake} calories!`;
+  let cardioText = `I currently run ${currentMiles !== null ? currentMiles : initialMiles} miles, I want to run ${goalMiles} miles!`;
+  console.log("currentMiles line 155 of goal page:", currentMiles);
 
   useEffect(() => {
     if (goalWeight != undefined) {
@@ -167,7 +163,16 @@ const GoalRibbon = ({
     } else {
       setGoalText(cardioText);
     }
-  }, [goalWeight, initialCalories, initialMiles, goalMiles, currentCalories]);
+  }, [
+    goalWeight,
+    initialCalories,
+    initialMiles,
+    goalMiles,
+    currentCalories,
+    currentMiles,
+    currentWeight,
+    goal_calorie_intake,
+  ]);
 
   return (
     <div className="goal-wrapper">

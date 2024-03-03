@@ -17,7 +17,7 @@ export async function GET(request) {
   );
 
   let runHistory = await psql.query(
-    "SELECT * FROM run_history WHERE user_id = $1 ORDER BY date DESC LIMIT 7",
+    "SELECT * FROM run_history WHERE user_id = $1 AND date >= CURRENT_DATE - INTERVAL '7 days' ORDER BY date DESC",
     [user_id],
   );
 
