@@ -13,39 +13,35 @@ const NavBar = () => {
 
   return (
     <>
-      <div className="flex mt-6 h-10 w-11/12 sm:w-3/4 m-auto max-w-navWrap">
+      <div className="flex mt-6 h-10 w-11/12 md:w-3/4 m-auto max-w-navWrap">
         <div className="w-14 h-14 inset-x-0 -my-2 m-auto absolute rounded-full bg-neutral-300 drop-shadow-lg z-10"></div>
         <div className="flex m-auto relative w-full h-full rounded-full bg-neutral-300">
-          <div className="flex justify-around content-center px-4 sm:px-12 w-1/2 text-sm items-center">
+          <div className="flex justify-around content-center px-4 md:px-12 w-1/2 text-sm items-center">
             <Link
               href="/Home"
               className={path == "/Home" ? selectedStyle : defaultStyle}
             >
-              {" "}
-              Dashboard{" "}
+              Dashboard
             </Link>
             <Link
               href="/goals"
               className={path == "/goals" ? selectedStyle : defaultStyle}
             >
-              {" "}
-              My Goals{" "}
+              My Goals
             </Link>
           </div>
-          <div className="flex justify-around content-center px-4 sm:px-12 w-1/2 text-sm items-center">
+          <div className="flex justify-around content-center px-4 md:px-12 w-1/2 text-sm items-center">
             <Link
               href="/Diet"
               className={path == "/Diet" ? selectedStyle : defaultStyle}
             >
-              {" "}
-              My Diet{" "}
+              My Diet
             </Link>
             <Link
               href="/cardio"
               className={path == "/cardio" ? selectedStyle : defaultStyle}
             >
-              {" "}
-              My Cardio{" "}
+              My Cardio
             </Link>
           </div>
         </div>
