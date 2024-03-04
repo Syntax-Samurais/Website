@@ -36,7 +36,7 @@ const Goals = () => {
     lose_weight: false,
     maintain_weight: false,
   });
-  const [currentMiles, setCurrentMiles] = useState(null);
+  const [currentMiles, setCurrentMiles] = useState(0);
   const [currentCalories, setCurrentCalories] = useState(0);
 
   const handleOpenModal = () => {
@@ -63,9 +63,10 @@ const Goals = () => {
           setCurrentWeight(data.weightHistory[0].weight);
           setUserInterests({ ...data.userInterests[0] });
           let mileSum = 0;
-          data.runHistory[0].forEach((entry) => {
-            mileSum += entry.miles;
+          data.runHistory.forEach((entry) => {
+            mileSum += parseFloat(entry.miles_ran);
           });
+          console.log("mileSum:", mileSum);
           setCurrentMiles(mileSum);
           let calorieSum = 0;
           if (data.calorieHistory.length !== 0)
@@ -127,6 +128,7 @@ const Goals = () => {
         {userInterests.increase_running || userInterests.improve_pace ? (
           <GoalRibbon
             initialMiles={initialMiles}
+            currentMiles={currentMiles}
             goalMiles={goalMiles}
             handleCloseModal={handleCloseModal}
             handleOpenModal={handleOpenModal}
@@ -153,7 +155,7 @@ const GoalRibbon = ({
   let weightText = `I currently weigh ${currentWeight} lbs, I want to weigh ${goalWeight} lbs!`;
   let calorieText = `I currently eat ${currentCalories} calories, I want to eat ${goal_calorie_intake} calories!`;
   let cardioText = `I currently run ${currentMiles !== null ? currentMiles : initialMiles} miles, I want to run ${goalMiles} miles!`;
-  console.log("currentMiles line 155 of goal page:", currentMiles);
+  console.log("currentMiles line 156 of goal page:", currentMiles);
 
   useEffect(() => {
     if (goalWeight != undefined) {
