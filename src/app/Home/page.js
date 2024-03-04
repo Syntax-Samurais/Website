@@ -228,10 +228,11 @@ const Home = () => {
         <div className="flex flex-row flex-wrap h-fit sm:h-96 w-full mx-auto">
           {renderCalories()}
           {renderMilesRan()}
-        </div>
-        <div className="flex justify-center h-80 w-full md:mt-8">
           <LineChart chartData={WeightChartData} goalWeight={goalWeight} />
         </div>
+        {/* <div className="flex justify-center h-80 w-full md:mt-8">
+         
+        </div> */}
       </section>
     </>
   );
