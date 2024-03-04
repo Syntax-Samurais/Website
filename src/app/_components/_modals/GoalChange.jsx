@@ -4,16 +4,29 @@ import React, { useState } from "react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 
-const GoalChange = ({ showModal, handleCloseModal, userInterests }) => {
+const GoalChange = ({
+  showModal,
+  handleCloseModal,
+  userInterests,
+  goalWeight,
+  weight_goal_date,
+  goal_calorie_intake,
+  goalMiles,
+  handleInterestChange,
+}) => {
   const router = useRouter();
   let cookieUser = Cookies.get("user");
   const globalId = cookieUser;
 
+  // use the passed in props to set default values for the form fields
+  console.log("Goal Change Modal weight_goal_date: ", weight_goal_date);
   const [formData, setFormData] = useState({
-    goal_weight: "",
-    weight_goal_date: "",
-    goal_calorie_intake: "",
-    goal_weekly_miles: "",
+    goal_weight: goalWeight,
+    weight_goal_date:
+      weight_goal_date || new Date().toISOString().split("T")[0],
+    goal_calorie_intake: goal_calorie_intake,
+    goal_weekly_miles: goalMiles,
+    userInterests: userInterests,
   });
 
   const handleClose = () => {
@@ -90,7 +103,12 @@ const GoalChange = ({ showModal, handleCloseModal, userInterests }) => {
             {/* Iterete over user interests and create checkboxes for each at the beginning of the form. If userInterest is true, check the box. */}
             <div className="flex flex-wrap">
               {Object.keys(userInterests).map((interest) => {
-                if (interest !== "id" && interest !== "user_id") {
+                if (
+                  interest !== "id" &&
+                  interest !== "user_id" &&
+                  interest !== "improve_pace" &&
+                  interest !== "increase_weight"
+                ) {
                   return (
                     <div
                       key={interest}
@@ -108,12 +126,13 @@ const GoalChange = ({ showModal, handleCloseModal, userInterests }) => {
                         name={interest}
                         value={formData[interest]}
                         checked={userInterests[interest]}
-                        onChange={(e) =>
+                        onChange={(e) => {
                           setFormData((prevFormData) => ({
                             ...prevFormData,
                             [interest]: e.target.checked,
-                          }))
-                        }
+                          }));
+                          handleInterestChange(interest, e.target.checked);
+                        }}
                         className="w-full rounded-md p-2 text-black"
                       />
                     </div>

@@ -48,6 +48,13 @@ const Goals = () => {
     setShowModal(false);
   };
 
+  const handleInterestChange = (interest, isChecked) => {
+    setUserInterests((prevInterests) => ({
+      ...prevInterests,
+      [interest]: isChecked,
+    }));
+  };
+
   useEffect(() => {
     const fetchingData = async () => {
       try {
@@ -66,7 +73,6 @@ const Goals = () => {
           data.runHistory.forEach((entry) => {
             mileSum += parseFloat(entry.miles_ran);
           });
-          console.log("mileSum:", mileSum);
           setCurrentMiles(mileSum);
           let calorieSum = 0;
           if (data.calorieHistory.length !== 0)
@@ -98,6 +104,11 @@ const Goals = () => {
             handleCloseModal={handleCloseModal}
             showModal={showModal}
             userInterests={userInterests}
+            goalWeight={goalWeight}
+            weight_goal_date={weight_goal_date}
+            goal_calorie_intake={goal_calorie_intake}
+            goalMiles={goalMiles}
+            handleInterestChange={handleInterestChange}
           />
         )}
         <div className="flex flex-col justify-center items-center">
