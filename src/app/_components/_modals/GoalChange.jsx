@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 
-const GoalChange = ({ showModal, handleCloseModal }) => {
+const GoalChange = ({ showModal, handleCloseModal, userInterests }) => {
   const router = useRouter();
   let cookieUser = Cookies.get("user");
   const globalId = cookieUser;
@@ -87,6 +87,42 @@ const GoalChange = ({ showModal, handleCloseModal }) => {
             &times;
           </button>
           <form onSubmit={handleSubmit}>
+            {/* Iterete over user interests and create checkboxes for each at the beginning of the form. If userInterest is true, check the box. */}
+            <div className="flex flex-wrap">
+              {Object.keys(userInterests).map((interest) => {
+                if (interest !== "id" && interest !== "user_id") {
+                  return (
+                    <div
+                      key={interest}
+                      className="border-2 border-gray-500 rounded-lg p-2 m-2"
+                    >
+                      <label
+                        htmlFor={interest}
+                        className="block text-right text-white"
+                      >
+                        {formatLabel(interest)}
+                      </label>
+                      <input
+                        type="checkbox"
+                        id={interest}
+                        name={interest}
+                        value={formData[interest]}
+                        checked={userInterests[interest]}
+                        onChange={(e) =>
+                          setFormData((prevFormData) => ({
+                            ...prevFormData,
+                            [interest]: e.target.checked,
+                          }))
+                        }
+                        className="w-full rounded-md p-2 text-black"
+                      />
+                    </div>
+                  );
+                }
+                return null;
+              })}
+            </div>
+
             {formFields.map((field) => (
               <div key={field}>
                 <label htmlFor={field} className="block text-left text-white">

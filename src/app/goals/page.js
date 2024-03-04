@@ -97,6 +97,7 @@ const Goals = () => {
           <GoalChange
             handleCloseModal={handleCloseModal}
             showModal={showModal}
+            userInterests={userInterests}
           />
         )}
         {userInterests.increase_weight ||
