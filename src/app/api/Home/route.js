@@ -10,7 +10,9 @@ export async function GET(request) {
     user_id,
   ]);
   let calorieData = await psql.query(
-    "SELECT * FROM calorie_history WHERE user_id = 1",
+    // "SELECT * FROM calorie_history WHERE user_id = $1 AND date >= CURRENT_TIMESTAMP - INTERVAL '7 days' ORDER BY date DESC",
+    "SELECT * FROM calorie_history WHERE user_id = $1 AND date >= CURRENT_TIMESTAMP - INTERVAL '7 days' ORDER BY date DESC",
+    [user_id],
   );
   let goals = await psql.query("SELECT * FROM goals WHERE user_id = $1", [
     user_id,
