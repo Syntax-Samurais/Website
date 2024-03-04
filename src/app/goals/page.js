@@ -100,42 +100,50 @@ const Goals = () => {
             userInterests={userInterests}
           />
         )}
-        {userInterests.increase_weight ||
-        userInterests.gain_weight ||
-        userInterests.lose_weight ||
-        userInterests.maintain_weight ? (
-          <GoalRibbon
-            goalWeight={goalWeight}
-            currentWeight={currentWeight}
-            handleCloseModal={handleCloseModal}
-            showModal={showModal}
-            handleOpenModal={handleOpenModal}
-          />
-        ) : null}
-        {userInterests.increase_weight ||
-        userInterests.gain_weight ||
-        userInterests.lose_weight ||
-        userInterests.maintain_weight ? (
-          <GoalRibbon
-            currentCalories={currentCalories}
-            initialCalories={initialCalories}
-            goal_calorie_intake={goal_calorie_intake}
-            handleCloseModal={handleCloseModal}
-            handleOpenModal={handleOpenModal}
-            showModal={showModal}
-          />
-        ) : null}
+        <div className="flex flex-col justify-center items-center">
+          <button
+            className="flex flex-col bg-PrimaryBlue text-white font-bold py-2 px-4 rounded-full border-white border-2 justify-center items-center mt-8 mb-0"
+            onClick={handleOpenModal}
+          >
+            MODIFY GOALS
+          </button>
+          {userInterests.increase_weight ||
+          userInterests.gain_weight ||
+          userInterests.lose_weight ||
+          userInterests.maintain_weight ? (
+            <GoalRibbon
+              goalWeight={goalWeight}
+              currentWeight={currentWeight}
+              handleCloseModal={handleCloseModal}
+              showModal={showModal}
+              handleOpenModal={handleOpenModal}
+            />
+          ) : null}
+          {userInterests.increase_weight ||
+          userInterests.gain_weight ||
+          userInterests.lose_weight ||
+          userInterests.maintain_weight ? (
+            <GoalRibbon
+              currentCalories={currentCalories}
+              initialCalories={initialCalories}
+              goal_calorie_intake={goal_calorie_intake}
+              handleCloseModal={handleCloseModal}
+              handleOpenModal={handleOpenModal}
+              showModal={showModal}
+            />
+          ) : null}
 
-        {userInterests.increase_running || userInterests.improve_pace ? (
-          <GoalRibbon
-            initialMiles={initialMiles}
-            currentMiles={currentMiles}
-            goalMiles={goalMiles}
-            handleCloseModal={handleCloseModal}
-            handleOpenModal={handleOpenModal}
-            showModal={showModal}
-          />
-        ) : null}
+          {userInterests.increase_running || userInterests.improve_pace ? (
+            <GoalRibbon
+              initialMiles={initialMiles}
+              currentMiles={currentMiles}
+              goalMiles={goalMiles}
+              handleCloseModal={handleCloseModal}
+              handleOpenModal={handleOpenModal}
+              showModal={showModal}
+            />
+          ) : null}
+        </div>
       </div>
     </>
   );
@@ -180,9 +188,6 @@ const GoalRibbon = ({
     <div className="goal-wrapper">
       <div>
         <p>{goalText}</p>
-        <button onClick={handleOpenModal}>
-          <p>Modify</p>
-        </button>
       </div>
     </div>
   );

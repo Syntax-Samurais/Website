@@ -14,16 +14,4 @@
   p {
     @apply text-center text-lg font-bold pb-0.5;
   }
-
-  button {
-    @apply bg-PrimaryBlue text-white font-bold  px-4 py-0.5 rounded;
-
-    border: solid;
-    border-radius: 25px;
-    border-width: 1px;
-
-    p {
-      @apply text-sm;
-    }
-  }
 }

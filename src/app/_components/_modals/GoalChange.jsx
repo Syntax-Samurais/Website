@@ -131,6 +131,7 @@ const GoalChange = ({ showModal, handleCloseModal, userInterests }) => {
                 <input
                   type={field === "weight_goal_date" ? "date" : "text"}
                   id={field}
+                  /*add default text to field with the  */
                   name={field}
                   value={formData[field]}
                   onChange={(e) =>
