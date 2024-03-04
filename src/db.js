@@ -4,7 +4,7 @@ let connection = new Promise((resolve, reject) => {
   try {
     resolve(
       new Pool({
-        connectionString: process.env.LOCAL_DATABASE_URL,
+        connectionString: process.env.DATABASE_URL,
       }),
     );
   } catch (e) {
