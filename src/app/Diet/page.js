@@ -84,16 +84,16 @@ const ScrollableBox = ({ pastEntries }) => {
       </h1>
       <div className="bg-PrimaryBlue w-96 max-h-80 rounded-lg text-white border border-black overflow-auto">
         <div className="p-4">
-          <ul className="list list-inside">
+          <ul className="list list-inside divide-y divide-SecondaryGrey">
             {/* Maps through past runs and displays them */}
             {pastEntries.length !== 0 ? (
               <>
                 {pastEntries.map((entry, index) => (
-                  <div className="border mb-1 rounded-lg">
-                    <li key={index} className="mb-2 text-center">
+                  <div className="">
+                    <li key={index} className="my-1 text-center">
                       <strong>{entry.date.split("T")[0]}</strong>
                     </li>
-                    <li className="text-center mb-1">
+                    <li className="text-center mb-1 ">
                       {" "}
                       Calories: {entry.calories} | Weight: {entry.weight}
                     </li>
