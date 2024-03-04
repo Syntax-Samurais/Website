@@ -156,7 +156,6 @@ const GoalRibbon = ({
   let weightText = `I currently weigh ${currentWeight} lbs, I want to weigh ${goalWeight} lbs!`;
   let calorieText = `I currently eat ${currentCalories} calories, I want to eat ${goal_calorie_intake} calories!`;
   let cardioText = `I currently run ${currentMiles !== null ? currentMiles : initialMiles} miles, I want to run ${goalMiles} miles!`;
-  console.log("currentMiles line 156 of goal page:", currentMiles);
 
   useEffect(() => {
     if (goalWeight != undefined) {
