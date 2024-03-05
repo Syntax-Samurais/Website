@@ -57,7 +57,7 @@ export default function Home() {
   ];
 
   return (
-    <div className="text-white bg-mountains bg-cover bg-scroll">
+    <div className="text-white bg-mountains2 bg-cover bg-scroll">
       <Head>
         <title>FitFusion</title>
         <meta
@@ -69,8 +69,8 @@ export default function Home() {
       <Header />
       <main>
         <div className="mt-52 flex justify-center">
-          <div className="text-center text-black">
-            <h1 className="text-4xl font-bold mb-2">Welcome to FitFusion</h1>
+          <div className="text-center text-white">
+            <h1 className="text-4xl font-bold">Welcome to FitFusion</h1>
             <p className="text-lg mb-4">Elevate your fitness</p>
             <button
               className="mt-4 bg-white text-blue-500 px-4 py-2 rounded-md transition duration-300 ease-in-out hover:bg-blue-500 hover:text-white"
