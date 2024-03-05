@@ -78,7 +78,7 @@ const GoalChange = ({
         data[key] = e.target[key]?.value;
       }
     }
-    // TODO check userInterests to see if state is updating before patching
+
     gain_weight = gain_weight;
     increase_running = increase_running;
     lose_weight = lose_weight;
@@ -101,10 +101,6 @@ const GoalChange = ({
       console.error("Patching error: ", error);
     }
   };
-  console.log("gain_weight: ", gain_weight);
-  console.log("increase_running: ", increase_running);
-  console.log("lose_weight: ", lose_weight);
-  console.log("maintain_weight: ", maintain_weight);
 
   const formFields = [
     "goal_weight",
@@ -146,7 +142,10 @@ const GoalChange = ({
             {/* Iterete over user userInterestFields and create checkboxes for each at the beginning of the form. If userInterest is true, check the box. */}
             <div>
               {userInterestFields.map((field) => (
-                <div key={field}>
+                <div
+                  key={field}
+                  className="flex flex-wrap items-center text-white"
+                >
                   <input
                     type="checkbox"
                     id={field}
@@ -177,12 +176,6 @@ const GoalChange = ({
               ))}
             </div>
             <div></div>
-            <label
-              htmlFor="weight_goal_date"
-              className="block text-left text-white"
-            >
-              Date
-            </label>{" "}
             {formFields.map((field) => (
               <div key={field}>
                 <label htmlFor={field} className="block text-left text-white">

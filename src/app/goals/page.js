@@ -128,6 +128,7 @@ const Goals = () => {
           {gain_weight || lose_weight || maintain_weight ? (
             <GoalRibbon
               goalWeight={goalWeight}
+              weight_goal_date={weight_goal_date}
               currentWeight={currentWeight}
               handleCloseModal={handleCloseModal}
               showModal={showModal}
@@ -163,6 +164,7 @@ const Goals = () => {
 
 const GoalRibbon = ({
   currentWeight,
+  weight_goal_date,
   goalWeight,
   initialMiles,
   goalMiles,
@@ -172,17 +174,33 @@ const GoalRibbon = ({
   currentMiles,
   handleOpenModal,
 }) => {
+  // Set a div for each goal type that displays the time for each goal. i.e. the weight goal will display the time until the goal is reached. The calorie goal will disply that it is a daily goal. The running goal will display that it is a weekly goal.
   const [goalText, setGoalText] = useState("");
   let weightText = `I currently weigh ${currentWeight} lbs, I want to weigh ${goalWeight} lbs!`;
-  let calorieText = `I currently eat ${currentCalories} calories, I want to eat ${goal_calorie_intake} calories!`;
+  let calorieText = `My daily average for the past week  is ${currentCalories} calories, I want to eat ${goal_calorie_intake} calories!`;
   let cardioText = `I currently run ${currentMiles !== null ? currentMiles : initialMiles} miles, I want to run ${goalMiles} miles!`;
+
+  // Take weight_goal_date and convert to a displayble date in format Month Day, Year
+  let displayDate = new Date(weight_goal_date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
+  const [bannerText, setBannerText] = useState("");
+  let weightBanner = `TARGET GOAL: ${displayDate}`;
+  let calorieBanner = `DAILY GOAL`;
+  let cardioBanner = `WEELY GOAL`;
 
   useEffect(() => {
     if (goalWeight != undefined) {
+      setBannerText(weightBanner);
       setGoalText(weightText);
     } else if (initialCalories != undefined) {
+      setBannerText(calorieBanner);
       setGoalText(calorieText);
     } else {
+      setBannerText(cardioBanner);
       setGoalText(cardioText);
     }
   }, [
@@ -194,12 +212,23 @@ const GoalRibbon = ({
     currentMiles,
     currentWeight,
     goal_calorie_intake,
+    weight_goal_date,
   ]);
 
   return (
     <div className="goal-wrapper">
       <div>
-        <p>{goalText}</p>
+        <div className="flex flex-col w-full h-full bg-PrimaryBlue">
+          <button className="inset-0 border-2 border-white p-2 mb-4 bg-Utility">
+            <p className=" flex flex-wrap text-center text-lg font-bold text-black">
+              {bannerText}
+            </p>
+          </button>
+
+          <p className="flex flex-wrap text-center text-lg font-bold pb-0.5">
+            {goalText}
+          </p>
+        </div>
       </div>
     </div>
   );
