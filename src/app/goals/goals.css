@@ -11,16 +11,3 @@
     height: 15vh;
   }
 }
-
-/*
-    <div className="relative flex flex-col justify-center items-center text-white bg-PrimaryBlue w-425 h-60">
-      <div className="absolute inset-0 flex justify-center items-center overflow-hidden">
-        <div className="w-full h-full bg-PrimaryBlue transform skew-x-12">
-          <div className="transform -skew-x-12">
-            <p>{bannerText}</p>
-            <p>{goalText}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-*/

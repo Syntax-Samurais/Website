@@ -176,9 +176,24 @@ const GoalRibbon = ({
 }) => {
   // Set a div for each goal type that displays the time for each goal. i.e. the weight goal will display the time until the goal is reached. The calorie goal will disply that it is a daily goal. The running goal will display that it is a weekly goal.
   const [goalText, setGoalText] = useState("");
-  let weightText = `I currently weigh ${currentWeight} lbs, I want to weigh ${goalWeight} lbs!`;
-  let calorieText = `My daily average for the past week  is ${currentCalories} calories, I want to eat ${goal_calorie_intake} calories!`;
-  let cardioText = `I currently run ${currentMiles !== null ? currentMiles : initialMiles} miles, I want to run ${goalMiles} miles!`;
+  let weightText = "";
+  if (currentWeight <= goalWeight) {
+    weightText = `I met my goal of ${goalWeight}lbs and now weigh ${currentWeight}lbs!`;
+  } else {
+    weightText = `I currently weigh ${currentWeight} lbs, I want to weigh ${goalWeight} lbs!`;
+  }
+  let calorieText = "";
+  if (currentCalories <= goal_calorie_intake) {
+    calorieText = `I met my goal of ${goal_calorie_intake} calories and I averaged ${currentCalories} calories this week!`;
+  } else {
+    calorieText = `My daily average this week  is ${currentCalories - goal_calorie_intake} calories over my goal of ${goal_calorie_intake} cal/day.`;
+  }
+  let cardioText = "";
+  if (currentMiles >= goalMiles) {
+    cardioText = `I met my goal of ${goalMiles} miles and I ran ${currentMiles} miles this week!`;
+  } else {
+    cardioText = `I currently run ${currentMiles !== null ? currentMiles : initialMiles} miles, I want to run ${goalMiles} miles!`;
+  }
 
   // Take weight_goal_date and convert to a displayble date in format Month Day, Year
   let displayDate = new Date(weight_goal_date).toLocaleDateString("en-US", {
@@ -188,9 +203,9 @@ const GoalRibbon = ({
   });
 
   const [bannerText, setBannerText] = useState("");
-  let weightBanner = `TARGET GOAL: ${displayDate}`;
+  let weightBanner = `DATE GOAL: ${displayDate}`;
   let calorieBanner = `DAILY GOAL`;
-  let cardioBanner = `WEELY GOAL`;
+  let cardioBanner = `WEEKLY GOAL`;
 
   useEffect(() => {
     if (goalWeight != undefined) {
