@@ -3,7 +3,6 @@ import "./diet.css";
 import React, { useState, useEffect } from "react";
 import Header from "../_components/Header";
 import NavBar from "../_components/NavBar";
-// import { globalId } from "../_components/_modals/LoginModal.jsx";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 
@@ -23,7 +22,6 @@ export default function Diet() {
     const res = fetch(`/api/Diet/Day?id=${globalId}`)
       .then((res) => res.json())
       .then((data) => setPastWeight(data));
-    // setPastWeight(result);
   }, [pastWeight]);
 
   const [calories_goal, setCaloriesGoal] = useState(0);
@@ -34,7 +32,6 @@ export default function Diet() {
         const result = await res.json();
         // setCaloriesGoal(null);
         setCaloriesGoal(result[0].goal_calorie_intake);
-        // setTempItems(tempItems);
       } catch (e) {
         console.warn(`Couldnt fetch item`, e);
       }
@@ -77,10 +74,7 @@ const UserGoalCalories = ({ calories_goal }) => {
 };
 
 const ScrollableBox = ({ pastEntries, globalId }) => {
-  // if (!pastEntries) return null;
   function handleDelete(e) {
-    // alert("deleted" )
-    console.log(e.target.id);
     const res = fetch("api/Diet/Day", {
       method: "DELETE",
       headers: {
@@ -93,7 +87,6 @@ const ScrollableBox = ({ pastEntries, globalId }) => {
     });
   }
 
-  // console.log(pastEntries)
   return (
     <>
       <h1 className="text-center text-white text-xl mb-4 mt-4 lg:mt-0">

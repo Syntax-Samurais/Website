@@ -19,15 +19,14 @@ export async function POST(request, response) {
   try {
     let psql = await getPsql();
     let body = await request.json();
-    // let results = await psql.query("UPDATE goals set goal_calorie_intake = $1 where user_id = 1;", [body.calories]);
+
     let { user_id, currentDate, weight, calories } = body;
 
-    // let currentDate = new Date().toISOString().split("T")[0];
     let previousresults = await psql.query(
       "SELECT weight_history.user_id, weight_history.weight, calorie_history.calories, weight_history.date FROM weight_history INNER JOIN calorie_history ON weight_history.user_id = calorie_history.user_id and weight_history.date = calorie_history.date WHERE weight_history.user_id = $1 GROUP BY weight_history.user_id, weight_history.weight, calorie_history.calories, weight_history.date ORDER BY weight_history.date DESC;",
       [user_id],
     );
-    // console.log(previousresults.rows);
+
     let weightQuery = `
       INSERT INTO weight_history (user_id, date, weight) 
       VALUES ($1, $2, $3)
@@ -39,11 +38,9 @@ export async function POST(request, response) {
     `;
     let caloriesValues = [user_id, currentDate, calories];
     for (let i = 0; i < previousresults.rows.length; i++) {
-      //  console.log("For loop entered", previousresults.rows[i].date.toISOString().split("T")[0])
       if (
         currentDate == previousresults.rows[i].date.toISOString().split("T")[0]
       ) {
-        // console.log("Update condition met", previousresults.rows[i].date)
         weightQuery =
           "Update weight_history SET weight = $1 WHERE user_id = $2 AND date = $3";
         weightValues = [weight, user_id, currentDate];
@@ -91,7 +88,6 @@ export async function DELETE(request, response) {
       "DELETE from weight_history WHERE user_id = $1 and date = $2;",
       [user_id, currentDate],
     );
-    // console.log(body);
 
     return new Response(JSON.stringify({ success: "successfully deleted" }));
   } catch (error) {
