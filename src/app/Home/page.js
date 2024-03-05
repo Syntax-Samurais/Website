@@ -41,11 +41,14 @@ const Home = () => {
   const [totalCaloriesConsumed, setCaloriesConsumed] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedTimePeriod, setSelectedTimePeriod] = useState("weekly");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch(`/api/Home?id=${globalId}`);
+        const res = await fetch(
+          `/api/Home?id=${globalId}&timePeriod=${selectedTimePeriod})`,
+        );
         const tempItems = await res.json();
         console.log(tempItems);
 
@@ -147,6 +150,12 @@ const Home = () => {
     fetchData();
   }, []);
 
+  const [currLineBtn, setLineBtn] = useState("weekly");
+  const handleTimePeriodButtonClick = (e) => {
+    setSelectedTimePeriod(e.target.id);
+    setLineBtn(e.target.id);
+  };
+
   const renderCalories = () => {
     return (
       <div className="flex flex-col justify-center w-full md:w-1/2">
@@ -230,8 +239,47 @@ const Home = () => {
           {renderCalories()}
           {renderMilesRan()}
         </div>
-        <div className="flex justify-center w-3/4 h-80 m-auto">
-          <LineChart chartData={WeightChartData} goalWeight={160} />
+        <div className="flex justify-end h-72 w-full sm:mt-96 md:mt-4">
+          <LineChart
+            chartData={WeightChartData}
+            goalWeight={goalWeight}
+            selectedTimePeriod={selectedTimePeriod}
+          />
+          <div className="flex flex-row justify-around self-end absolute h-12 w-32 md:w-48 -my-10 rounded-sm text-sm">
+            <button
+              id="weekly"
+              className={
+                currLineBtn == "weekly"
+                  ? "bg-SecondaryBlue w-8 h-8 md:h-12 md:w-12 rounded-md text-white font-bold shadow-lg"
+                  : "bg-PrimaryGrey w-8 h-8 md:h-12 md:w-12 rounded-md text-white font-bold shadow-lg"
+              }
+              onClick={(e) => handleTimePeriodButtonClick(e)}
+            >
+              W
+            </button>
+            <button
+              id="monthly"
+              className={
+                currLineBtn == "monthly"
+                  ? "bg-SecondaryBlue w-8 h-8 md:h-12 md:w-12 rounded-md text-white font-bold shadow-lg"
+                  : "bg-PrimaryGrey w-8 h-8 md:h-12 md:w-12 rounded-md text-white font-bold shadow-lg"
+              }
+              onClick={(e) => handleTimePeriodButtonClick(e)}
+            >
+              M
+            </button>
+            <button
+              id="yearly"
+              className={
+                currLineBtn == "yearly"
+                  ? "bg-SecondaryBlue w-8 h-8 md:h-12 md:w-12 rounded-md text-white font-bold shadow-lg"
+                  : "bg-PrimaryGrey w-8 h-8 md:h-12 md:w-12 rounded-md text-white font-bold shadow-lg"
+              }
+              onClick={(e) => handleTimePeriodButtonClick(e)}
+            >
+              Y
+            </button>
+          </div>
         </div>
       </section>
     </>
