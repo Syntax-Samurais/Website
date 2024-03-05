@@ -184,6 +184,7 @@ const Home = () => {
       </div>
     );
   };
+
   const renderMilesRan = () => {
     return (
       <div className="flex flex-col justify-center w-full md:w-1/2 py-20 md:py-0">
@@ -228,11 +229,10 @@ const Home = () => {
         <div className="flex flex-row flex-wrap h-fit sm:h-96 w-full mx-auto">
           {renderCalories()}
           {renderMilesRan()}
-          <LineChart chartData={WeightChartData} goalWeight={goalWeight} />
         </div>
-        {/* <div className="flex justify-center h-80 w-full md:mt-8">
-         
-        </div> */}
+        <div className="flex justify-center w-3/4 h-80 m-auto">
+          <LineChart chartData={WeightChartData} goalWeight={160} />
+        </div>
       </section>
     </>
   );
