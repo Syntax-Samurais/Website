@@ -7,6 +7,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      maxWidth: {
+        navWrap: "1440px",
+      },
       height: {
         custom: "340px",
       },
@@ -24,10 +27,6 @@ module.exports = {
         PrimaryBlue: "#294D77",
         SecondaryBlue: "#1861A5",
         Utility: "#BFAD1D",
-      },
-
-      color: {
-        customHeaderBlue: "#294d77",
       },
       backgroundImage: {
         mountains: "url('/images/mountains.jpeg')",
