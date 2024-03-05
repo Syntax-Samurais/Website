@@ -42,11 +42,10 @@ export default function AboutPage() {
       clearInterval(alertLoop);
       document.title = "🚨 ALERT CLEARED! 🚨";
       setTimeout(() => {
-        document.title = "You lost, but FitFusion can save you!";
+        document.title = "Come back when you are prepared to win!";
       }, 1000);
-      window.location.href =
-        "https://www.quora.com/Im-really-tired-of-being-a-loser-How-do-I-stop-being-a-loser"; // Quora link
-    }, 10000); // Redirect after 5 seconds
+      window.location.href = "https://youtu.be/ukWRRNqMAZ4?t=55"; // Beetles link
+    }, 5000); // Redirect after 5 seconds
   };
 
   return (
