@@ -50,7 +50,7 @@ export default function Diet() {
       <UserGoalCalories calories_goal={calories_goal} />
       <div className="flex justify-center mt-12">
         <div className="mx-24">
-          <ScrollableBox pastEntries={pastWeight} />
+          <ScrollableBox pastEntries={pastWeight} globalId={globalId} />
         </div>
         <div className="mx-24">
           <Box globalId={globalId} />
@@ -74,9 +74,24 @@ const UserGoalCalories = ({ calories_goal }) => {
   );
 };
 
-const ScrollableBox = ({ pastEntries }) => {
+const ScrollableBox = ({ pastEntries, globalId }) => {
   // if (!pastEntries) return null;
+  function handleDelete(e) {
+    // alert("deleted" )
+    console.log(e.target.id);
+    const res = fetch("api/Diet/Day", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user_id: globalId,
+        currentDate: pastEntries[e.target.id].date,
+      }),
+    });
+  }
 
+  // console.log(pastEntries)
   return (
     <>
       <h1 className="text-center text-white text-xl mb-4">
@@ -89,15 +104,26 @@ const ScrollableBox = ({ pastEntries }) => {
             {pastEntries.length !== 0 ? (
               <>
                 {pastEntries.map((entry, index) => (
-                  <div className="">
-                    <li key={index} className="my-1 text-center">
-                      <strong>{entry.date.split("T")[0]}</strong>
-                    </li>
-                    <li className="text-center mb-1 ">
-                      {" "}
-                      Calories: {entry.calories} | Weight: {entry.weight}
-                    </li>
-                  </div>
+                  <React.Fragment key={index}>
+                    <div className="flex justify-between">
+                      <div className="">
+                        <li className="my-1 text-left">
+                          <strong>{entry.date.split("T")[0]}</strong>
+                        </li>
+                        <li className="text-center mb-1 text-sm">
+                          {" "}
+                          Calories: {entry.calories} | Weight: {entry.weight}
+                        </li>{" "}
+                      </div>
+                      <button
+                        id={index}
+                        onClick={(e) => handleDelete(e)}
+                        className="text-red-600 hover:text-red-800 focus:outline-none"
+                      >
+                        🗑️
+                      </button>
+                    </div>
+                  </React.Fragment>
                 ))}
               </>
             ) : (
@@ -175,6 +201,7 @@ const Box = ({ globalId }) => {
                   name="current_weight"
                   placeholder="in pounds"
                   className="w-full rounded-md p-2 text-black"
+                  step="0.01"
                 />
               </div>
             </div>

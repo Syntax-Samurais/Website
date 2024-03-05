@@ -4,26 +4,18 @@ export async function GET(request) {
   const queryParams = new URL(request.url).searchParams;
   const user_id = queryParams.get("id");
   let psql = await getPsql();
-  // const { date } = request.json();
-  // console.log(date)
+
   let results = await psql.query(
     "SELECT weight_history.user_id, weight_history.weight, calorie_history.calories, weight_history.date FROM weight_history INNER JOIN calorie_history ON weight_history.user_id = calorie_history.user_id and weight_history.date = calorie_history.date WHERE weight_history.user_id = $1 GROUP BY weight_history.user_id, weight_history.weight, calorie_history.calories, weight_history.date ORDER BY weight_history.date DESC;",
     [user_id],
   );
-  // console.log(results.rows);
-  // let info = [];
-  // for (let i = 0; i < 7; i++) {
-  //   // console.log(results.rows[i]);
-  //   info.push(results.rows[i]);
-  // }
+
   return new Response(JSON.stringify(results.rows), {
     contentType: "application/json",
   });
 }
 
 export async function POST(request, response) {
-  // const queryParams = new URL(request.url).searchParams;
-  // const user_id = queryParams.get("id");
   try {
     let psql = await getPsql();
     let body = await request.json();
@@ -83,5 +75,15 @@ export async function POST(request, response) {
       status: 500,
       contentType: "application/json",
     });
+  }
+}
+
+export async function Delete(request, response) {
+  try {
+    let psql = await getPsql();
+    let body = await request.json();
+    console.log(body);
+  } catch (error) {
+    console.error("Error", error);
   }
 }
