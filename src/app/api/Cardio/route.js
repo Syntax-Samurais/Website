@@ -49,3 +49,26 @@ export async function POST(request) {
     });
   }
 }
+
+export async function DELETE(request, response) {
+  try {
+    let psql = await getPsql();
+    let body = await request.json();
+
+    const { user_id, currentDate, miles, time } = body;
+
+    await psql.query(
+      "DELETE from run_history WHERE user_id = $1 and date = $2 and miles_ran = $3 and run_time = $4;",
+      [user_id, currentDate, miles, time],
+    );
+
+    return new Response(JSON.stringify({ success: "successfully deleted" }));
+  } catch (error) {
+    console.error("Error", error);
+
+    return new Response(JSON.stringify({ error: "Something went wrong" }), {
+      status: 500,
+      contentType: "application/json",
+    });
+  }
+}
