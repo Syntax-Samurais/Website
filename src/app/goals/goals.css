@@ -7,23 +7,7 @@
     border: 50px solid transparent;
     border-right-color: #2e2f2e;
     border-left-color: #2e2f2e;
-    width: 425px;
-    height: 60px;
-  }
-
-  p {
-    @apply text-center text-lg font-bold pb-0.5;
-  }
-
-  button {
-    @apply bg-PrimaryBlue text-white font-bold  px-4 py-0.5 rounded;
-
-    border: solid;
-    border-radius: 25px;
-    border-width: 1px;
-
-    p {
-      @apply text-sm;
-    }
+    width: 70vw;
+    height: 15vh;
   }
 }
