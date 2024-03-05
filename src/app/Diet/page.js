@@ -48,12 +48,14 @@ export default function Diet() {
       <NavBar />
       {/* if calories goal is null then show big div that says set a weight and calorie goal to view this page */}
       <UserGoalCalories calories_goal={calories_goal} />
-      <div className="flex justify-center mt-12">
-        <div className="mx-24">
-          <ScrollableBox pastEntries={pastWeight} globalId={globalId} />
-        </div>
-        <div className="mx-24">
-          <Box globalId={globalId} />
+      <div className="mt-10">
+        <div className="flex flex-wrap flex-col content-center justify-center lg:flex-row ">
+          <div className="lg:w-2/5">
+            <Box globalId={globalId} />
+          </div>
+          <div className="lg:w-2/5">
+            <ScrollableBox pastEntries={pastWeight} globalId={globalId} />
+          </div>
         </div>
       </div>
     </>
@@ -86,7 +88,7 @@ const ScrollableBox = ({ pastEntries, globalId }) => {
       },
       body: JSON.stringify({
         user_id: globalId,
-        currentDate: pastEntries[e.target.id].date,
+        currentDate: pastEntries[e.target.id].date.split("T")[0],
       }),
     });
   }
@@ -94,10 +96,10 @@ const ScrollableBox = ({ pastEntries, globalId }) => {
   // console.log(pastEntries)
   return (
     <>
-      <h1 className="text-center text-white text-xl mb-4">
+      <h1 className="text-center text-white text-xl mb-4 mt-4 lg:mt-0">
         Weight & Calorie History
       </h1>
-      <div className="bg-PrimaryBlue w-96 max-h-80 rounded-lg text-white border border-black overflow-auto">
+      <div className="bg-PrimaryBlue w-96 max-h-80 rounded-lg text-white border border-black overflow-auto m-auto">
         <div className="p-4">
           <ul className="list list-inside divide-y divide-SecondaryGrey">
             {/* Maps through past runs and displays them */}
@@ -176,7 +178,7 @@ const Box = ({ globalId }) => {
   return (
     <>
       <h1 className="text-center text-white text-xl mb-4">New Entry</h1>
-      <div className="bg-PrimaryBlue w-96 h-fit rounded-lg text-center text-white border border-black">
+      <div className="bg-PrimaryBlue w-96 h-fit rounded-lg text-center text-white border border-black m-auto">
         <form onSubmit={handleSubmit}>
           <div className="p-4">
             <div className="mb-4">

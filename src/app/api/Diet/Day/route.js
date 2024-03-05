@@ -78,12 +78,28 @@ export async function POST(request, response) {
   }
 }
 
-export async function Delete(request, response) {
+export async function DELETE(request, response) {
   try {
     let psql = await getPsql();
     let body = await request.json();
-    console.log(body);
+    const { user_id, currentDate } = body;
+    await psql.query(
+      "DELETE from calorie_history WHERE user_id = $1 and date = $2;",
+      [user_id, currentDate],
+    );
+    await psql.query(
+      "DELETE from weight_history WHERE user_id = $1 and date = $2;",
+      [user_id, currentDate],
+    );
+    // console.log(body);
+
+    return new Response(JSON.stringify({ success: "successfully deleted" }));
   } catch (error) {
     console.error("Error", error);
+
+    return new Response(JSON.stringify({ error: "Something went wrong" }), {
+      status: 500,
+      contentType: "application/json",
+    });
   }
 }
