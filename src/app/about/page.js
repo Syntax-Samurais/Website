@@ -63,36 +63,46 @@ export default function AboutPage() {
           <img
             src="./images/gradientBlue.png"
             alt="Image 2"
-            className="w-full h-96 object-cover"
+            className="w-full h-72 object-cover"
           />
-          <div className="absolute inset-0 flex flex-col pt-12 items-center text-white">
-            <h1 className="text-4xl font-bold border-b">
+          <div className="absolute inset-0 flex flex-col pt-4 items-center text-white">
+            <div className="text-yellow-500 pb-4">
+              {[1, 2, 3, 4, 5].map((_, index) => (
+                <span key={index} className="text-5xl">
+                  &#9733;
+                </span>
+              ))}
+            </div>
+            <h1 className="text-3xl font-bold border-b">
               3.8 Million 5-Star Reviews
             </h1>
-            <div className="text-lg bg-black bg-opacity-50 rounded-lg p-8 m-12">
+            <div className="text-lg bg-black bg-opacity-50 rounded-lg p-6 m-8">
               <p className="text-center">
                 "Best fitness app ever! Highly recommended!"
               </p>
-              <p className="text-right">- James Bond</p>
+              <p className="text-right mr-8">- James Bond</p>
             </div>
-          </div>
-
-          {/* Stars */}
-          <div className="absolute top-0 text-yellow-500">
-            {[1, 2, 3, 4, 5].map((_, index) => (
-              <span key={index} className="text-4xl">
-                &#9733;
-              </span>
-            ))}
           </div>
         </div>
 
         {/* Sponsor section */}
-        <div className="flex-1">
-          <h1 className="absolute  w-full h-full text-center text-4xl font-bold">
-            asdf
-          </h1>
-          {/* sponser images flex wrapped */}
+        <div className="flex items-center">
+          <img
+            src="./images/github.png"
+            alt="Sponsor 1"
+            className="w-1/4 h-1/4"
+          />
+          <img
+            src="./images/nike.png"
+            alt="Sponsor 2"
+            className="w-1/4 h-1/4"
+          />
+          <img src="./images/UFC.png" alt="Sponsor 3" className="w-1/4 h-1/4" />
+          <img
+            src="./images/SyntaxSam.png"
+            alt="Sponsor 4"
+            className="w-1/4 h-1/4"
+          />
         </div>
       </main>
     </div>
