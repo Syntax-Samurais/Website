@@ -15,7 +15,37 @@ export default function AboutPage() {
   };
 
   const handleLooser = () => {
-    // Handle loser action
+    const audio = new Audio("./sounds/boo.mp3");
+    audio.play();
+
+    let alertCount = 0;
+    const alertLoop = setInterval(() => {
+      if (alertCount < 3) {
+        alert(
+          "You're failing miserably without FitFusion! Your life is doomed!",
+        );
+        alertCount++;
+      }
+    }, 500); // Alert every 500 milliseconds
+
+    // Rotate browser tab text to grab attention
+    const rotateText = () => {
+      document.title = "🚨 ATTENTION: LOSER ALERT! 🚨";
+      setTimeout(() => {
+        document.title = "You're LOSING without FitFusion!";
+      }, 500);
+    };
+    setInterval(rotateText, 1000); // Rotate title every second
+
+    // Clear all intervals and redirect to Quora after a certain period
+    setTimeout(() => {
+      clearInterval(alertLoop);
+      document.title = "🚨 ALERT CLEARED! 🚨";
+      setTimeout(() => {
+        document.title = "Come back when you are prepared to win!";
+      }, 1000);
+      window.location.href = "https://youtu.be/ukWRRNqMAZ4?t=55"; // Beetles link
+    }, 5000); // Redirect after 5 seconds
   };
 
   return (
