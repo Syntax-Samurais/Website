@@ -148,64 +148,77 @@ const Home = () => {
   }, []);
 
   const renderCalories = () => {
-    if (weeklyCalorieGoal === 0 || weeklyCalorieGoal === null) {
-      return (
-        <h1 className="text-PrimaryGrey space-y-2 mr-32 pr-32">
-          No Data Found!<br></br>Click
-          <span className="text-PrimaryBlue font-bold underline">
-            <a href="/goals"> here</a>
-          </span>{" "}
-          to set<br></br> a goal.
-        </h1>
-      );
-    } else {
-      return (
-        <div className="flex flex-col h-auto w-1/4 justify-center mr-16 pr-16">
-          <div className="flex h-3/4 justify-center">
+    return (
+      <div className="flex flex-col justify-center w-full md:w-1/2">
+        <div className="flex justify-center content-center">
+          <div className="flex aspect-square justify-center self-center h-72 w-72 bg-slate-500 rounded-full text-center">
             <div className="w-32 h-32 flex justify-center content-center self-center absolute rounded-full bg-PrimaryGrey shadow-lg">
               <span className="text-center self-center font-bold text-white">
-                {totalCaloriesConsumed}/<br></br>
-                {weeklyCalorieGoal}
+                {weeklyCalorieGoal === 0 || weeklyCalorieGoal === null ? (
+                  <>
+                    <p>
+                      No Calorie <br></br> Data Found
+                    </p>
+                    <div className="py-1"></div>
+                    <Link
+                      className="text-PrimaryBlue font-bold underline"
+                      href="/goals"
+                    >
+                      Set a goal
+                    </Link>
+                  </>
+                ) : (
+                  <>
+                    {totalCaloriesConsumed} /<br />
+                    {weeklyCalorieGoal}
+                  </>
+                )}
               </span>
             </div>
             <PieChart chartData={calorieChartData} />
           </div>
-          <span className="text-center py-4 text-white font-medium text-3xl">
-            Calorie Goal
-          </span>
         </div>
-      );
-    }
+        <div className="text-center mt-4 text-white font-medium text-3xl">
+          Weekly Calories Consumed
+        </div>
+      </div>
+    );
   };
+
   const renderMilesRan = () => {
-    if (weeklyRunGoal === 0 || weeklyRunGoal === null) {
-      return (
-        <h1 className="text-PrimaryGrey space-y-2 ml-32 pl-32">
-          No Run Data Found!<br></br>Click
-          <span className="text-PrimaryBlue font-bold underline">
-            <a href="/goals"> here</a>
-          </span>{" "}
-          to set<br></br>a new goal.
-        </h1>
-      );
-    } else {
-      return (
-        <div className="flex flex-col h-auto w-1/4 justify-center ml-16 pl-16">
-          <div className="flex h-3/4 justify-center">
+    return (
+      <div className="flex flex-col justify-center w-full md:w-1/2 py-20 md:py-0">
+        <div className="flex justify-center content-center">
+          <div className="flex aspect-square justify-center self-center h-72 w-72 bg-slate-500 rounded-full text-center">
             <div className="w-32 h-32 flex justify-center content-center self-center absolute rounded-full bg-PrimaryGrey shadow-lg">
               <span className="text-center self-center font-bold text-white">
-                {totalMilesRan}/<br></br>
-                {weeklyRunGoal}
+                {weeklyRunGoal === 0 || weeklyRunGoal === null ? (
+                  <>
+                    <p>No Run Data Found!</p>
+                    <div className="py-1"></div>
+                    <Link
+                      className="text-PrimaryBlue font-bold underline"
+                      href="/goals"
+                    >
+                      Set a goal
+                    </Link>
+                  </>
+                ) : (
+                  <>
+                    {totalMilesRan} /<br />
+                    {weeklyRunGoal}
+                  </>
+                )}
               </span>
             </div>
             <PieChart chartData={mileChartData} />
           </div>
-          <span className="text-center py-4 text-white font-medium text-3xl">
-            Miles Ran
-          </span>
         </div>
-      );
-    }
+        <div className="text-center mt-4 text-white font-medium text-3xl">
+          Miles Ran
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -214,85 +227,13 @@ const Home = () => {
       <NavBar />
       <section className="w-full sm:w-3/4 h-fit sm:h-4/5 m-auto flex flex-col flex-wrap flex-1 mt-16 m-auto max-w-navWrap">
         <div className="flex flex-row flex-wrap h-fit sm:h-96 w-full mx-auto">
-          <div className="flex flex-col justify-center w-full md:w-1/2">
-            <div className="flex justify-center content-center">
-              <div className="flex aspect-square justify-center self-center h-72 w-72 bg-slate-500 rounded-full text-center">
-                <div className="w-32 h-32 flex justify-center content-center self-center absolute rounded-full bg-PrimaryGrey shadow-lg">
-                  <span className="text-center self-center font-bold text-white">
-                    {weeklyCalorieGoal === 0 || weeklyCalorieGoal === null ? (
-                      <>
-                        <p>
-                          No Calorie <br></br> Data Found
-                        </p>
-                        <div className="py-1"></div>
-                        <Link
-                          className="text-PrimaryBlue font-bold underline"
-                          href="/goals"
-                        >
-                          Set a goal
-                        </Link>
-                      </>
-                    ) : (
-                      <>
-                        {totalCaloriesConsumed} /<br />
-                        {weeklyCalorieGoal}
-                      </>
-                    )}
-                  </span>
-                </div>
-                <PieChart chartData={calorieChartData} />
-              </div>
-            </div>
-            <div className="text-center mt-4 text-white font-medium text-3xl">
-              Weekly Calories Consumed
-            </div>
-          </div>
-          <div className="flex flex-col justify-center w-full md:w-1/2 py-20 md:py-0">
-            <div className="flex justify-center content-center">
-              <div className="flex aspect-square justify-center self-center h-72 w-72 bg-slate-500 rounded-full text-center">
-                <div className="w-32 h-32 flex justify-center content-center self-center absolute rounded-full bg-PrimaryGrey shadow-lg">
-                  <span className="text-center self-center font-bold text-white">
-                    {weeklyRunGoal === 0 || weeklyRunGoal === null ? (
-                      <>
-                        <p>No Run Data Found!</p>
-                        <div className="py-1"></div>
-                        <Link
-                          className="text-PrimaryBlue font-bold underline"
-                          href="/goals"
-                        >
-                          Set a goal
-                        </Link>
-                      </>
-                    ) : (
-                      <>
-                        {totalMilesRan} /<br />
-                        {weeklyRunGoal}
-                      </>
-                    )}
-                  </span>
-                </div>
-                <PieChart chartData={mileChartData} />
-              </div>
-            </div>
-            <div className="text-center mt-4 text-white font-medium text-3xl">
-              Miles Ran
-            </div>
-          </div>
-          <div className="flex justify-center h-80 w-full md:mt-8">
-            <LineChart chartData={WeightChartData} goalWeight={160} />
+          {renderCalories()}
+          {renderMilesRan()}
+          <div className="flex justify-center h-80 w-full md:mt-12">
+            <LineChart chartData={WeightChartData} goalWeight={goalWeight} />
           </div>
         </div>
       </section>
-      {/* -------------------------Chart JS-----------------------*/}
-      {/* <section className="flex justify-center flex-col h-full w-screen mt-16">
-        <div className="flex relative h-96 w-full m-auto justify-center">
-          {renderCalories()}
-          {renderMilesRan()}
-        </div>
-        <div className="flex justify-center w-3/4 h-80 m-auto">
-          <LineChart chartData={WeightChartData} goalWeight={160} />
-        </div>
-      </section> */}
     </>
   );
 };

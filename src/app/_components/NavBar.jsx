@@ -13,7 +13,7 @@ const NavBar = () => {
 
   return (
     <>
-      <div className="flex mt-6 h-10 w-11/12 md:w-3/4 m-auto max-w-navWrap">
+      <div className="hidden sm:flex mt-6 h-10 w-11/12 md:w-3/4 m-auto max-w-navWrap">
         <div className="w-14 h-14 inset-x-0 -my-2 m-auto absolute rounded-full bg-neutral-300 drop-shadow-lg z-10"></div>
         <div className="flex m-auto relative w-full h-full rounded-full bg-neutral-300">
           <div className="flex justify-around content-center px-4 md:px-12 w-1/2 text-sm items-center">
