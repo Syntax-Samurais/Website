@@ -4,16 +4,47 @@ import React, { useState } from "react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 
-const GoalChange = ({ showModal, handleCloseModal, userInterests }) => {
+const GoalChange = ({
+  showModal,
+  handleCloseModal,
+  gain_weight,
+  increase_running,
+  lose_weight,
+  maintain_weight,
+  goalWeight,
+  weight_goal_date,
+  goal_calorie_intake,
+  goalMiles,
+  handleInterestChange,
+}) => {
   const router = useRouter();
   let cookieUser = Cookies.get("user");
   const globalId = cookieUser;
 
+  console.log("Goal Change Modal weight_goal_date: ", weight_goal_date);
   const [formData, setFormData] = useState({
-    goal_weight: "",
-    weight_goal_date: "",
-    goal_calorie_intake: "",
-    goal_weekly_miles: "",
+    goal_weight: goalWeight,
+    weight_goal_date: weight_goal_date
+      ? new Date(weight_goal_date)
+          .toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+          })
+          .split("/")
+          .reverse()
+          .join("-")
+      : new Date()
+          .toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+          })
+          .split("/")
+          .reverse()
+          .join("-"),
+    goal_calorie_intake: goal_calorie_intake,
+    goal_weekly_miles: goalMiles,
   });
 
   const handleClose = () => {
@@ -28,17 +59,31 @@ const GoalChange = ({ showModal, handleCloseModal, userInterests }) => {
     e.preventDefault();
     const data = {};
 
+    userInterestFields.forEach((field) => {
+      const isChecked = formData[field];
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [field]: isChecked,
+      }));
+      data[field] = isChecked ? "true" : "false";
+    });
+
     for (const key in formData) {
       if (formData[key]) {
         setFormData((prevFormData) => ({
           ...prevFormData,
-          [key]: e.target[key].value,
+          [key]: e.target[key]?.value,
         }));
 
-        data[key] = e.target[key].value;
+        data[key] = e.target[key]?.value;
       }
     }
-    console.log(data);
+
+    gain_weight = gain_weight;
+    increase_running = increase_running;
+    lose_weight = lose_weight;
+    maintain_weight = maintain_weight;
+    console.log("Data to patch", data);
     handleClose();
 
     try {
@@ -64,6 +109,13 @@ const GoalChange = ({ showModal, handleCloseModal, userInterests }) => {
     "goal_weekly_miles",
   ];
 
+  const userInterestFields = [
+    "gain_weight",
+    "increase_running",
+    "lose_weight",
+    "maintain_weight",
+  ];
+
   const formatLabel = (field) =>
     field
       .split("_")
@@ -87,42 +139,43 @@ const GoalChange = ({ showModal, handleCloseModal, userInterests }) => {
             &times;
           </button>
           <form onSubmit={handleSubmit}>
-            {/* Iterete over user interests and create checkboxes for each at the beginning of the form. If userInterest is true, check the box. */}
-            <div className="flex flex-wrap">
-              {Object.keys(userInterests).map((interest) => {
-                if (interest !== "id" && interest !== "user_id") {
-                  return (
-                    <div
-                      key={interest}
-                      className="border-2 border-gray-500 rounded-lg p-2 m-2"
-                    >
-                      <label
-                        htmlFor={interest}
-                        className="block text-right text-white"
-                      >
-                        {formatLabel(interest)}
-                      </label>
-                      <input
-                        type="checkbox"
-                        id={interest}
-                        name={interest}
-                        value={formData[interest]}
-                        checked={userInterests[interest]}
-                        onChange={(e) =>
-                          setFormData((prevFormData) => ({
-                            ...prevFormData,
-                            [interest]: e.target.checked,
-                          }))
-                        }
-                        className="w-full rounded-md p-2 text-black"
-                      />
-                    </div>
-                  );
-                }
-                return null;
-              })}
+            {/* Iterete over user userInterestFields and create checkboxes for each at the beginning of the form. If userInterest is true, check the box. */}
+            <div>
+              {userInterestFields.map((field) => (
+                <div
+                  key={field}
+                  className="flex flex-wrap items-center text-white"
+                >
+                  <input
+                    type="checkbox"
+                    id={field}
+                    name={field}
+                    value="true"
+                    checked={
+                      field === "gain_weight"
+                        ? gain_weight
+                        : field === "increase_running"
+                          ? increase_running
+                          : field === "lose_weight"
+                            ? lose_weight
+                            : maintain_weight
+                    }
+                    onChange={(e) => {
+                      const isChecked = e.target.checked;
+                      setFormData((prevFormData) => ({
+                        ...prevFormData,
+                        [field]: isChecked ? "true" : "false",
+                      }));
+                      handleInterestChange(field, isChecked);
+                    }}
+                  />
+                  <label htmlFor={field} className="text-white">
+                    {formatLabel(field)}
+                  </label>
+                </div>
+              ))}
             </div>
-
+            <div></div>
             {formFields.map((field) => (
               <div key={field}>
                 <label htmlFor={field} className="block text-left text-white">
@@ -131,6 +184,7 @@ const GoalChange = ({ showModal, handleCloseModal, userInterests }) => {
                 <input
                   type={field === "weight_goal_date" ? "date" : "text"}
                   id={field}
+                  /*add default text to field with the  */
                   name={field}
                   value={formData[field]}
                   onChange={(e) =>
@@ -145,7 +199,7 @@ const GoalChange = ({ showModal, handleCloseModal, userInterests }) => {
             ))}
             <button
               type="submit"
-              className="bg-SecondaryBlue text-white p-2 rounded-md w-full"
+              className="bg-SecondaryBlue text-white p-2 rounded-md w-full mt-4"
             >
               Submit
             </button>
