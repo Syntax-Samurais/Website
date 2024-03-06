@@ -128,10 +128,34 @@ const GoalChange = ({
                     checked={formData[field] === "true"}
                     onChange={(e) => {
                       const isChecked = e.target.checked;
-                      setFormData((prevFormData) => ({
-                        ...prevFormData,
-                        [field]: isChecked ? "true" : "false",
-                      }));
+                      setFormData((prevFormData) => {
+                        const updatedFormData = { ...prevFormData };
+
+                        if (field === "lose_weight" && isChecked) {
+                          updatedFormData.maintain_weight = "false";
+                          updatedFormData.gain_weight = "false";
+                        } else if (field === "maintain_weight" && isChecked) {
+                          updatedFormData.lose_weight = "false";
+                          updatedFormData.gain_weight = "false";
+                        } else if (field === "gain_weight" && isChecked) {
+                          updatedFormData.lose_weight = "false";
+                          updatedFormData.maintain_weight = "false";
+                        }
+
+                        if (field === "increase_running") {
+                          updatedFormData[field] = isChecked ? "true" : "false";
+                        } else if (
+                          [
+                            "lose_weight",
+                            "maintain_weight",
+                            "gain_weight",
+                          ].includes(field)
+                        ) {
+                          updatedFormData[field] = isChecked ? "true" : "false";
+                        }
+
+                        return updatedFormData;
+                      });
                     }}
                   />
                   <label htmlFor={field} className="text-white">
