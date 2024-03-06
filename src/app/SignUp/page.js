@@ -22,15 +22,13 @@ const ScreenOne = (props) => {
   return (
     <>
       <div className="h-custom ">
-        <h1 className="text-customLightBlue my-4 text-2xl">
-          What is your primary goal?
-        </h1>
+        <h1 className="text-white my-4 text-2xl">What is your primary goal?</h1>
         {goals.map((goal) => (
           <div
             key={goal.id}
             value={goal.value}
-            className={`border border-cyan-400 rounded-md text-customLightBlue px-1 py-1 my-4 text-md cursor-pointer w-3/4 
-            ml-12 hover:opacity-75 ${selectedGoalId === goal.id ? "text-white font-bold" : ""}`}
+            className={`border rounded-md border-black text-white px-1 py-1 my-4 text-md cursor-pointer w-3/4 
+            ml-12 hover:opacity-75 ${selectedGoalId === goal.id ? "text-white font-bold border-white" : ""}`}
             onClick={() => {
               props.setGoal(goal.value);
               setGoal_ChangeStyle(goal);
@@ -72,7 +70,7 @@ const ScreenTwo = (props) => {
   };
   return (
     <>
-      <div className="h-custom text-customLightBlue">
+      <div className="h-custom text-white">
         <h1 className="mb-4 mt-6 text-lg">{question}</h1>
         <input className="text-black" type="text" onChange={input}></input>
         {calorieQuestion !== "" ? (
@@ -119,7 +117,7 @@ const ScreenThree = (props) => {
 
   return (
     <>
-      <div className="h-custom text-customLightBlue">
+      <div className="h-custom text-white">
         <h1 className="mb-4 mt-6">{question}</h1>
         {props.goal !== "sameWeight" ? (
           <input className="text-black" type="text" onChange={input}></input>
@@ -127,9 +125,7 @@ const ScreenThree = (props) => {
         {calorieQuestion !== "" ? (
           <div>
             {" "}
-            <h1 className="text-customLightBlue block mt-10">
-              {calorieQuestion}
-            </h1>{" "}
+            <h1 className="text-white block mt-10">{calorieQuestion}</h1>{" "}
             <input
               className="text-black my-2"
               type="text"
@@ -137,7 +133,7 @@ const ScreenThree = (props) => {
             ></input>
           </div>
         ) : null}
-        <label className="text-customLightBlue block mt-10">
+        <label className="text-white block mt-10">
           By what date do you want to meet your goal?
         </label>
         <input
@@ -168,7 +164,7 @@ const ScreenFour = (props) => {
   };
   return (
     <>
-      <div className="h-custom text-customLightBlue">
+      <div className="h-custom text-white">
         <h1 className="mt-5 mb-6 text-2xl">
           Awesome! Let's get started.
           <br />
@@ -295,21 +291,19 @@ const SignUpPage = () => {
     <>
       <Header />
       <div className="h-custom">
-        <div className="m-auto mt-20 w-96 border border-customLightBlue border-opacity-65 rounded-xl bg-customBlue text-center">
-          <h2 className="text-white my-2 text-3xl tracking-wide underline">
-            Welcome to FitFusion
-          </h2>
+        <div className="m-auto mt-20 w-96 border-black shadow-2xl rounded-xl bg-PrimaryBlue text-center">
+          <img className="w-20 h-20 m-auto" src="/images/logo1.png"></img>
           {screens[currentScreen]}
           {currentScreen === 4 ? (
             <button
-              className="mt-4 bg-white border-customDarkGray border-2 text-customLightDarkBlue font-bold px-4 py-2 rounded-md ml-2 hover:bg-customLightBlue hover:text-white"
+              className=" bg-white border-customDarkGray border-2 text-black font-bold px-4 py-2 rounded-md hover:bg-SecondaryGrey hover:text-white my-4"
               onClick={signUp}
             >
               Sign Up!
             </button>
           ) : (
             <button
-              className="mt-4 bg-white border-customDarkGray border-2 text-customLightDarkBlue font-bold px-4 py-2 rounded-md ml-2 hover:bg-customLightBlue hover:text-white"
+              className=" bg-white border-customDarkGray border-2 text-black font-bold px-4 py-2 rounded-md hover:bg-SecondaryGrey hover:text-white my-4"
               onClick={() => {
                 if (input !== "") {
                   setCurrentScreen(currentScreen + 1);

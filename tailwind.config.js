@@ -11,7 +11,7 @@ module.exports = {
         navWrap: "1440px",
       },
       height: {
-        custom: "340px",
+        custom: "300px",
       },
       fontSize: {
         "2xxl": "2.25rem",
