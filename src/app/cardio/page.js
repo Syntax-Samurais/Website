@@ -36,7 +36,11 @@ export default function Cardio() {
 
     fetchData();
   }, [pastRuns]);
+  // console.log(globalId)
 
+  const deleteEntry = (response) => {
+    // console.log(response)
+  };
   return (
     <>
       <Header />
@@ -44,7 +48,7 @@ export default function Cardio() {
       <UserGoalMiles />
       <div className="flex justify-center mt-12">
         <div className="mx-24">
-          <ScrollableBox pastRuns={pastRuns} />
+          <ScrollableBox pastRuns={pastRuns} user_id={globalId} />
         </div>
         <div className="mx-24">
           <Box />
