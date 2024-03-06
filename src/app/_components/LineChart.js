@@ -14,20 +14,35 @@ const LineChart = ({ chartData, goalWeight, selectedTimePeriod }) => {
   } else if (selectedTimePeriod === "weekly") {
     filteredData = aggregateDataLastWeek(chartData);
   }
-  const options = {
-    plugins: {
-      annotation: {
-        annotations: {
-          line1: {
+
+  const annotations =
+    goalWeight && goalWeight !== 0
+      ? [
+          {
             type: "line",
             yMin: goalWeight,
             yMax: goalWeight,
             borderColor: "rgb(24, 97, 165)",
             borderWidth: 1,
+            label: {
+              enabled: true,
+              content: "Goal Weight",
+            },
           },
-        },
+        ]
+      : [];
+
+  const maxWeight = Math.max(
+    ...chartData.datasets.flatMap((dataset) => dataset.data),
+  ); // Get the maximum weight from your data
+
+  const options = {
+    plugins: {
+      annotation: {
+        annotations: annotations,
       },
     },
+
     scales: {
       x: {
         display: true,
@@ -52,6 +67,9 @@ const LineChart = ({ chartData, goalWeight, selectedTimePeriod }) => {
             weight: "800", // Adjust the font weight if needed
           },
         },
+        min: 70, // Set minimum value for y-axis
+        max: Math.ceil(maxWeight / 10) * 10 + 10, // Adjust maximum value as needed
+        stepSize: 1, // Adjust step size as needed
       },
     },
     responsive: true,

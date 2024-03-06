@@ -34,7 +34,7 @@ const Home = () => {
   const [mileChartData, setMileChartData] = useState(defaultChar);
   const [calorieChartData, setCalorieChartData] = useState(defaultChar);
   const [WeightChartData, setWeightChartData] = useState(defaultChar);
-  const [goalWeight, setGoalWeight] = useState(0);
+  const [goalWeight, setGoalWeight] = useState(80);
   const [weeklyRunGoal, setRunGoal] = useState(0);
   const [totalMilesRan, setMilesRan] = useState(0);
   const [weeklyCalorieGoal, setCalorieGoal] = useState(0);
