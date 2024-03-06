@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-// import axios from "axios";
+import Cookies from "js-cookie";
 import Header from "../_components/Header";
 
 const goals = [
@@ -276,9 +276,20 @@ const SignUpPage = () => {
           currentDate: currentDate,
         }),
       })
-        .then((response) => {
+        .then(async (response) => {
           // console.log(response);
-          router.push("/");
+
+          const res = await fetch(
+            `/api/Login?username=${username}&password=${password}`,
+          );
+          // console.log(res); // 400 = missing field | 401 = invalid username or password | 200 = success
+
+          if (res.status === 200) {
+            const data = await res.json();
+            const { id } = data;
+            Cookies.set("user", id);
+            router.push(`/Home`);
+          }
         })
         .catch((error) => {
           // console.log(error);
