@@ -54,14 +54,11 @@ export default function Header() {
           >
             Home
           </Link>
-          <Link className="hidden sm:block ml-4 hover:text-PrimaryGrey" href="">
+          <Link
+            className="hidden sm:block ml-4 hover:text-PrimaryGrey"
+            href="/about"
+          >
             About
-          </Link>
-          <Link className="hidden sm:block ml-4 hover:text-PrimaryGrey" href="">
-            Services
-          </Link>
-          <Link className="hidden sm:block ml-4 hover:text-PrimaryGrey" href="">
-            Contact
           </Link>
           <Link className={logoutStyle} onClick={handleLogout} href="/">
             Logout
