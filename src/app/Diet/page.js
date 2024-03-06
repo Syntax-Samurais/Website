@@ -3,7 +3,6 @@ import "./diet.css";
 import React, { useState, useEffect } from "react";
 import Header from "../_components/Header";
 import NavBar from "../_components/NavBar";
-// import { globalId } from "../_components/_modals/LoginModal.jsx";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 
@@ -23,7 +22,6 @@ export default function Diet() {
     const res = fetch(`/api/Diet/Day?id=${globalId}`)
       .then((res) => res.json())
       .then((data) => setPastWeight(data));
-    // setPastWeight(result);
   }, [pastWeight]);
 
   const [calories_goal, setCaloriesGoal] = useState(0);
@@ -34,7 +32,6 @@ export default function Diet() {
         const result = await res.json();
         // setCaloriesGoal(null);
         setCaloriesGoal(result[0].goal_calorie_intake);
-        // setTempItems(tempItems);
       } catch (e) {
         console.warn(`Couldnt fetch item`, e);
       }
@@ -48,12 +45,14 @@ export default function Diet() {
       <NavBar />
       {/* if calories goal is null then show big div that says set a weight and calorie goal to view this page */}
       <UserGoalCalories calories_goal={calories_goal} />
-      <div className="flex justify-center mt-12">
-        <div className="mx-24">
-          <ScrollableBox pastEntries={pastWeight} />
-        </div>
-        <div className="mx-24">
-          <Box globalId={globalId} />
+      <div className="mt-10">
+        <div className="flex flex-wrap flex-col content-center justify-center lg:flex-row ">
+          <div className="lg:w-2/5">
+            <Box globalId={globalId} />
+          </div>
+          <div className="lg:w-2/5">
+            <ScrollableBox pastEntries={pastWeight} globalId={globalId} />
+          </div>
         </div>
       </div>
     </>
@@ -74,30 +73,52 @@ const UserGoalCalories = ({ calories_goal }) => {
   );
 };
 
-const ScrollableBox = ({ pastEntries }) => {
-  // if (!pastEntries) return null;
+const ScrollableBox = ({ pastEntries, globalId }) => {
+  function handleDelete(e) {
+    const res = fetch("api/Diet/Day", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user_id: globalId,
+        currentDate: pastEntries[e.target.id].date.split("T")[0],
+      }),
+    });
+  }
 
   return (
     <>
-      <h1 className="text-center text-white text-xl mb-4">
+      <h1 className="text-center text-white text-xl mb-4 mt-4 lg:mt-0">
         Weight & Calorie History
       </h1>
-      <div className="bg-PrimaryBlue w-96 max-h-80 rounded-lg text-white border border-black overflow-auto">
+      <div className="bg-PrimaryBlue w-96 max-h-80 rounded-lg text-white border border-black overflow-auto m-auto">
         <div className="p-4">
           <ul className="list list-inside divide-y divide-SecondaryGrey">
             {/* Maps through past runs and displays them */}
             {pastEntries.length !== 0 ? (
               <>
                 {pastEntries.map((entry, index) => (
-                  <div className="">
-                    <li key={index} className="my-1 text-center">
-                      <strong>{entry.date.split("T")[0]}</strong>
-                    </li>
-                    <li className="text-center mb-1 ">
-                      {" "}
-                      Calories: {entry.calories} | Weight: {entry.weight}
-                    </li>
-                  </div>
+                  <React.Fragment key={index}>
+                    <div className="flex justify-between">
+                      <div className="">
+                        <li className="my-1 text-left">
+                          <strong>{entry.date.split("T")[0]}</strong>
+                        </li>
+                        <li className="text-center mb-1 text-sm">
+                          {" "}
+                          Calories: {entry.calories} | Weight: {entry.weight}
+                        </li>{" "}
+                      </div>
+                      <button
+                        id={index}
+                        onClick={(e) => handleDelete(e)}
+                        className="text-red-600 hover:text-red-800 focus:outline-none"
+                      >
+                        🗑️
+                      </button>
+                    </div>
+                  </React.Fragment>
                 ))}
               </>
             ) : (
@@ -150,7 +171,7 @@ const Box = ({ globalId }) => {
   return (
     <>
       <h1 className="text-center text-white text-xl mb-4">New Entry</h1>
-      <div className="bg-PrimaryBlue w-96 h-fit rounded-lg text-center text-white border border-black">
+      <div className="bg-PrimaryBlue w-96 h-fit rounded-lg text-center text-white border border-black m-auto">
         <form onSubmit={handleSubmit}>
           <div className="p-4">
             <div className="mb-4">
@@ -175,6 +196,7 @@ const Box = ({ globalId }) => {
                   name="current_weight"
                   placeholder="in pounds"
                   className="w-full rounded-md p-2 text-black"
+                  step="0.01"
                 />
               </div>
             </div>
