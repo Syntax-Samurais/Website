@@ -174,28 +174,31 @@ const ScreenFour = (props) => {
         </h2>
         <form className="flex flex-wrap mx-2 mt-5">
           <div></div>
-          <label className="justify-self-end">Username:</label>
+          {/* <label className="justify-self-end">Username:</label> */}
           <input
-            className="text-black mx-5"
+            className="text-white bg-PrimaryBlue p-2 w-3/4 border-b-2 my-2 focus:outline-none mx-auto"
             type="text"
+            placeholder="Username"
             onChange={createUsername}
           ></input>
-          <div className="mt-7">
-            <label>Password:</label>
-            <input
-              className="text-black mx-5"
-              type="password"
-              onChange={createPassword}
-            ></input>
-          </div>
-          <div>
-            <label className="relative mt-7">Confirm Password:</label>
-            <input
-              className="text-black mt-8"
-              type="password"
-              onChange={confirmPassword}
-            ></input>
-          </div>
+          {/* <div className="mt-7"> */}
+          {/* <label>Password:</label> */}
+          <input
+            className="text-white mx-auto bg-PrimaryBlue p-2 w-3/4 border-b-2 my-2 focus:outline-none"
+            type="password"
+            placeholder="Password"
+            onChange={createPassword}
+          ></input>
+          {/* </div> */}
+          {/* <div> */}
+          {/* <label className="relative mt-7">Confirm Password:</label> */}
+          <input
+            className="text-white mx-auto bg-PrimaryBlue p-2 w-3/4 border-b-2 my-2 focus:outline-none"
+            type="password"
+            placeholder="Confirm Password"
+            onChange={confirmPassword}
+          ></input>
+          {/* </div> */}
         </form>
       </div>
     </>
