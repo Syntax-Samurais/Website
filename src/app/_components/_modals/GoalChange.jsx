@@ -16,12 +16,12 @@ const GoalChange = ({
   goal_calorie_intake,
   goalMiles,
   handleInterestChange,
+  handleFormSubmit,
 }) => {
   const router = useRouter();
   let cookieUser = Cookies.get("user");
   const globalId = cookieUser;
 
-  console.log("Goal Change Modal weight_goal_date: ", weight_goal_date);
   const [formData, setFormData] = useState({
     goal_weight: goalWeight,
     weight_goal_date: weight_goal_date
@@ -45,6 +45,10 @@ const GoalChange = ({
           .join("-"),
     goal_calorie_intake: goal_calorie_intake,
     goal_weekly_miles: goalMiles,
+    gain_weight: gain_weight ? "true" : "false",
+    increase_running: increase_running ? "true" : "false",
+    lose_weight: lose_weight ? "true" : "false",
+    maintain_weight: maintain_weight ? "true" : "false",
   });
 
   const handleClose = () => {
@@ -57,49 +61,19 @@ const GoalChange = ({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = {};
-
-    userInterestFields.forEach((field) => {
-      const isChecked = formData[field];
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        [field]: isChecked,
-      }));
-      data[field] = isChecked ? "true" : "false";
-    });
-
-    for (const key in formData) {
-      if (formData[key]) {
-        setFormData((prevFormData) => ({
-          ...prevFormData,
-          [key]: e.target[key]?.value,
-        }));
-
-        data[key] = e.target[key]?.value;
-      }
-    }
-
-    gain_weight = gain_weight;
-    increase_running = increase_running;
-    lose_weight = lose_weight;
-    maintain_weight = maintain_weight;
-    console.log("Data to patch", data);
+    const data = {
+      goal_weight: formData.goal_weight,
+      weight_goal_date: formData.weight_goal_date,
+      goal_calorie_intake: formData.goal_calorie_intake,
+      goal_weekly_miles: formData.goal_weekly_miles,
+      gain_weight: formData.gain_weight === "true",
+      increase_running: formData.increase_running === "true",
+      lose_weight: formData.lose_weight === "true",
+      maintain_weight: formData.maintain_weight === "true",
+    };
+    handleFormSubmit(data);
     handleClose();
-
-    try {
-      const response = await fetch(`/api/Goals/Change?id=${globalId}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-      if (!response.ok) {
-        throw new Error("Network response not ok");
-      }
-    } catch (error) {
-      console.error("Patching error: ", error);
-    }
+    console.log("Data to patch", data);
   };
 
   const formFields = [
@@ -151,22 +125,13 @@ const GoalChange = ({
                     id={field}
                     name={field}
                     value="true"
-                    checked={
-                      field === "gain_weight"
-                        ? gain_weight
-                        : field === "increase_running"
-                          ? increase_running
-                          : field === "lose_weight"
-                            ? lose_weight
-                            : maintain_weight
-                    }
+                    checked={formData[field] === "true"}
                     onChange={(e) => {
                       const isChecked = e.target.checked;
                       setFormData((prevFormData) => ({
                         ...prevFormData,
                         [field]: isChecked ? "true" : "false",
                       }));
-                      handleInterestChange(field, isChecked);
                     }}
                   />
                   <label htmlFor={field} className="text-white">

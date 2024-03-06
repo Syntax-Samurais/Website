@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import GoalChange from "../_components/_modals/GoalChange.jsx";
 
 import "./goals.css";
+import { data } from "autoprefixer";
 
 const Goals = () => {
   const router = useRouter();
@@ -19,6 +20,8 @@ const Goals = () => {
       router.push(`/`);
     }
   }, [globalId, router]);
+
+  const [isLoading, setIsLoading] = useState(true);
 
   const [showModal, setShowModal] = useState(false);
   const [currentWeight, setCurrentWeight] = useState(0);
@@ -56,6 +59,26 @@ const Goals = () => {
     }
   };
 
+  const handleFormSubmit = async (data) => {
+    try {
+      const res = await fetch(`/api/Goals/Change?id=${globalId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      const result = await res.json();
+      console.log("Result from patch request", result);
+      if (!res.ok) {
+        throw new Error("Network response not ok");
+      }
+      fetchingData();
+    } catch (error) {
+      console.error("Patching error: ", error);
+    }
+  };
+
   useEffect(() => {
     const fetchingData = async () => {
       try {
@@ -63,40 +86,42 @@ const Goals = () => {
         const data = await res.json();
         setGoalWeight(data.goals[0].goal_weight);
         setWeightGoalDate(data.goals[0].weight_goal_date);
-        try {
-          setInitialCalories(data.goals[0].initial_calorie_intake);
-          setGoalCalorieIntake(data.goals[0].goal_calorie_intake);
-          setInitialMiles(data.goals[0].initial_weekly_miles);
-          setGoalMiles(data.goals[0].goal_weekly_miles);
-          setCurrentWeight(data.weightHistory[0].weight);
-          setGainWeight(data.userInterests[0].gain_weight);
-          setIncreaseRunning(data.userInterests[0].increase_running);
-          setLoseWeight(data.userInterests[0].lose_weight);
-          setMaintainWeight(data.userInterests[0].maintain_weight);
-          let mileSum = 0;
-          data.runHistory.forEach((entry) => {
-            mileSum += parseFloat(entry.miles_ran);
-          });
-          setCurrentMiles(mileSum);
-          let calorieSum = 0;
-          if (data.calorieHistory.length !== 0)
-            data.calorieHistory.map((entry) => {
-              calorieSum += entry.calories;
-            });
-          let avgCalories =
-            data.calorieHistory.length !== 0
-              ? calorieSum / data.calorieHistory.length
-              : 0;
-          setCurrentCalories(Math.floor(avgCalories));
-        } catch (error) {
-          console.error("Error fetching data:", error);
+        setInitialCalories(data.goals[0].initial_calorie_intake);
+        setGoalCalorieIntake(data.goals[0].goal_calorie_intake);
+        setInitialMiles(data.goals[0].initial_weekly_miles);
+        setGoalMiles(data.goals[0].goal_weekly_miles);
+        setCurrentWeight(data.weightHistory[0].weight);
+        if (data.userInterests && data.userInterests.length > 0) {
+          setGainWeight(data.userInterests[0].gain_weight ?? false);
+          setIncreaseRunning(data.userInterests[0].increase_running ?? false);
+          setLoseWeight(data.userInterests[0].lose_weight ?? false);
+          setMaintainWeight(data.userInterests[0].maintain_weight ?? false);
         }
+
+        let mileSum = 0;
+        data.runHistory.forEach((entry) => {
+          mileSum += parseFloat(entry.miles_ran);
+        });
+        setCurrentMiles(mileSum);
+        let calorieSum = 0;
+        if (data.calorieHistory.length !== 0)
+          data.calorieHistory.map((entry) => {
+            calorieSum += entry.calories;
+          });
+        let avgCalories =
+          data.calorieHistory.length !== 0
+            ? calorieSum / data.calorieHistory.length
+            : 0;
+        setCurrentCalories(Math.floor(avgCalories));
+        setIsLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
+        setIsLoading(false);
       }
     };
     fetchingData();
-  }, [showModal]);
+    console.log("Fetching data for goals page");
+  }, [showModal, globalId]);
 
   return (
     <>
@@ -116,18 +141,29 @@ const Goals = () => {
             goal_calorie_intake={goal_calorie_intake}
             goalMiles={goalMiles}
             handleInterestChange={handleInterestChange}
+            handleFormSubmit={handleFormSubmit}
           />
         )}
         <div className="flex flex-col justify-center items-center">
           <button
-            className="flex flex-col bg-PrimaryBlue text-white font-bold py-2 px-4 rounded-full border-white border-2 justify-center items-center mt-8 mb-0"
+            className="flex flex-col bg-PrimaryBlue text-white font-bold py-2 px-4 rounded-full border-white border-2 justify-center items-center mt-8 mb-0 hover:bg-SecondaryBlue hover:border-SecondaryBlue"
             onClick={handleOpenModal}
           >
             MODIFY GOALS
           </button>
+          {isLoading ? (
+            <div className="flex flex-col justify-center items-center">
+              <p className="text-2xl font-bold text-white">
+                Calculating Progress...
+              </p>
+            </div>
+          ) : null}
           {gain_weight || lose_weight || maintain_weight ? (
             <GoalRibbon
               goalWeight={goalWeight}
+              gain_weight={gain_weight}
+              lose_weight={lose_weight}
+              maintain_weight={maintain_weight}
               weight_goal_date={weight_goal_date}
               currentWeight={currentWeight}
               handleCloseModal={handleCloseModal}
@@ -137,6 +173,9 @@ const Goals = () => {
           ) : null}
           {gain_weight || lose_weight || maintain_weight ? (
             <GoalRibbon
+              gain_weight={gain_weight}
+              lose_weight={lose_weight}
+              maintain_weight={maintain_weight}
               currentCalories={currentCalories}
               initialCalories={initialCalories}
               goal_calorie_intake={goal_calorie_intake}
@@ -173,11 +212,17 @@ const GoalRibbon = ({
   goal_calorie_intake,
   currentMiles,
   handleOpenModal,
+  lose_weight,
+  gain_weight,
+  maintain_weight,
+  increase_running,
 }) => {
   // Set a div for each goal type that displays the time for each goal. i.e. the weight goal will display the time until the goal is reached. The calorie goal will disply that it is a daily goal. The running goal will display that it is a weekly goal.
   const [goalText, setGoalText] = useState("");
   let weightText = "";
-  if (currentWeight <= goalWeight) {
+  if (lose_weight && currentWeight <= goalWeight) {
+    weightText = `I met my goal of ${goalWeight}lbs and now weigh ${currentWeight}lbs!`;
+  } else if (gain_weight && currentWeight > goalWeight) {
     weightText = `I met my goal of ${goalWeight}lbs and now weigh ${currentWeight}lbs!`;
   } else {
     weightText = `I currently weigh ${currentWeight} lbs, I want to weigh ${goalWeight} lbs!`;
@@ -228,18 +273,21 @@ const GoalRibbon = ({
     currentWeight,
     goal_calorie_intake,
     weight_goal_date,
+    gain_weight,
+    lose_weight,
+    maintain_weight,
+    increase_running,
   ]);
 
   return (
     <div className="goal-wrapper">
       <div>
-        <div className="flex flex-col w-full h-full bg-PrimaryBlue">
-          <button className="inset-0 border-2 border-white p-2 mb-4 bg-Utility">
-            <p className=" flex flex-wrap text-center text-lg font-bold text-black">
+        <div className="flex flex-col w-full h-full bg-PrimaryBlue hover:bg-SecondaryBlue">
+          <button className="border-2 border-white p-2 mb-4 bg-Utility cursor-pointer">
+            <p className="flex flex-wrap text-center  md:text-lg text-sm font-bold text-black">
               {bannerText}
             </p>
           </button>
-
           <p className="flex flex-wrap text-center text-lg font-bold pb-0.5">
             {goalText}
           </p>
