@@ -60,12 +60,6 @@ export default function Header() {
           >
             About
           </Link>
-          <Link className="hidden sm:block ml-4 hover:text-PrimaryGrey" href="">
-            Services
-          </Link>
-          <Link className="hidden sm:block ml-4 hover:text-PrimaryGrey" href="">
-            Contact
-          </Link>
           <Link className={logoutStyle} onClick={handleLogout} href="/">
             Logout
           </Link>
