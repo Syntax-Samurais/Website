@@ -2,8 +2,11 @@ import React from "react";
 import { Line } from "react-chartjs-2";
 import { Chart as ChartJS } from "chart.js/auto";
 import annotationPlugin from "chartjs-plugin-annotation";
+import zoomPlugin from "chartjs-plugin-zoom";
 
-ChartJS.register(annotationPlugin);
+if (typeof window !== "undefined") {
+  ChartJS.register(annotationPlugin, zoomPlugin);
+}
 
 const LineChart = ({ chartData, goalWeight, selectedTimePeriod }) => {
   let filteredData = chartData;
@@ -25,6 +28,24 @@ const LineChart = ({ chartData, goalWeight, selectedTimePeriod }) => {
             borderColor: "rgb(24, 97, 165)",
             borderWidth: 1,
           },
+        },
+      },
+      zoom: {
+        pan: {
+          enabled: true,
+          mode: "xy",
+        },
+        zoom: {
+          wheel: {
+            enabled: true,
+          },
+          pinch: {
+            enabled: true,
+          },
+          mode: "xy",
+        },
+        limits: {
+          y: { min: 90, max: goalWeight + 200 },
         },
       },
     },

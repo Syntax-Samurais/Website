@@ -10,8 +10,6 @@ import CardioRibbon from "../_components/CardioRibbon.jsx";
 import WeightRibbon from "../_components/WeightRibbon.jsx";
 import CalorieRibbon from "../_components/CalorieRibbon.jsx";
 
-import { data } from "autoprefixer";
-
 const Goals = () => {
   const router = useRouter();
   let cookieUser = Cookies.get("user");
