@@ -10,7 +10,6 @@ import CardioRibbon from "../_components/CardioRibbon.jsx";
 import WeightRibbon from "../_components/WeightRibbon.jsx";
 import CalorieRibbon from "../_components/CalorieRibbon.jsx";
 
-import "./goals.css";
 import { data } from "autoprefixer";
 
 const Goals = () => {
@@ -71,14 +70,17 @@ const Goals = () => {
         },
         body: JSON.stringify(data),
       });
+
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+
       const result = await res.json();
       console.log("Result from patch request", result);
-      if (!res.ok) {
-        throw new Error("Network response not ok");
-      }
+
       fetchingData();
     } catch (error) {
-      console.error("Patching error: ", error);
+      console.error("Patching error:", error);
     }
   };
 
