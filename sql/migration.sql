@@ -15,18 +15,16 @@ CREATE TABLE users (
 
 CREATE TABLE user_interests (
   id SERIAL PRIMARY KEY,
-  user_id INTEGER REFERENCES users(id),
-  improve_pace BOOLEAN,
-  increase_running BOOLEAN,
-  increase_weight BOOLEAN,
-  lose_weight BOOLEAN,
-  maintain_weight BOOLEAN,
-  gain_weight BOOLEAN
+  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+  increase_running BOOLEAN DEFAULT false,
+  lose_weight BOOLEAN DEFAULT false,
+  maintain_weight BOOLEAN DEFAULT false,
+  gain_weight BOOLEAN DEFAULT false
 );
 
 CREATE TABLE goals (
   id SERIAL PRIMARY KEY,
-  user_id INTEGER REFERENCES users(id),
+  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
   date DATE DEFAULT CURRENT_DATE,
   goal_weight INTEGER,
   weight_goal_date DATE,
@@ -38,14 +36,14 @@ CREATE TABLE goals (
 
 CREATE TABLE weight_history (
   id SERIAL PRIMARY KEY,
-  user_id INTEGER REFERENCES users(id),
+  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
   date DATE DEFAULT CURRENT_DATE,
   weight DECIMAL(6, 2)
 );
 
 CREATE TABLE run_history (
   id SERIAL PRIMARY KEY,
-  user_id INTEGER REFERENCES users(id),
+  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
   date DATE DEFAULT CURRENT_DATE,
   miles_ran DECIMAL(6, 2),
   run_time VARCHAR(255)
@@ -53,7 +51,7 @@ CREATE TABLE run_history (
 
 CREATE TABLE calorie_history (
   id SERIAL PRIMARY KEY,
-  user_id INTEGER REFERENCES users(id),
+  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
   date DATE DEFAULT CURRENT_DATE,
   calories INTEGER
 );
