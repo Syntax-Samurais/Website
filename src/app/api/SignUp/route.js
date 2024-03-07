@@ -63,8 +63,8 @@ export async function POST(request, response) {
       break;
     case "gainWeight":
       await psql.query(
-        "Insert into user_interests (user_id, gain_weight, increase_weight) values ($1, $2, $3);",
-        [id, true, true],
+        "Insert into user_interests (user_id, gain_weight) values ($1, $2);",
+        [id, true],
       );
       break;
     default:
