@@ -148,7 +148,7 @@ const Home = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [goalWeight]);
 
   const [currLineBtn, setLineBtn] = useState("weekly");
   const handleTimePeriodButtonClick = (e) => {
