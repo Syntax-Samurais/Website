@@ -21,7 +21,7 @@ export default function CalorieRibbon({
       );
     } else {
       setCalorieText(
-        `I currently eat ${currentCalories !== null ? currentCalories : initialCalories} calories, I want to eat ${goal_calorie_intake} calories!`,
+        `This week I averaged ${currentCalories - goal_calorie_intake} calories over my goal of ${goal_calorie_intake} calories.`,
       );
     }
   }
@@ -48,7 +48,7 @@ export default function CalorieRibbon({
               </>
             ) : (
               <>
-                <p className="flex flex-wrap text-center text-lg font-bold pb-0.5">
+                <p className="flex flex-wrap text-center md:text-lg text-sm font-bold pb-0.5">
                   {calorieText}
                 </p>
               </>

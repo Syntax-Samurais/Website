@@ -169,7 +169,7 @@ const Goals = () => {
         )}
         <div className="flex flex-col justify-center items-center">
           <button
-            className="flex flex-col bg-PrimaryBlue text-white font-bold py-2 px-4 rounded-full border-white border-2 justify-center items-center mt-8 mb-0 hover:bg-SecondaryBlue hover:border-SecondaryBlue"
+            className="flex flex-col bg-PrimaryBlue text-white md:text-lg text-sm font-bold py-2 px-4 rounded-full border-white border-2 justify-center items-center mt-8 mb-0 hover:bg-SecondaryBlue hover:border-SecondaryBlue"
             onClick={handleOpenModal}
           >
             MODIFY GOALS
@@ -182,23 +182,23 @@ const Goals = () => {
             </div>
           ) : null}
           {gain_weight || lose_weight || maintain_weight ? (
-            <CalorieRibbon
-              goal_calorie_intake={goal_calorie_intake}
-              currentCalories={currentCalories}
-              initialCalories={initialCalories}
-              showModal={showModal}
-            />
-          ) : null}
-          {gain_weight || lose_weight || maintain_weight ? (
-            <WeightRibbon
-              gain_weight={gain_weight}
-              lose_weight={lose_weight}
-              maintain_weight={maintain_weight}
-              goalWeight={goalWeight}
-              currentWeight={currentWeight}
-              showModal={showModal}
-              weight_goal_date={weight_goal_date}
-            />
+            <>
+              <WeightRibbon
+                gain_weight={gain_weight}
+                lose_weight={lose_weight}
+                maintain_weight={maintain_weight}
+                goalWeight={goalWeight}
+                currentWeight={currentWeight}
+                showModal={showModal}
+                weight_goal_date={weight_goal_date}
+              />
+              <CalorieRibbon
+                goal_calorie_intake={goal_calorie_intake}
+                currentCalories={currentCalories}
+                initialCalories={initialCalories}
+                showModal={showModal}
+              />
+            </>
           ) : null}
 
           {increase_running ? (

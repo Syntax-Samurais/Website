@@ -60,7 +60,7 @@ export default function WeightRibbon({
               </>
             ) : (
               <>
-                <p className="flex flex-wrap text-center text-lg font-bold pb-0.5">
+                <p className="flex flex-wrap text-center md:text-lg text-sm font-bold pb-0.5">
                   {weightText}
                 </p>
               </>

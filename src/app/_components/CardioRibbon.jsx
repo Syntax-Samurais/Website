@@ -12,7 +12,7 @@ export default function CardioRibbon({
 
   useEffect(() => {
     updateCardioText();
-  }, [currentMiles, showModal]);
+  }, [goalMiles, currentMiles, showModal]);
 
   function updateCardioText() {
     if (currentMiles >= goalMiles) {
@@ -48,7 +48,7 @@ export default function CardioRibbon({
               </>
             ) : (
               <>
-                <p className="flex flex-wrap text-center text-lg font-bold pb-0.5">
+                <p className="flex flex-wrap text-center md:text-lg text-sm font-bold pb-0.5">
                   {cardioText}
                 </p>
               </>
