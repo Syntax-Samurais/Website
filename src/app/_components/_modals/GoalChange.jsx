@@ -25,24 +25,8 @@ const GoalChange = ({
   const [formData, setFormData] = useState({
     goal_weight: goalWeight,
     weight_goal_date: weight_goal_date
-      ? new Date(weight_goal_date)
-          .toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "2-digit",
-            day: "2-digit",
-          })
-          .split("/")
-          .reverse()
-          .join("-")
-      : new Date()
-          .toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "2-digit",
-            day: "2-digit",
-          })
-          .split("/")
-          .reverse()
-          .join("-"),
+      ? new Date(weight_goal_date).toISOString().split("T")[0]
+      : new Date().toISOString().split("T")[0],
     goal_calorie_intake: goal_calorie_intake,
     goal_weekly_miles: goalMiles,
     gain_weight: gain_weight ? "true" : "false",
@@ -50,6 +34,8 @@ const GoalChange = ({
     lose_weight: lose_weight ? "true" : "false",
     maintain_weight: maintain_weight ? "true" : "false",
   });
+
+  console.log("formData: checking date formate", formData);
 
   const handleClose = () => {
     handleCloseModal();
@@ -63,7 +49,10 @@ const GoalChange = ({
     e.preventDefault();
     const data = {
       goal_weight: formData.goal_weight,
-      weight_goal_date: formData.weight_goal_date,
+      weight_goal_date: formData.weight_goal_date
+        .split("/")
+        .reverse()
+        .join("-"),
       goal_calorie_intake: formData.goal_calorie_intake,
       goal_weekly_miles: formData.goal_weekly_miles,
       gain_weight: formData.gain_weight === "true",
