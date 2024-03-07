@@ -4,6 +4,7 @@ import { Chart as ChartJS } from "chart.js/auto";
 import annotationPlugin from "chartjs-plugin-annotation";
 import zoomPlugin from "chartjs-plugin-zoom";
 
+//check window presence
 if (typeof window !== "undefined") {
   ChartJS.register(annotationPlugin, zoomPlugin);
 }
