@@ -40,6 +40,10 @@ export async function POST(request, response) {
       "Insert into weight_history (user_id, weight, date) values ($1, $2, $3);",
       [id, before, currentDate],
     );
+    await psql.query(
+      "Insert into calorie_history (user_id, calories, date) values ($1, $2, $3);",
+      [id, 0, currentDate],
+    );
   }
 
   switch (goal) {
