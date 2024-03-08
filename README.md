@@ -116,6 +116,7 @@ Fit Fusion is a collaborative effort by the following individuals:
 - [Morgan Curry](https://www.linkedin.com/in/morgan-curry-004a4b2a1/)
 - [Steven DeClercq](https://www.linkedin.com/in/steven-declercq/)
 - [Anthony Meadows](https://www.linkedin.com/in/anthonymeadows2000/)
+- [Derek Manning](https://www.linkedin.com/in/derekmanninghm/)
 
 Each contributor played a crucial role as software engineers, with some also taking on responsibilities as project managers.
 
